@@ -7,37 +7,62 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Main extends ApplicationAdapter {
+	Chipa chipo = new Chipa(120.0f,130.0f,5.0f,5.0f);
 	SpriteBatch batch;
 	Texture img;
 	BitmapFont testfont;
-	float x = 0.0f;//координаты в виде переменных оставляю на время - потом заменим на вектор
-	float y = 0.0f;
-	String string_height ="Высота окна этого устройства: " + String.valueOf(Gdx.graphics.getHeight()) + " пикселей";
-	String string_width = "Ширина окна этого устройства: " + String.valueOf(Gdx.graphics.getWidth()) + " пикселей";
+
+	int heightOfScreen;
+	int widthOfScreen;
+
+	String string_height="";
+	String string_width="";
+
 	@Override
 	public void create () {
+		int heightOfScreen = Gdx.graphics.getHeight();
+		int widthOfScreen = Gdx.graphics.getWidth();
+
+		string_height ="Высота окна этого устройства: " + String.valueOf(heightOfScreen) + " пикселей";
+		string_width = "Ширина окна этого устройства: " + String.valueOf(widthOfScreen) + " пикселей";
+
+		testfont = new BitmapFont(Gdx.files.internal("testfont.fnt"), Gdx.files.internal("testfont.png"),false);
+
 		batch = new SpriteBatch();
-		img = new Texture("chipo.png");
-		testfont = new BitmapFont(Gdx.files.internal("testfont.fnt"), Gdx.files.internal("testfont.fnt"),false);
+		Chipa.setMyTexture(new Texture("chipo.png"));
 	}
 
 	@Override
 	public void render () {
+		update();
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		testfont.draw(batch, string_height,60,50);
-		testfont.draw(batch, string_width,50,50);
-		batch.draw(img, x, y);
-		x++;
-		y++;
+		testfont.draw(batch, "test",Gdx.app.getGraphics().getWidth()-200,Gdx.app.getGraphics().getHeight()-100);
+		testfont.draw(batch, string_width,200,100);
+		testfont.draw(batch, string_height,200,240);
+		chipo.render(batch);
 
 		batch.end();
 	}
 
+	public void update(){
+		chipo.update();
+	}
+
+
+	@Override
+	public void pause(){
+		super.pause();
+	}
+	@Override
+	public void resume(){
+		super.resume();
+	}
 	@Override
 	public void dispose () {
 		batch.dispose();
 		img.dispose();
+		testfont.dispose();
 	}
 }
