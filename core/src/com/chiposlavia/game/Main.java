@@ -16,6 +16,7 @@ public class Main extends ApplicationAdapter {
 	Texture img;
 	BitmapFont testfont;
 	Random rand = new Random();
+	FrameRate fps;
 	int heightOfScreen;
 	int widthOfScreen;
 	private final int CHIPO_COUNT = 20;
@@ -28,10 +29,9 @@ public class Main extends ApplicationAdapter {
 	public void create () {
 		int heightOfScreen = Gdx.graphics.getHeight();
 		int widthOfScreen = Gdx.graphics.getWidth();
-
+		fps = new FrameRate();
 		string_height ="Высота окна этого устройства: " + String.valueOf(heightOfScreen) + " пикселей";
 		string_width = "Ширина окна этого устройства: " + String.valueOf(widthOfScreen) + " пикселей";
-
 		testfont = new BitmapFont(Gdx.files.internal("testfont.fnt"), Gdx.files.internal("testfont.png"),false);
 		for (int i = 0;i < CHIPO_COUNT; i++){
 			chpo[i] = new Chipa(new Vector2(1+rand.nextInt(800), 1+(rand.nextInt(2000))), new Vector2(15.0f * (rand.nextFloat()-0.5f), 15.0f * (rand.nextFloat()-0.5f)));
@@ -43,25 +43,27 @@ public class Main extends ApplicationAdapter {
 	@Override
 	public void render () {
 		update();
-
+		fps.update();
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 
-		testfont.draw(batch, "test",Gdx.app.getGraphics().getWidth()-200,Gdx.app.getGraphics().getHeight()-100);
 		testfont.draw(batch, string_width,200,100);
 		testfont.draw(batch, string_height,200,240);
 
 		for (int i = 0; i < CHIPO_COUNT ; i++) {
 			chpo[i].render(batch);
 		}
+		fps.render();
 		batch.end();
+
 	}
 
 	public void update(){
 		for (int i = 0; i < CHIPO_COUNT ; i++) {
 			chpo[i].update();
 		}
+
 	}
 
 
@@ -78,5 +80,6 @@ public class Main extends ApplicationAdapter {
 		batch.dispose();
 		img.dispose();
 		testfont.dispose();
+		fps.dispose();
 	}
 }
