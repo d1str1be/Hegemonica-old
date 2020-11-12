@@ -32,12 +32,12 @@ public class Main extends ApplicationAdapter {
 		fps = new FrameRate();
 		string_height ="Высота окна этого устройства: " + String.valueOf(heightOfScreen) + " пикселей";
 		string_width = "Ширина окна этого устройства: " + String.valueOf(widthOfScreen) + " пикселей";
-		testfont = new BitmapFont(Gdx.files.internal("testfont.fnt"), Gdx.files.internal("testfont.png"),false);
+		testfont = new BitmapFont(Gdx.files.internal("fonts/testfont.fnt"), Gdx.files.internal("fonts/testfont.png"),false);
 		for (int i = 0;i < CHIPO_COUNT; i++){
 			chpo[i] = new Chipa(new Vector2(1+rand.nextInt(800), 1+(rand.nextInt(2000))), new Vector2(15.0f * (rand.nextFloat()-0.5f), 15.0f * (rand.nextFloat()-0.5f)));
 		}
 		batch = new SpriteBatch();
-		Chipa.setMyTexture(new Texture("chipo.png"));
+		Chipa.setMyTexture(new Texture("icons/chipo.png"));
 	}
 
 	@Override
