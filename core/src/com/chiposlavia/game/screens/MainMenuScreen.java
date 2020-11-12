@@ -14,7 +14,7 @@ public class MainMenuScreen implements Screen {
     }
     @Override
     public void show() {
-        menufont = new BitmapFont(Gdx.files.internal("Land_font.fnt"), Gdx.files.internal("Land_font.png"),false);
+        menufont = new BitmapFont(Gdx.files.internal("fonts/Land_font.fnt"), Gdx.files.internal("fonts/Land_font.png"),false);
 
     }
 
