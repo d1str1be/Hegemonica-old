@@ -20,7 +20,7 @@ public class FrameRate implements Disposable{
         lastTimeCounted = TimeUtils.millis();
         sinceChange = 0;
         frameRate = Gdx.graphics.getFramesPerSecond();
-        font = new BitmapFont(Gdx.files.internal("Land_font.fnt"), Gdx.files.internal("Land_font.png"),false);
+        font = new BitmapFont(Gdx.files.internal("testfont.fnt"), Gdx.files.internal("testfont.png"),false);
         batch = new SpriteBatch();
         cam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }

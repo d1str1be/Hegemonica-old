@@ -13,16 +13,12 @@ public class Chipa {
     private static Texture myTexture;
 
     public Chipa(Vector2 position, Vector2 velocity){
-    this.position =  position;
+    this.position = position;
     this.velocity = velocity;
-
     }
-//геттеры, сеттеры
-
     public static void setMyTexture(Texture myTexture) {
         Chipa.myTexture = myTexture;
     }
-//конец геттеров, сеттеров
     public void render(SpriteBatch batch){
         batch.draw(myTexture, position.x, position.y);
     }

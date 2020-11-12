@@ -21,7 +21,8 @@ public class GameScreen implements Screen {
     FrameRate fps;
     int heightOfScreen;
     int widthOfScreen;
-    private final int CHIPO_COUNT = 20;
+
+    private final int CHIPO_COUNT = 1;
     Chipa[] chpo = new Chipa[CHIPO_COUNT];
 
     String string_height="";
@@ -34,9 +35,8 @@ public class GameScreen implements Screen {
     }
     @Override
     public void show() {
-        int heightOfScreen = Gdx.graphics.getHeight();
-        int widthOfScreen = Gdx.graphics.getWidth();
-
+        heightOfScreen = Gdx.graphics.getHeight();
+        widthOfScreen = Gdx.graphics.getWidth();
         fps = new FrameRate();
         string_height ="Высота окна этого устройства: " + String.valueOf(heightOfScreen) + " пикселей";
         string_width = "Ширина окна этого устройства: " + String.valueOf(widthOfScreen) + " пикселей";
@@ -53,8 +53,8 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         fps.update();
         this.update();
-        Gdx.gl.glClearColor(1,1,1,1);
-        Gdx.gl.glClear  (GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClearColor(0,0,0,1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         game.batch.begin();
 
         testfont.draw(game.batch, string_width,200,100);
