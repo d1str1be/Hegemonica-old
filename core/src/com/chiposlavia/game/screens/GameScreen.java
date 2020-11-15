@@ -22,7 +22,7 @@ public class GameScreen implements Screen {
     int heightOfScreen;
     int widthOfScreen;
 
-    private final int CHIPO_COUNT = 1;
+    private final int CHIPO_COUNT = 10;
     Chipa[] chpo = new Chipa[CHIPO_COUNT];
 
     String string_height="";
