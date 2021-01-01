@@ -29,7 +29,6 @@ public class GameScreen implements Screen {
     String string_width="";
 
 
-
     public GameScreen(ChiposlaviaGame game){
         this.game = game;
     }
@@ -59,7 +58,6 @@ public class GameScreen implements Screen {
 
         testfont.draw(game.batch, string_width,200,100);
         testfont.draw(game.batch, string_height,200,240);
-
         for (int i = 0; i < CHIPO_COUNT ; i++) {
             chpo[i].render(game.batch);
         }
