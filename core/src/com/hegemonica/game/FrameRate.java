@@ -1,4 +1,4 @@
-package com.chiposlavia.game;
+package com.hegemonica.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;

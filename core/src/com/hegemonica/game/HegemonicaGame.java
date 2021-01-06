@@ -1,10 +1,10 @@
-package com.chiposlavia.game;
+package com.hegemonica.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.chiposlavia.game.screens.MainMenuScreen;
+import com.hegemonica.game.screens.MainMenuScreen;
 
-public class ChiposlaviaGame extends Game {
+public class HegemonicaGame extends Game {
 
 	public SpriteBatch batch;
 

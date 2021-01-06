@@ -21,7 +21,7 @@ allprojects {
 
     version = '0.1'
     ext {
-        appName = "Chiposlavia"
+        appName = "Hegemonica"
         gdxVersion = '1.9.12'
         roboVMVersion = '2.3.11'
         box2DLightsVersion = '1.5'
@@ -81,7 +81,7 @@ project(":android") {
 
 project(":core") {
     apply plugin: "java-library"
-    compile "com.kotcrab.vis:vis-ui:$visuiVersion"
+
 
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
@@ -91,7 +91,7 @@ project(":core") {
         api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-ai:$aiVersion"
-        
+        implementation "com.kotcrab.vis:vis-ui:$visuiVersion"
     }
 }
 

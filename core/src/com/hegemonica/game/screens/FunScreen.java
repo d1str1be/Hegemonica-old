@@ -1,4 +1,4 @@
-package com.chiposlavia.game.screens;
+package com.hegemonica.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -7,14 +7,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.chiposlavia.game.Chipa;
-import com.chiposlavia.game.ChiposlaviaGame;
-import com.chiposlavia.game.FrameRate;
+import com.hegemonica.game.ChipoIcon;
+import com.hegemonica.game.FrameRate;
+import com.hegemonica.game.HegemonicaGame;
 
 import java.util.Random;
 
 public class FunScreen implements Screen {
-    ChiposlaviaGame game;
+    HegemonicaGame game;
     Texture img;
     BitmapFont testfont;
     Random rand = new Random();
@@ -23,13 +23,13 @@ public class FunScreen implements Screen {
     int widthOfScreen;
 
     private final int CHIPO_COUNT = 10;
-    Chipa[] chpo = new Chipa[CHIPO_COUNT];
+    ChipoIcon[] chpo = new ChipoIcon[CHIPO_COUNT];
 
     String string_height="";
     String string_width="";
 
 
-    public FunScreen(ChiposlaviaGame game){
+    public FunScreen(HegemonicaGame game){
         this.game = game;
     }
     @Override
@@ -41,10 +41,10 @@ public class FunScreen implements Screen {
         string_width = "Ширина окна этого устройства: " + String.valueOf(widthOfScreen) + " пикселей";
 
         testfont = new BitmapFont(Gdx.files.internal("fonts/testfont.fnt"), Gdx.files.internal("fonts/testfont.png"),false);
-        Chipa.setMyTexture(new Texture("icons/chipo.png"));
+        ChipoIcon.setMyTexture(new Texture("icons/chipo.png"));
 
         for (int i = 0;i < CHIPO_COUNT; i++){
-            chpo[i] = new Chipa(new Vector2(1+rand.nextInt(800), 1+(rand.nextInt(2000))), new Vector2(15.0f * (rand.nextFloat()-0.5f), 15.0f * (rand.nextFloat()-0.5f)));
+            chpo[i] = new ChipoIcon(new Vector2(1+rand.nextInt(800), 1+(rand.nextInt(2000))), new Vector2(15.0f * (rand.nextFloat()-0.5f), 15.0f * (rand.nextFloat()-0.5f)));
         }
     }
 

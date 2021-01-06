@@ -1,4 +1,4 @@
-package com.chiposlavia.game;
+package com.hegemonica.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -7,17 +7,17 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.Vector;
 import javax.swing.Spring;
 
-public class Chipa {
+public class ChipoIcon {
     private Vector2 position;
     private Vector2 velocity;
     private static Texture myTexture;
 
-    public Chipa(Vector2 position, Vector2 velocity){
+    public ChipoIcon(Vector2 position, Vector2 velocity){
     this.position = position;
     this.velocity = velocity;
     }
     public static void setMyTexture(Texture myTexture) {
-        Chipa.myTexture = myTexture;
+        ChipoIcon.myTexture = myTexture;
     }
     public void render(SpriteBatch batch){
         batch.draw(myTexture, position.x, position.y);
