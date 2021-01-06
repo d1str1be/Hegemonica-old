@@ -2,7 +2,6 @@ package com.chiposlavia.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.chiposlavia.game.screens.GameScreen;
 import com.chiposlavia.game.screens.MainMenuScreen;
 
 public class ChiposlaviaGame extends Game {

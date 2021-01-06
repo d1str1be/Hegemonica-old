@@ -13,7 +13,7 @@ import com.chiposlavia.game.FrameRate;
 
 import java.util.Random;
 
-public class GameScreen implements Screen {
+public class FunScreen implements Screen {
     ChiposlaviaGame game;
     Texture img;
     BitmapFont testfont;
@@ -29,7 +29,7 @@ public class GameScreen implements Screen {
     String string_width="";
 
 
-    public GameScreen(ChiposlaviaGame game){
+    public FunScreen(ChiposlaviaGame game){
         this.game = game;
     }
     @Override
