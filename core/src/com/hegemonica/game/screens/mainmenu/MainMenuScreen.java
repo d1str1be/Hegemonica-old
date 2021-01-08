@@ -1,6 +1,5 @@
-package com.hegemonica.game.screens;
+package com.hegemonica.game.screens.mainmenu;
 
-import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -8,16 +7,15 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.hegemonica.game.HegemonicaGame;
+import com.hegemonica.game.screens.funscreen.FunScreen;
 
 public class MainMenuScreen implements Screen {
-   HegemonicaGame game;
+    HegemonicaGame game;
     BitmapFont menufont;
     Table table;
     TextButton bPlay;
@@ -25,9 +23,9 @@ public class MainMenuScreen implements Screen {
     TextButton bExit;
     Skin GlassyUI;
     Stage stage;
+    
     float centerButtonHeight;
     float centerButtonWidth;
-    Label outputLabel;
 
     public MainMenuScreen(HegemonicaGame game){
         this.game = game;
@@ -38,28 +36,62 @@ public class MainMenuScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
 
 
-        centerButtonHeight = Gdx.graphics.getHeight()/12;
+        centerButtonHeight = Gdx.graphics.getHeight()/8;
         centerButtonWidth = Gdx.graphics.getWidth()/12*5;
 
         menufont = new BitmapFont(Gdx.files.internal("fonts/Land_font.fnt"), Gdx.files.internal("fonts/Land_font.png"),false);
 
         GlassyUI = new Skin(Gdx.files.internal("ui/glassy/skin/glassy-ui.json"));
-
+        //кнопка "играть"
         bPlay = new TextButton("Play", GlassyUI);
         bPlay.setSize(centerButtonWidth, centerButtonHeight);
-        bPlay.setPosition(Gdx.graphics.getWidth()/2-centerButtonWidth,Gdx.graphics.getHeight()-centerButtonHeight*);
+        bPlay.setPosition((Gdx.graphics.getWidth()-centerButtonWidth)/2,Gdx.graphics.getHeight()-centerButtonHeight*5);
         bPlay.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                bPlay.setText("Press a Button");
+
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                bPlay.setText("Pressed Text Button");
+                game.setScreen(new FunScreen(game));
                 return true;
             }
         });
         stage.addActor(bPlay);
+        //кнопка "настройки"
+        bSettings = new TextButton("Settings", GlassyUI);
+        bSettings.setSize(centerButtonWidth, centerButtonHeight);
+        bSettings.setPosition((Gdx.graphics.getWidth()-centerButtonWidth)/2,Gdx.graphics.getHeight()-centerButtonHeight*6);
+        bSettings.addListener(new InputListener(){
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                bSettings.setText("Settings Menu is not ready yet");
+            }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                bSettings.setText("Settings");
+                return true;
+            }
+        });
+        stage.addActor(bSettings);
+
+        //кнопка "выйти"
+        bExit = new TextButton("Exit", GlassyUI);
+        bExit.setSize(centerButtonWidth, centerButtonHeight);
+        bExit.setPosition((Gdx.graphics.getWidth()-centerButtonWidth)/2,Gdx.graphics.getHeight()-centerButtonHeight*7);
+        bExit.addListener(new InputListener(){
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+
+            }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                Gdx.app.exit();
+                return true;
+            }
+        });
+        stage.addActor(bExit);
+
     }
 
     @Override

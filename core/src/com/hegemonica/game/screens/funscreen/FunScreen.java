@@ -1,19 +1,17 @@
-package com.hegemonica.game.screens;
+package com.hegemonica.game.screens.funscreen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.hegemonica.game.ChipoIcon;
 import com.hegemonica.game.FrameRate;
 import com.hegemonica.game.HegemonicaGame;
 
 import java.util.Random;
 
-public class FunScreen implements Screen {
+public class FunScreen implements Screen{
     HegemonicaGame game;
     Texture img;
     BitmapFont testfont;
@@ -69,6 +67,8 @@ public class FunScreen implements Screen {
         for (int i = 0; i < CHIPO_COUNT ; i++) {
             chpo[i].update();
         }
+
+
     }
     @Override
     public void resize(int width, int height) {
@@ -94,4 +94,5 @@ public class FunScreen implements Screen {
     public void dispose() {
 
     }
+
 }

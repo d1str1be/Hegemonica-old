@@ -2,7 +2,7 @@ package com.hegemonica.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.hegemonica.game.screens.MainMenuScreen;
+import com.hegemonica.game.screens.mainmenu.MainMenuScreen;
 
 public class HegemonicaGame extends Game {
 
