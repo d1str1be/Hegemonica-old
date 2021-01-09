@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
-import com.hegemonica.game.FrameRate;
+import com.hegemonica.game.Framerate;
 import com.hegemonica.game.HegemonicaGame;
 
 import java.util.Random;
@@ -16,7 +16,7 @@ public class FunScreen implements Screen{
     Texture img;
     BitmapFont testfont;
     Random rand = new Random();
-    FrameRate fps;
+    Framerate fps;
     int heightOfScreen;
     int widthOfScreen;
 
@@ -34,11 +34,11 @@ public class FunScreen implements Screen{
     public void show() {
         heightOfScreen = Gdx.graphics.getHeight();
         widthOfScreen = Gdx.graphics.getWidth();
-        fps = new FrameRate();
+        fps = new Framerate();
         string_height ="Высота окна этого устройства: " + String.valueOf(heightOfScreen) + " пикселей";
         string_width = "Ширина окна этого устройства: " + String.valueOf(widthOfScreen) + " пикселей";
 
-        testfont = new BitmapFont(Gdx.files.internal("fonts/testfont.fnt"), Gdx.files.internal("fonts/testfont.png"),false);
+        testfont = new BitmapFont(Gdx.files.internal("fonts/test.fnt"), Gdx.files.internal("fonts/test.png"),false);
         ChipoIcon.setMyTexture(new Texture("icons/chipo.png"));
 
         for (int i = 0;i < CHIPO_COUNT; i++){

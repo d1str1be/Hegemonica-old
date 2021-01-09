@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.hegemonica.game.screens.mainmenu.MainMenuScreen;
 
 public class HegemonicaGame extends Game {
-
 	public SpriteBatch batch;
 
 	@Override
@@ -18,16 +17,17 @@ public class HegemonicaGame extends Game {
 	public void render () {
 		super.render();
 	}
-	public void update(){
-	}
+
 	@Override
 	public void pause(){
 		super.pause();
 	}
+
 	@Override
 	public void resume(){
 		super.resume();
 	}
+
 	@Override
 	public void dispose () {
 		batch.dispose();

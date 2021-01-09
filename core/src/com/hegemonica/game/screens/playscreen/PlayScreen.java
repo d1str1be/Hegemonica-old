@@ -18,9 +18,8 @@ public class PlayScreen implements Screen {
 
     @Override
     public void show() {
-    Files files;
-    testTexture = new Texture(files.internal("icons/hegemonica-4.png"));
-    stage.addActor(Texture);
+    testTexture = new Texture(Gdx.files.internal("icons/hegemonica-4.png"));
+    //stage.addActor(testTexture);
     }
 
     @Override

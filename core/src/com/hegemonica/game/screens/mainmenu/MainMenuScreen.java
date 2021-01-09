@@ -2,15 +2,19 @@ package com.hegemonica.game.screens.mainmenu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.hegemonica.game.Framerate;
 import com.hegemonica.game.HegemonicaGame;
 import com.hegemonica.game.screens.funscreen.FunScreen;
 
@@ -23,7 +27,11 @@ public class MainMenuScreen implements Screen {
     TextButton bExit;
     Skin GlassyUI;
     Stage stage;
-    
+    Label hegemonicaLabel;
+    Music music;
+    int starttime;
+    int timeTillStart;
+    Framerate fps;
     float centerButtonHeight;
     float centerButtonWidth;
 
@@ -32,16 +40,30 @@ public class MainMenuScreen implements Screen {
     }
     @Override
     public void show() {
+        menufont = new BitmapFont(Gdx.files.internal("fonts/land.fnt"),Gdx.files.internal("fonts/land.png"), false);
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
+        fps = new Framerate();
+        //музыка тест
+        music = Gdx.audio.newMusic(Gdx.files.internal("music/mainmenu.mp3"));
+        music.setLooping(true);
+        music.play();
 
+        //таймер с начала игры
+        starttime = (int) System.currentTimeMillis();
 
         centerButtonHeight = Gdx.graphics.getHeight()/8;
         centerButtonWidth = Gdx.graphics.getWidth()/12*5;
 
-        menufont = new BitmapFont(Gdx.files.internal("fonts/Land_font.fnt"), Gdx.files.internal("fonts/Land_font.png"),false);
-
         GlassyUI = new Skin(Gdx.files.internal("ui/glassy/skin/glassy-ui.json"));
+        //надпись "гегемоника"
+        hegemonicaLabel = new Label("Hegemonica", GlassyUI, "big");
+        hegemonicaLabel.setAlignment(Align.center);
+        hegemonicaLabel.setY(Gdx.graphics.getHeight()*2/3);
+        hegemonicaLabel.setWidth(Gdx.graphics.getWidth());
+        hegemonicaLabel.setFontScale(2);
+        stage.addActor(hegemonicaLabel);
+
         //кнопка "играть"
         bPlay = new TextButton("Play", GlassyUI);
         bPlay.setSize(centerButtonWidth, centerButtonHeight);
@@ -54,10 +76,13 @@ public class MainMenuScreen implements Screen {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 game.setScreen(new FunScreen(game));
+                music.dispose();
+                stage.dispose();
                 return true;
             }
         });
         stage.addActor(bPlay);
+
         //кнопка "настройки"
         bSettings = new TextButton("Settings", GlassyUI);
         bSettings.setSize(centerButtonWidth, centerButtonHeight);
@@ -100,11 +125,13 @@ public class MainMenuScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
         stage.draw();
+        fps.render();
+        timerupdate();
     }
 
     @Override
     public void resize(int width, int height) {
-
+        
     }
 
     @Override
@@ -124,5 +151,8 @@ public class MainMenuScreen implements Screen {
     @Override
     public void dispose() {
 
+    }
+    public void timerupdate(){
+        timeTillStart = (int) ((System.currentTimeMillis() - starttime) / 1000);
     }
 }
