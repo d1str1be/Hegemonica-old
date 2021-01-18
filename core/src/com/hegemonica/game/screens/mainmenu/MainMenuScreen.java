@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -117,6 +118,20 @@ public class MainMenuScreen implements Screen {
         });
         stage.addActor(bExit);
 
+        // creating animations
+        tweenManager = new TweenManager();
+        Tween.registerAccessor(Actor.class, new ActorAccessor());
+
+        // heading and buttons fade-in
+        Timeline.createSequence().beginSequence()
+                .push(Tween.set(bPlay, ActorAccessor.ALPHA).target(0))
+                .push(Tween.set(bSettings, ActorAccessor.ALPHA).target(0))
+                .push(Tween.set(bExit, ActorAccessor.ALPHA).target(0))
+                .push(Tween.from(hegemonicaLabel, ActorAccessor.ALPHA, .25f).target(0))
+                .push(Tween.to(bPlay, ActorAccessor.ALPHA, .25f).target(1))
+                .push(Tween.to(bSettings, ActorAccessor.ALPHA, .25f).target(1))
+                .push(Tween.to(bExit, ActorAccessor.ALPHA, .25f).target(1))
+                .end().start(tweenManager);
     }
 
     @Override
@@ -131,7 +146,7 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        
+
     }
 
     @Override

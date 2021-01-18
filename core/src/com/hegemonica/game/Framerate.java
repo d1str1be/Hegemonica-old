@@ -50,7 +50,7 @@ public class Framerate implements Disposable{
     }
     public void render() {
         batch.begin();
-        font.draw(batch, (int)frameRate + " fps", 0, (int) (Gdx.graphics.getHeight()-font.getScaleY()));
+        font.draw(batch, (int)frameRate + " fps", 10, (int) (Gdx.graphics.getHeight()-font.getScaleY()));
         batch.end();
     }
 
