@@ -115,9 +115,10 @@ public class Application extends ApplicationAdapter implements InputProcessor, G
 	}
 
 	@Override
-	public boolean scrolled(int amount) {
+	public boolean scrolled(float amountX, float amountY) {
 		return false;
 	}
+
 
 	@Override
 	public boolean touchDown(float x, float y, int pointer, int button) {
@@ -165,6 +166,11 @@ public class Application extends ApplicationAdapter implements InputProcessor, G
 	public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
 
 		return false;
+	}
+
+	@Override
+	public void pinchStop() {
+
 	}
 
 }

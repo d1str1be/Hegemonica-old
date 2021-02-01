@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.hegemonica.game.Framerate;
 import com.hegemonica.game.HegemonicaGame;
+import com.hegemonica.game.PointInPolygonTest;
 import com.hegemonica.game.screens.funscreen.FunScreen;
 
 public class MainMenuScreen implements Screen {
@@ -76,7 +77,7 @@ public class MainMenuScreen implements Screen {
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                game.setScreen(new FunScreen(game));
+                game.setScreen(new PointInPolygonTest());
                 music.dispose();
                 stage.dispose();
                 return true;
@@ -119,19 +120,19 @@ public class MainMenuScreen implements Screen {
         stage.addActor(bExit);
 
         // creating animations
-        tweenManager = new TweenManager();
-        Tween.registerAccessor(Actor.class, new ActorAccessor());
-
-        // heading and buttons fade-in
-        Timeline.createSequence().beginSequence()
-                .push(Tween.set(bPlay, ActorAccessor.ALPHA).target(0))
-                .push(Tween.set(bSettings, ActorAccessor.ALPHA).target(0))
-                .push(Tween.set(bExit, ActorAccessor.ALPHA).target(0))
-                .push(Tween.from(hegemonicaLabel, ActorAccessor.ALPHA, .25f).target(0))
-                .push(Tween.to(bPlay, ActorAccessor.ALPHA, .25f).target(1))
-                .push(Tween.to(bSettings, ActorAccessor.ALPHA, .25f).target(1))
-                .push(Tween.to(bExit, ActorAccessor.ALPHA, .25f).target(1))
-                .end().start(tweenManager);
+//        tweenManager = new TweenManager();
+//        Tween.registerAccessor(Actor.class, new ActorAccessor());
+//
+//        // heading and buttons fade-in
+//        Timeline.createSequence().beginSequence()
+//                .push(Tween.set(bPlay, ActorAccessor.ALPHA).target(0))
+//                .push(Tween.set(bSettings, ActorAccessor.ALPHA).target(0))
+//                .push(Tween.set(bExit, ActorAccessor.ALPHA).target(0))
+//                .push(Tween.from(hegemonicaLabel, ActorAccessor.ALPHA, .25f).target(0))
+//                .push(Tween.to(bPlay, ActorAccessor.ALPHA, .25f).target(1))
+//                .push(Tween.to(bSettings, ActorAccessor.ALPHA, .25f).target(1))
+//                .push(Tween.to(bExit, ActorAccessor.ALPHA, .25f).target(1))
+//                .end().start(tweenManager);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.hegemonica.game;
 
-import com.badlogic.astract.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 
-public class PointInPolygonTest extends Application {
+public class PointInPolygonTest extends Application implements Screen {
 	Vector2	a			= new Vector2(), b = new Vector2(), c = new Vector2(), d = new Vector2();
 
 	Vector2	a1			= new Vector2(), b1 = new Vector2(), c1 = new Vector2(), d1 = new Vector2();
@@ -23,9 +23,14 @@ public class PointInPolygonTest extends Application {
 	}
 
 	@Override
-	public void create() {
-		super.create();
+	public void show() {
 		Gdx.gl.glLineWidth(2);
+	}
+
+
+	@Override
+	public void hide() {
+
 	}
 
 	public void update() {
@@ -43,9 +48,8 @@ public class PointInPolygonTest extends Application {
 	}
 
 	@Override
-	public void render() {
+	public void render(float delta) {
 		update();
-		super.render();
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		shapeRenderer.setProjectionMatrix(viewport.getCamera().combined);
 
