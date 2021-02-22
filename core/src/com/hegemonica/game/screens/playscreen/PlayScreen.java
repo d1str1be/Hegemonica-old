@@ -7,10 +7,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.hegemonica.game.PointInPolygonTest;
 
 //Игровой экран - тестовая карта с  4мя провинциями
 
 public class PlayScreen implements Screen {
+    PointInPolygonTest polygonTest;
     private Stage stage;
     Texture testTexture;
     int txtWidth = 480, txtHeight = 480;
@@ -19,12 +21,13 @@ public class PlayScreen implements Screen {
     @Override
     public void show() {
     testTexture = new Texture(Gdx.files.internal("icons/hegemonica-4.png"));
+    polygonTest = new PointInPolygonTest();
     //stage.addActor(testTexture);
     }
 
     @Override
     public void render(float delta) {
-
+        polygonTest.update(); 
     }
 
     @Override

@@ -5,7 +5,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -16,12 +15,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.hegemonica.game.Framerate;
-import com.hegemonica.game.HegemonicaGame;
+import com.hegemonica.game.Core;
 import com.hegemonica.game.PointInPolygonTest;
-import com.hegemonica.game.screens.funscreen.FunScreen;
 
 public class MainMenuScreen implements Screen {
-    HegemonicaGame game;
+    Core game;
     BitmapFont menufont;
     Table table;
     TextButton bPlay;
@@ -37,12 +35,12 @@ public class MainMenuScreen implements Screen {
     float centerButtonHeight;
     float centerButtonWidth;
 
-    public MainMenuScreen(HegemonicaGame game){
+    public MainMenuScreen(Core game){
         this.game = game;
     }
     @Override
     public void show() {
-        menufont = new BitmapFont(Gdx.files.internal("fonts/land.fnt"),Gdx.files.internal("fonts/land.png"), false);
+        menufont = new BitmapFont(Gdx.files.internal("fonts/land.fnt"), Gdx.files.internal("fonts/land.png"), false);
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         fps = new Framerate();

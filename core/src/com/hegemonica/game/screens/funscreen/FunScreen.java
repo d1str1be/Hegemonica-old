@@ -7,12 +7,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
 import com.hegemonica.game.Framerate;
-import com.hegemonica.game.HegemonicaGame;
+import com.hegemonica.game.Core;
 
 import java.util.Random;
 
 public class FunScreen implements Screen{
-    HegemonicaGame game;
+    Core game;
     Texture img;
     BitmapFont testfont;
     Random rand = new Random();
@@ -27,7 +27,7 @@ public class FunScreen implements Screen{
     String string_width="";
 
 
-    public FunScreen(HegemonicaGame game){
+    public FunScreen(Core game){
         this.game = game;
     }
     @Override

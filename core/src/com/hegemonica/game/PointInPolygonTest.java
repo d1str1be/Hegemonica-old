@@ -1,6 +1,8 @@
 package com.hegemonica.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -8,9 +10,21 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class PointInPolygonTest extends Application implements Screen {
+import java.awt.Font;
+
+public class PointInPolygonTest extends Core implements Screen, InputProcessor, GestureDetector.GestureListener {
+    Viewport viewport;
+    BitmapFont font;
+    public SpriteBatch batch;
+    public Stage stage;
+    public ShapeRenderer shapeRenderer;
+    public Vector2 touchPoint;
     Vector2 a = new Vector2(), b = new Vector2(), c = new Vector2(), d = new Vector2();
 
     Vector2 a1 = new Vector2(), b1 = new Vector2(), c1 = new Vector2(), d1 = new Vector2();
@@ -19,11 +33,20 @@ public class PointInPolygonTest extends Application implements Screen {
     boolean contain = false;
 
     public PointInPolygonTest() {
-        super();
+        this.show();
     }
-
+    public InputMultiplexer getInputProcessor() {
+        return new InputMultiplexer(new GestureDetector(this), this);
+    }
     @Override
     public void show() {
+        font = new BitmapFont(Gdx.files.internal("fonts/land.fnt"), Gdx.files.internal("fonts/land.png"), false);
+        viewport = new FitViewport(800, 480);
+        stage = new Stage(viewport);
+        batch = new SpriteBatch();
+        shapeRenderer = new ShapeRenderer();
+        touchPoint = new Vector2();
+        Gdx.input.setInputProcessor(Gdx.input.getInputProcessor());
         Gdx.gl.glLineWidth(2);
     }
 
@@ -139,7 +162,29 @@ public class PointInPolygonTest extends Application implements Screen {
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
-        viewport.unproject(touchPoint.set(x, y));
+        return false;
+    }
+
+
+
+    Vector2 temp = new Vector2();
+
+    @Override
+    public boolean touchDown(float x, float y, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        viewport.unproject(touchPoint.set(screenX, screenY));
+        temp.set(touchPoint);
+        return true;
+    }
+
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        viewport.unproject(touchPoint.set(screenX, screenY));
         if (a.isZero()) {
             a.set(touchPoint);
             return true;
@@ -173,14 +218,7 @@ public class PointInPolygonTest extends Application implements Screen {
             return true;
         }
 
-        return super.tap(x, y, count, button);
-    }
-
-    Vector2 temp = new Vector2();
-
-    @Override
-    public boolean touchDown(float x, float y, int pointer, int button) {
-        viewport.unproject(touchPoint.set(x, y));
+        viewport.unproject(touchPoint.set(screenX, screenY));
         if (hitPoint(touchPoint, a))
             temp = a;
         if (hitPoint(touchPoint, b))
@@ -201,18 +239,11 @@ public class PointInPolygonTest extends Application implements Screen {
     }
 
     @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        viewport.unproject(touchPoint.set(screenX, screenY));
-        temp.set(touchPoint);
-        return true;
-    }
-
-    @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         viewport.unproject(touchPoint.set(screenX, screenY));
         temp.set(0, 0);
         tap(screenX, screenY, pointer, button);
-        return super.touchUp(screenX, screenY, pointer, button);
+        return false;
     }
 
     boolean hitPoint(Vector2 touchPoint, Vector2 point) {
@@ -264,4 +295,63 @@ public class PointInPolygonTest extends Application implements Screen {
         return pnpoly(vertx, verty, testx, testy);
     }
 
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(float amountX, float amountY) {
+        return false;
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean longPress(float x, float y) {
+        return false;
+    }
+
+    @Override
+    public boolean fling(float velocityX, float velocityY, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean pan(float x, float y, float deltaX, float deltaY) {
+        return false;
+    }
+
+    @Override
+    public boolean panStop(float x, float y, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean zoom(float initialDistance, float distance) {
+        return false;
+    }
+
+    @Override
+    public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
+        return false;
+    }
+
+    @Override
+    public void pinchStop() {
+
+    }
 }
