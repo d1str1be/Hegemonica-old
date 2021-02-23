@@ -11,12 +11,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.hegemonica.game.screens.playscreen.PlayScreen;
 
 public class PointInPolygonTest extends PlayScreen {
-    Vector2	a			= new Vector2(), b = new Vector2(), c = new Vector2(), d = new Vector2();
-
-    Vector2	a1			= new Vector2(), b1 = new Vector2(), c1 = new Vector2(), d1 = new Vector2();
-    float	r			= 10;
-    boolean	intersect	= false;
-    boolean	contain		= false;
+    Vector2 a = new Vector2(), b = new Vector2(), c = new Vector2(), d = new Vector2();
+    Vector2 a1 = new Vector2(), b1 = new Vector2(), c1 = new Vector2(), d1 = new Vector2();
+    float r = 10;
+    boolean intersect = false;
+    boolean contain = false;
 
     public void update() {
         Gdx.gl.glLineWidth(2);
@@ -163,7 +162,7 @@ public class PointInPolygonTest extends PlayScreen {
         return super.tap(x, y, count, button);
     }
 
-    Vector2	temp = new Vector2();
+    Vector2 temp = new Vector2();
 
     @Override
     public boolean touchDown(float x, float y, int pointer, int button) {

@@ -17,23 +17,30 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.hegemonica.game.Framerate;
 import com.hegemonica.game.Core;
 import com.hegemonica.game.PointInPolygonTest;
+import com.hegemonica.game.screens.playscreen.PlayScreen;
 
 public class MainMenuScreen implements Screen {
     Core game;
     BitmapFont menufont;
+
     Table table;
     TextButton bPlay;
     TextButton bSettings;
     TextButton bExit;
+
     Skin GlassyUI;
     Stage stage;
     Label hegemonicaLabel;
     Music music;
-    int starttime;
-    int timeTillStart;
     Framerate fps;
+
     float centerButtonHeight;
     float centerButtonWidth;
+
+    int starttime;
+    int timeTillStart;
+
+
 
     public MainMenuScreen(Core game){
         this.game = game;
@@ -75,7 +82,7 @@ public class MainMenuScreen implements Screen {
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                game.setScreen(new PointInPolygonTest());
+                game.setScreen(new PlayScreen());
                 music.dispose();
                 stage.dispose();
                 return true;
@@ -164,7 +171,8 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        stage.dispose();
+        music.dispose();
     }
     public void timerupdate(){
         timeTillStart = (int) ((System.currentTimeMillis() - starttime) / 1000);
