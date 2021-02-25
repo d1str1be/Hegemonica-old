@@ -16,6 +16,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.hegemonica.game.Core;
 import com.hegemonica.game.PointInPolygonTest;
 
 import java.text.BreakIterator;
@@ -53,7 +54,12 @@ public class PlayScreen implements Screen, InputProcessor, GestureDetector.Gestu
 
     @Override
     public void render(float delta) {
-        polygonTest.update();
+        try {
+            polygonTest.update();
+        }
+        catch (Exception e){
+            Log.wtf(Core.TAG, e);
+        }
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
