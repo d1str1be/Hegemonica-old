@@ -124,6 +124,8 @@ public class MainMenuScreen implements Screen {
         });
         stage.addActor(bExit);
 
+        Gdx.app.log(Core.Tags.ENGINE,"Engine log");
+
         // creating animations
 //        tweenManager = new TweenManager();
 //        Tween.registerAccessor(Actor.class, new ActorAccessor());
