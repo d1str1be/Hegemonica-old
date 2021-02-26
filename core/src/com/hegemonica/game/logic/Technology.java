@@ -8,7 +8,7 @@ public class Technology {
 
     public int cost;
     public int year;
-    
+
     public void onResearch(Country country){
 
     }
