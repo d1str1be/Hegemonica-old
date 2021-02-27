@@ -11,19 +11,30 @@ public class Country {
     public int inflation;
     public boolean hasCrisis;
     public boolean inWar;
-    
+
+    //наличие персонажа в стране
+    public boolean hasBohema;
+    public boolean hasSeaman;
+    public boolean hasMinister;
+    public boolean hasBusinessman;
+    public boolean hasRevoltman;
+    public boolean hasGeneral;
 
 
-    public class Ethnoses {
-        final public int SVADIANS = 1;
+    public static class Ethnoses {
+        final static int SVADIANS = 1;
     }
 
-    static public class СultureGroups {
-        final public int WEST = 1;
+    public static class СultureGroups {
+        final static public int WEST = 1;
     }
-    public class Religions {
-        final public int KANON = 1;
+    public static class Religions {
+        final static  int KANON = 1;
     }
 
+    public void update(){ //обновление данных страны при каждом ходе
+        if(hasBohema){
+        }
+    }
 
 }

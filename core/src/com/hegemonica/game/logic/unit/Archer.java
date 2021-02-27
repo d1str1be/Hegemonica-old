@@ -1,6 +1,5 @@
 package com.hegemonica.game.logic.unit;
 
-import com.hegemonica.game.logic.country.Province;
 
 public class Archer extends WarUnit {
     @Override
@@ -9,7 +8,11 @@ public class Archer extends WarUnit {
     public double strength = 1;
     public double neededMP = 1;
     public boolean isSeaUnit = false;
-    public Archer () {
-        this(id, buyCost, turnCost, strength, neededMP, isSeaUnit);
+    //public Archer () {
+//        this(id, buyCost, turnCost, strength, neededMP, isSeaUnit);
+//    }
+
+    public Archer(int id, int buyCost, double turnCost, double strength, double neededMP, boolean isSeaUnit) {
+        super(IDs.ARCHERS, 5, 1, 1, 1, false);
     }
 }

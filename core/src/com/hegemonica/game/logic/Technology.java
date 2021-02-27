@@ -6,10 +6,13 @@ public class Technology {
     public boolean isResearched;
     public boolean canBeResearched;
 
-    public int cost;
+    public double cost;
     public int year;
 
     public void onResearch(Country country){
 
+    }
+
+    public Technology(double cost, int year) {
     }
 }
