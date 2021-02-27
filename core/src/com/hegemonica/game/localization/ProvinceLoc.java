@@ -5,6 +5,6 @@ public class ProvinceLoc {
         Mountain, Swarm, Steppe, Desert, Jungle, Hills, Plain
     }
     public enum Names {
-        HentaiSteppe
+        HeroSteppe
     }
 }

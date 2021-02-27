@@ -5,7 +5,8 @@ public class WarUnit {
     public int buyCost;
     public int turnCost;
     public int strength;
-    public int neededMP;
+    public int neededMP; // МП - менпауер
+    public boolean isSeaUnit;
 
     public static class GemelchUnits { // https://media.discordapp.net/attachments/774236986406862870/780117623575805992/YpJz5_SFXKI.png отсюда добавить
         final static public int ARCHER = 1;
