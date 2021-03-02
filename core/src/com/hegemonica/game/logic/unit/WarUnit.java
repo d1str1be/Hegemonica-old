@@ -2,26 +2,26 @@ package com.hegemonica.game.logic.unit;
 
 class WarUnit {
     public static int id;
-    public static int buyCost;
-    public static double turnCost;
-    public static double strength;
-    public static double neededMP; // МП - менпауер
+    public static int startBuyCost;
+    public static double startTurnCost;
+    public static double startStrength;
+    public static double startNeededMP; // МП - менпауер
     public static boolean isSeaUnit;
 
     public WarUnit(){
         id = IDs.WARUNIT;
-        buyCost = 0;
-        turnCost = 0;
-        strength = 0;
-        neededMP = 0;
+        startBuyCost = 0;
+        startTurnCost = 0;
+        startStrength = 0;
+        startNeededMP = 0;
         isSeaUnit = false;
     }
-    public WarUnit (int id, int buyCost, double turnCost, double strength, double neededMP, boolean isSeaUnit) {
+    public WarUnit (int id, int startBuyCost, double startTurnCost, double startStrength, double startNeededMP, boolean isSeaUnit) {
         this.id = id;
-        this.buyCost = buyCost;
-        this.turnCost = turnCost;
-        this.strength = strength;
-        this.neededMP = neededMP; // МП - менпауер, людские ресурсы для найма юнита
+        this.startBuyCost = startBuyCost;
+        this.startTurnCost = startTurnCost;
+        this.startStrength = startStrength;
+        this.startNeededMP = startNeededMP; // МП - менпауер, людские ресурсы для найма юнита
         this.isSeaUnit = isSeaUnit;
     }
 
