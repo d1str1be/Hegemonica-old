@@ -13,6 +13,6 @@ public class Swordsmen extends WarUnit {
     }
 
     public Swordsmen () {
-        this(IDs.SWORDSMEN, startBuyCost, startTurnCost, startStrength, startNeededMP, isSeaUnit);
+        this(IDs.SWORDSMEN, 7, 1, 1, 1, false);
     }
 }

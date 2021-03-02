@@ -3,25 +3,15 @@ package com.hegemonica.game.logic.unit;
 public class Crossbows extends WarUnit {
     public int startBuyCost = 7;
     public double startTurnCost = 1.5;
-    public double strength = 1.5;
-    public double neededMP = 1;
+    public double startStrength = 1.5;
+    public double startNeededMP = 1;
     public boolean isSeaUnit = false;
 
     public Crossbows() {
         super(IDs.CROSSBOWS, 7, 1.5, 1, 1, false);
     }
 
-    public Crossbows(int id, int buyCost, double turnCost, double strength, double neededMP, boolean isSeaUnit) {
+    public Crossbows(int id, int startBuyCost, double startTurnCost, double startStrength, double startNeededMP, boolean isSeaUnit) {
         super(IDs.CROSSBOWS, 7, 1.5, 1, 1, false);
     }
-
-//    public Crossbows() {
-//        buyCost = 7;
-//        turnCost = 1.5;
-//        strength = 1.5;
-//        neededMP = 1;
-//        isSeaUnit = false;
-//        super(IDs.CROSSBOWS, this.buyCost, turnCost, strength, neededMP, this.isSeaUnit);
-//
-//    }
 }
