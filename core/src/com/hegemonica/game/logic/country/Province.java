@@ -15,7 +15,4 @@ public class Province {
     }
     //рельеф
     public class Landscape {}
-    //постройки
-    public class Buildings{}
-    public class Resources{}
 }
