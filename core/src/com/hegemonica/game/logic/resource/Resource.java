@@ -14,5 +14,5 @@ public class Resource {
     public class Iron {}
     public class Gems {}
     public class Grain {}
-    
+
 }
