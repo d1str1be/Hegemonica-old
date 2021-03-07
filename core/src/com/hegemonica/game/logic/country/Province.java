@@ -14,10 +14,10 @@ public class Province {
 
     public Country owner;
 
-    HashMap <Building, int> buidings;
+    HashMap <Building, Integer> buidings;
 
     public int maxBuildings(double population) {
-        return (1 + (int)(Math.ceil(population) - 1) / 5); 
+        return (1 + (int)(Math.ceil(population) - 1) / 5);
     }
 
     //статус провинции

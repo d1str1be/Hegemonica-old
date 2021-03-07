@@ -1,5 +1,7 @@
 package com.hegemonica.game.logic.country;
 
+import java.util.HashMap;
+
 public class Country {
     public String name;
     public int id;
@@ -19,6 +21,8 @@ public class Country {
     public boolean hasBusinessman;
     public boolean hasRevoltman;
     public boolean hasGeneral;
+
+    HashMap resuorces<Resource, double>;
 
 
     public static class Ethnoses {
