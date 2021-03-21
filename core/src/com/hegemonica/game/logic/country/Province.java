@@ -5,6 +5,7 @@ import com.hegemonica.game.logic.buildings.Building;
 import java.util.HashMap;
 
 public class Province {
+
     public class Climate{
         public static final int ARCTIC = -3; // арктический
         public static final int COLD = -2; // холодный
@@ -22,44 +23,39 @@ public class Province {
     public int id;
     public String name;
 
-<<<<<<< Updated upstream
     public double population;
     public double neededFood;
 
     public Country owner;
 
-    HashMap <Building, Integer> buidings = new HashMap<>(){
+    HashMap <Building, Integer> buidings = new HashMap<Building, Integer>(){
     };
-};
 
+    public Province(int climateType) {
+
+    }
     public int maxBuildings(double population) {
         return (1 + (int)(Math.ceil(population) - 1) / 5);
     }
-
     //статус провинции
     public class Status {
-=======
-    public Province(int climateType) {
->>>>>>> Stashed changes
-    }
 
-    //статус провинции
-    public class Status {
-    }
-    //рельеф
-    public class Landscape {}
-<<<<<<< Updated upstream
-=======
-    public void update(){
-        switch (climate){
+        //рельеф
+        public class Landscape {}
+        public void update(){
+            switch (climate){
 
-        }
-        switch (landscape){
+            }
+            switch (landscape){
 
+            }
+            switch (status){
+
+            }
         }
-        switch (status){
-            
-        }
-    }
->>>>>>> Stashed changes
+}
+
+
+
+
 }
