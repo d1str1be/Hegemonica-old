@@ -58,7 +58,7 @@ public class PlayScreen implements Screen, InputProcessor, GestureDetector.Gestu
             polygonTest.update();
         }
         catch (Exception e){
-            Gdx.app.error(Core.Tags.ENGINE, "my error message", e);
+            Gdx.app.error(Core.Tags.ENGINE, "error message", e);
         }
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
