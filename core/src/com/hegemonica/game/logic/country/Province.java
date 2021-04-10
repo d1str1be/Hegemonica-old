@@ -20,7 +20,11 @@ public class Province {
     public int climate;
     public int landscape;
     public int status;
-    public int territorySize;
+
+    public int sizeLimit;
+    public int sizeUsed;
+
+    public Resource resource;
 
     public int id;
     public String name;
@@ -30,34 +34,33 @@ public class Province {
 
     public Country owner;
 
-    HashMap <Building, Integer> buidings = new HashMap<Building, Integer>(){
+    HashMap <Building, Integer> buildings = new HashMap<Building, Integer>(){
     };
 
-    public Province(int climateType) {
-
+    public Province(int id, String name, int climateType, int landscape, Country owner) {
+        this.id = id;
+        this.name = name;
+        this.climate = climateType;
+        this.landscape = landscape;
+        this.owner = owner;
     }
-    public int maxBuildings(double population) {
-        return (1 + (int)(Math.ceil(population) - 1) / 5);
+    public void update(){
+        switch (climate){
+
+        }
+        switch (landscape){
+
+        }
+        switch (status){
+
+        }
     }
     //статус провинции
     public class Status {
 
         //рельеф
         public class Landscape {}
-        public void update(){
-            switch (climate){
 
-            }
-            switch (landscape){
-
-            }
-            switch (status){
-
-            }
-        }
-}
-
-
-
+    }
 
 }
