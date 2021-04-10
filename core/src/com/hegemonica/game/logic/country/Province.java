@@ -1,6 +1,7 @@
 package com.hegemonica.game.logic.country;
 
 import com.hegemonica.game.logic.buildings.Building;
+import com.hegemonica.game.logic.resource.Resource;
 
 import java.util.HashMap;
 
@@ -19,6 +20,7 @@ public class Province {
     public int climate;
     public int landscape;
     public int status;
+    public int territorySize;
 
     public int id;
     public String name;
