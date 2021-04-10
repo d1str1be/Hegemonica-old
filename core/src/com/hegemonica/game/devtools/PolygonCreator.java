@@ -1,4 +1,4 @@
-package com.hegemonica.game.screens.playscreen;
+package com.hegemonica.game.devtools;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -12,10 +12,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
 
 public class PolygonCreator implements Screen, InputProcessor {
-    ArrayList<Vector2> vertices = new ArrayList<Vector2>();
-    Vector2 touchPoint;
+    Map<Integer, ArrayList<Vector2>> provinces = new Map<Integer, ArrayList<Vector2>>();
     InputProcessor inputProcessor;
     Viewport viewport;
     boolean coordsAreSame;
@@ -34,7 +36,6 @@ public class PolygonCreator implements Screen, InputProcessor {
     @Override
     public void render(float delta) {
         Gdx.gl.glLineWidth(2);
-
     }
 
     @Override
@@ -82,6 +83,7 @@ public class PolygonCreator implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+
         return false;
     }
 
