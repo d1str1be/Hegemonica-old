@@ -15,7 +15,6 @@ import java.util.ArrayList;
 
 public class PolygonCreator implements Screen, InputProcessor {
     ArrayList<Vector2> vertices = new ArrayList<Vector2>();
-    ArrayList<Integer> id = new ArrayList<Integer>();
     Vector2 touchPoint;
     InputProcessor inputProcessor;
     Viewport viewport;
