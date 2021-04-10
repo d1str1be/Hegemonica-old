@@ -37,12 +37,13 @@ public class Province {
     HashMap <Building, Integer> buildings = new HashMap<Building, Integer>(){
     };
 
-    public Province(int id, String name, int climateType, int landscape, Country owner) {
+    public Province(int id, String name, int climateType, int landscape, Country owner, int resourceID) {
         this.id = id;
         this.name = name;
         this.climate = climateType;
         this.landscape = landscape;
         this.owner = owner;
+        this.resource = new Resource(resourceID);
     }
     public void update(){
         switch (climate){

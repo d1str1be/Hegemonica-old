@@ -11,8 +11,7 @@ public class Resource {
 
     public static final int GOLD = 1;
 
-    public Resource(Province prov, int id) {
-        this.province = prov;
+    public Resource(int id) {
         this.id = id;
         canObtain = false;
     }
