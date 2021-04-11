@@ -2,5 +2,13 @@
   "class": "com.hegemonica.game.localization.CountryLoc",
   "map": {
     "Svadia": "Svadia"
+  },
+
+  "class": "com.hegemonica.game.localization.MenuLoc",
+  "map": {
+    "Play": "Play",
+    "Settings": "Settings",
+    "Exit": "Exit"
   }
 }
+

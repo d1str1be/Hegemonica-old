@@ -12,7 +12,7 @@ public class Framerate implements Disposable{
     private float sinceChange;
     private float frameRate;
     public BitmapFont font;
-    private SpriteBatch batch;
+    private final SpriteBatch batch;
     private OrthographicCamera cam;
 
 
@@ -27,7 +27,7 @@ public class Framerate implements Disposable{
 
     public void resize(int screenWidth, int screenHeight) {
         cam = new OrthographicCamera(screenWidth, screenHeight);
-        cam.translate(screenWidth / 2, screenHeight / 2);
+        cam.translate(screenWidth / 2f, screenHeight / 2f);
         cam.update();
         batch.setProjectionMatrix(cam.combined);
     }

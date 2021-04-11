@@ -1,6 +1,6 @@
 package com.hegemonica.game.localization;
 
-public class GeneralLocalization {
+public class GeneralLoc {
 
     public enum GeneralInfo {
 

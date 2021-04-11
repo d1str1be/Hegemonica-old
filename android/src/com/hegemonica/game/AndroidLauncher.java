@@ -1,7 +1,6 @@
 package com.hegemonica.game;
 
 import android.os.Bundle;
-import android.ut/
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;

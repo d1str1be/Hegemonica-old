@@ -22,7 +22,7 @@ public class Country {
     public boolean hasRevoltman;
     public boolean hasGeneral;
 
-    HashMap resuorces<Resource, double>;
+    //HashMap resuorces<Resource, double>;
 
 
     public static class Ethnoses {

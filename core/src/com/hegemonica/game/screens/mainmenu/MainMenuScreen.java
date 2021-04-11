@@ -17,6 +17,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.hegemonica.game.Framerate;
 import com.hegemonica.game.Core;
 import com.hegemonica.game.PointInPolygonTest;
+import com.hegemonica.game.localization.CountryLoc;
+import com.hegemonica.game.localization.MenuLoc;
 import com.hegemonica.game.screens.playscreen.PlayScreen;
 
 public class MainMenuScreen implements Screen {
@@ -72,7 +74,7 @@ public class MainMenuScreen implements Screen {
         stage.addActor(hegemonicaLabel);
 
         //кнопка "играть"
-        bPlay = new TextButton("Play", GlassyUI);
+        bPlay = new TextButton(MenuLoc.Buttons.Play.toString(), GlassyUI);
         bPlay.setSize(centerButtonWidth, centerButtonHeight);
         bPlay.setPosition((Gdx.graphics.getWidth()-centerButtonWidth)/2,Gdx.graphics.getHeight()-centerButtonHeight*5);
         bPlay.addListener(new InputListener(){
@@ -91,7 +93,7 @@ public class MainMenuScreen implements Screen {
         stage.addActor(bPlay);
 
         //кнопка "настройки"
-        bSettings = new TextButton("Settings", GlassyUI);
+        bSettings = new TextButton(MenuLoc.Buttons.Settings.toString(), GlassyUI);
         bSettings.setSize(centerButtonWidth, centerButtonHeight);
         bSettings.setPosition((Gdx.graphics.getWidth()-centerButtonWidth)/2,Gdx.graphics.getHeight()-centerButtonHeight*6);
         bSettings.addListener(new InputListener(){
@@ -108,7 +110,7 @@ public class MainMenuScreen implements Screen {
         stage.addActor(bSettings);
 
         //кнопка "выйти"
-        bExit = new TextButton("Exit", GlassyUI);
+        bExit = new TextButton(MenuLoc.Buttons.Exit.toString(), GlassyUI);
         bExit.setSize(centerButtonWidth, centerButtonHeight);
         bExit.setPosition((Gdx.graphics.getWidth()-centerButtonWidth)/2,Gdx.graphics.getHeight()-centerButtonHeight*7);
         bExit.addListener(new InputListener(){
