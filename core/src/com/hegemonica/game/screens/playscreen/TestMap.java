@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.EarClippingTriangulator;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.utils.FloatArray;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.ShortArray;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -30,12 +31,7 @@ public class TestMap implements Disposable {
     private ShapeRenderer shapeRenderer;
     private final float WORLD_HEIGHT = 100;
     private final float WORLD_WIDTH = 50;
-    private float testVertices[] = {651, 507, 645, 505, 642, 504,
-            639, 500, 644, 496, 647, 490,
-            648, 479, 654, 480, 659, 479, 661, 474, 671, 479, 672, 481, 675, 481, 678, 477, 678, 472, 673, 467, 673, 463, 676, 461,
-            680, 641, 691, 464, 698, 461, 697, 457, 697, 452, 702, 448, 706, 443, 711, 437,
-            711, 453, 718, 455, 719, 462, 711, 464, 706, 474, 609, 479, 693, 481, 690, 486,
-            681, 490, 673, 493, 668, 497, 663, 497, 661, 502, 651, 502, 651, 507};
+    private FloatArray testVertices;
             //719, 431, 736, 427, 744, 428, 753, 432,
             //760, 433,
     private ShortArray testTriangleVertices;
@@ -53,18 +49,27 @@ public class TestMap implements Disposable {
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
         shapeRenderer = new ShapeRenderer();
 
+        testVertices = new FloatArray(new float[]{651, 507, 645, 505, 642, 504,
+                639, 500, 644, 496, 647, 490,
+                648, 479, 654, 480, 659, 479, 661, 474, 671, 479, 672, 481, 675, 481, 678, 477, 678, 472, 673, 467, 673, 463, 676, 461,
+                680, 641, 691, 464, 698, 461, 697, 457, 697, 452, 702, 448, 706, 443, 711, 437,
+                711, 453, 718, 455, 719, 462, 711, 464, 706, 474, 609, 479, 693, 481, 690, 486,
+                681, 490, 673, 493, 668, 497, 663, 497, 661, 502, 651, 502, 651, 507});
+
         Pixmap.Format format;
         pix = new Pixmap(1 , 1, Format.RGBA8888);
         pix.setColor(Color.RED);
         pix.fill();
         texture = new Texture(pix);
         textureReg = new TextureRegion(texture);
-        polyReg = new PolygonRegion(textureReg, testVertices, triangulate(testVertices).toArray());
+        polyReg = new PolygonRegion(textureReg, testVertices.toArray(), triangulate(testVertices).toArray());
         polySprite = new PolygonSprite(polyReg);
         polyBatch = new PolygonSpriteBatch();
+
+
     }
 
-    private ShortArray triangulate(float[] polygonVertices){
+    private ShortArray triangulate(FloatArray polygonVertices){
         return triangulator.computeTriangles(polygonVertices);
     }
 
