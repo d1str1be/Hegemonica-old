@@ -2,7 +2,6 @@ package com.hegemonica.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.hegemonica.game.devtools.MapEditorScreen;
 import com.hegemonica.game.screens.playscreen.TestVersionScreen;
 
 
