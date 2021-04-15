@@ -1,4 +1,4 @@
-package com.hegemonica.game.screens.playscreen;
+package com.hegemonica.game;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 //Тестовый класс для отрисовки одной прямоугольной текстуры на игровом экране - d1str1be
