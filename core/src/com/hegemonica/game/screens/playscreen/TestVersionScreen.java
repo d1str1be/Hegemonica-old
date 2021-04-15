@@ -26,7 +26,7 @@ public class TestVersionScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        testMap.resize(width, height);
     }
 
     @Override

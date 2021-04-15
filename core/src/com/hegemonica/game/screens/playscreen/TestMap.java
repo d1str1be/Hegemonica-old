@@ -18,14 +18,14 @@ import com.badlogic.gdx.utils.FloatArray;
 import com.badlogic.gdx.utils.ShortArray;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.hegemonica.game.TestCamera;
 
 import java.util.Random;
 
 public class TestMap implements Disposable {
     private ProvCoords provCoords;
     boolean coordsAreSame;
-    private OrthographicCamera camera;
-    private Viewport viewport;
+    private TestCamera camera;
     private ShapeRenderer shapeRenderer;
     private final float WORLD_HEIGHT = 100;
     private final float WORLD_WIDTH = 50;
@@ -41,10 +41,13 @@ public class TestMap implements Disposable {
     private PolygonSprite polySprite;
     private PolygonSpriteBatch polyBatch;
     private Pixmap pix;
+
     public TestMap() {
-        camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        camera.translate(camera.viewportWidth / 2, camera.viewportHeight / 2);
-        viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
+        provCoords = new ProvCoords();
+//        camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+//        camera.translate(camera.viewportWidth / 2, camera.viewportHeight / 2);
+        camera = new TestCamera();
+        camera.create();
         shapeRenderer = new ShapeRenderer();
 
         testVertices = new FloatArray(new float[]{651, 507,
@@ -76,7 +79,7 @@ public class TestMap implements Disposable {
         polyReg = new PolygonRegion(textureReg, provCoords.levianProv.toArray(), triangulate(provCoords.levianProv).toArray());
         polySprite = new PolygonSprite(polyReg);
         polyBatch = new PolygonSpriteBatch();
-
+        polyBatch.setProjectionMatrix(camera.combined);
 
     }
 
@@ -91,6 +94,7 @@ public class TestMap implements Disposable {
 //        shapeRenderer.setColor(Color.WHITE);
 //        shapeRenderer.polygon(testVertices);
 //        shapeRenderer.end();
+        camera.update();
         polyBatch.begin();
         polySprite.draw(polyBatch);
         polyBatch.end();
@@ -98,7 +102,7 @@ public class TestMap implements Disposable {
 
 
     public void resize(int width, int height) {
-        viewport.update(width, height);
+
     }
     @Override
     public void dispose() {
