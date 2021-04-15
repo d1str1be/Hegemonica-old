@@ -1,5 +1,8 @@
 package com.hegemonica.game.logic.country;
 
+import com.hegemonica.game.logic.Technology;
+import com.hegemonica.game.logic.scenarios.gemelch.Gemelch;
+
 import java.util.HashMap;
 
 public class Country {
@@ -22,7 +25,11 @@ public class Country {
     public boolean hasRevoltman;
     public boolean hasGeneral;
 
-    HashMap resuorces<Resource, double>;
+    //HashMap resuorces<Resource, double>;
+
+    public Gemelch gemelch;
+
+    
 
 
     public static class Ethnoses {

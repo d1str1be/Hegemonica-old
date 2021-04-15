@@ -6,6 +6,10 @@ class WarUnit {
     public static double startTurnCost;
     public static double startStrength;
     public static double startNeededMP; // МП - менпауер
+    public static int BuyCost;
+    public static double TurnCost;
+    public static double Strength;
+    public static double NeededMP;
     public static boolean isSeaUnit;
 
     public WarUnit(){
