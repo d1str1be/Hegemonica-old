@@ -5,6 +5,7 @@ import com.hegemonica.game.logic.buildings.Building;
 import com.hegemonica.game.logic.country.Country;
 // ЭТО СЦЕНАРИЙ ГЕГЕМОНИИ МЕЛЬХИОРА. ЗДЕСЬ ЗАДАЕМ ВСЕ СТРАНЫ ЭТОГО СЦЕНАРИЯ, КАРТУ "ПАНГЕЯ" И ВСЕ ОСТАЛЬНОЕ ИЗ ЭТОЙ ИГРЫ
 public class Gemelch {
+
     public class Technologies{
         public Technology engineering = new Technology(50, new Technology[]{});
         public Technology paper = new Technology(50, new Technology[]{});

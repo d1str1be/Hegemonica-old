@@ -16,9 +16,9 @@ public class Province {
 
     HashMap <Building, Integer> buidings;
 
-    public int maxBuildings(double population) {
-        return (1 + (int)(Math.ceil(population) - 1) / 5);
-    }
+    //public int maxBuildings(double population) {
+    //    return (1 + (int)(Math.ceil(population) - 1) / 5);
+    //}
 
     //статус провинции
     public class Status {
@@ -30,4 +30,8 @@ public class Province {
     }
     //рельеф
     public class Landscape {}
+
+    public Province () {
+        
+    }
 }

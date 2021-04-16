@@ -29,23 +29,27 @@ public class Country {
 
     public Gemelch gemelch;
 
+    public Country (String name, ) {
+
+    }
+
     
 
 
-    public static class Ethnoses {
-        final static int SVADIANS = 1;
-    }
-
-    public static class СultureGroups {
-        final static public int WEST = 1;
-    }
-    public static class Religions {
-        final static  int KANON = 1;
-    }
-
-    public void update(){ //обновление данных страны при каждом ходе
-        if(hasBohema){
-        }
-    }
+//    public static class Ethnoses {
+//        final static int SVADIANS = 1;
+//    }
+//
+//    public static class СultureGroups {
+//        final static public int WEST = 1;
+//    }
+//    public static class Religions {
+//        final static  int KANON = 1;
+//    }
+//
+//    public void update(){ //обновление данных страны при каждом ходе
+//        if(hasBohema){
+//        }
+//    }
 
 }
