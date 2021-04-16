@@ -1,6 +1,8 @@
 package com.hegemonica.game.screens.playscreen;
 
+import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -22,10 +24,11 @@ import com.hegemonica.game.TestCamera;
 
 import java.util.Random;
 
-public class TestMap implements Disposable {
+public class TestMap implements Disposable, InputProcessor {
     private ProvCoords provCoords;
     boolean coordsAreSame;
-    private TestCamera camera;
+    public OrthographicCamera camera;
+    public Viewport viewport;
     private ShapeRenderer shapeRenderer;
     private final float WORLD_HEIGHT = 100;
     private final float WORLD_WIDTH = 50;
@@ -43,11 +46,11 @@ public class TestMap implements Disposable {
     private Pixmap pix;
 
     public TestMap() {
+        Gdx.input.setInputProcessor(this);
         provCoords = new ProvCoords();
-//        camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-//        camera.translate(camera.viewportWidth / 2, camera.viewportHeight / 2);
-        camera = new TestCamera();
-        camera.create();
+        camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        camera.translate(camera.viewportWidth / 2, camera.viewportHeight / 2);
+        viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
         shapeRenderer = new ShapeRenderer();
 
         testVertices = new FloatArray(new float[]{651, 507,
@@ -79,7 +82,7 @@ public class TestMap implements Disposable {
         polyReg = new PolygonRegion(textureReg, provCoords.levianProv.toArray(), triangulate(provCoords.levianProv).toArray());
         polySprite = new PolygonSprite(polyReg);
         polyBatch = new PolygonSpriteBatch();
-        polyBatch.setProjectionMatrix(camera.combined);
+
 
     }
 
@@ -95,6 +98,7 @@ public class TestMap implements Disposable {
 //        shapeRenderer.polygon(testVertices);
 //        shapeRenderer.end();
         camera.update();
+        polyBatch.setProjectionMatrix(camera.combined);
         polyBatch.begin();
         polySprite.draw(polyBatch);
         polyBatch.end();
@@ -110,7 +114,49 @@ public class TestMap implements Disposable {
         pix.dispose();
     }
 
+    @Override
+    public boolean keyDown(int keycode) {
+        return false;
+    }
 
+    @Override
+    public boolean keyUp(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        float x = Gdx.input.getDeltaX();
+        float y = Gdx.input.getDeltaY();
+
+        camera.translate(-x,y);
+        return true;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(float amountX, float amountY) {
+        return false;
+    }
 
 //всё что ниже - одна из попыток найти способ отрисовки заполненного цветом полигона - Богд
 

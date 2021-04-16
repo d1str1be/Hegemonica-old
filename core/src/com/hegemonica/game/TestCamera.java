@@ -2,16 +2,18 @@ package com.hegemonica.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class TestCamera extends ApplicationAdapter implements InputProcessor {
+public class TestCamera extends ApplicationAdapter implements InputProcessor { // хрень в итоге получилась
     public OrthographicCamera camera;
     public Viewport viewport;
     public Matrix4 combined;
+    public InputMultiplexer im;
     public TestCamera() {
         this.create();
         Gdx.input.setInputProcessor(this);
@@ -31,6 +33,10 @@ public class TestCamera extends ApplicationAdapter implements InputProcessor {
     @Override
     public void create() {
         Gdx.input.setInputProcessor(this);
+        im = new InputMultiplexer();
+        Gdx.input.setInputProcessor(im);
+
+        im.addProcessor(this);
     }
 
     @Override
