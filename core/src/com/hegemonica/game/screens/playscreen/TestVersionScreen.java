@@ -4,9 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.hegemonica.game.Core;
+import com.hegemonica.game.Framerate;
 
 public class TestVersionScreen implements Screen {
     TestMap testMap;
+
     Core game;
 
     public TestVersionScreen(Core game){
@@ -15,6 +17,7 @@ public class TestVersionScreen implements Screen {
     @Override
     public void show() {
         testMap = new TestMap();
+
     }
 
     @Override
@@ -22,6 +25,7 @@ public class TestVersionScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         testMap.render();
+
     }
 
     @Override

@@ -9,22 +9,28 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.graphics.g2d.PolygonSprite;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.EarClippingTriangulator;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.FloatArray;
 import com.badlogic.gdx.utils.ShortArray;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.hegemonica.game.Framerate;
 import com.hegemonica.game.TestCamera;
 
 import java.util.Random;
 
-public class TestMap implements Disposable, InputProcessor {
+public class TestMap implements Disposable, GestureDetector.GestureListener {
     private ProvCoords provCoords;
     boolean coordsAreSame;
     public OrthographicCamera camera;
@@ -44,9 +50,13 @@ public class TestMap implements Disposable, InputProcessor {
     private PolygonSprite polySprite;
     private PolygonSpriteBatch polyBatch;
     private Pixmap pix;
-
+    Framerate fps;
+    BitmapFont font;
+    SpriteBatch batch;
+    float zoomMin = 3f;
+    float zoomMax = 0.25f;
     public TestMap() {
-        Gdx.input.setInputProcessor(this);
+        Gdx.input.setInputProcessor(new GestureDetector(this));
         provCoords = new ProvCoords();
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.translate(camera.viewportWidth / 2, camera.viewportHeight / 2);
@@ -83,7 +93,9 @@ public class TestMap implements Disposable, InputProcessor {
         polySprite = new PolygonSprite(polyReg);
         polyBatch = new PolygonSpriteBatch();
 
-
+        fps = new Framerate();
+        font = new BitmapFont();
+        batch = new SpriteBatch();
     }
 
     private ShortArray triangulate(FloatArray polygonVertices){
@@ -99,9 +111,13 @@ public class TestMap implements Disposable, InputProcessor {
 //        shapeRenderer.end();
         camera.update();
         polyBatch.setProjectionMatrix(camera.combined);
+        fps.render();
         polyBatch.begin();
         polySprite.draw(polyBatch);
         polyBatch.end();
+        batch.begin();
+        font.draw(batch, "zoom = " + camera.zoom, Gdx.graphics.getWidth()-250f, Gdx.graphics.getHeight()-250f);
+        batch.end();
     }
 
 
@@ -114,48 +130,106 @@ public class TestMap implements Disposable, InputProcessor {
         pix.dispose();
     }
 
+//    @Override
+//    public boolean keyDown(int keycode) {
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean keyUp(int keycode) {
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean keyTyped(char character) {
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean touchDragged(int screenX, int screenY, int pointer) {
+//        float x = Gdx.input.getDeltaX();
+//        float y = Gdx.input.getDeltaY();
+//
+//        camera.translate(-x,y);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean mouseMoved(int screenX, int screenY) {
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean scrolled(float amountX, float amountY) {
+//        return false;
+//    }
+
     @Override
-    public boolean keyDown(int keycode) {
+    public boolean touchDown(float x, float y, int pointer, int button) {
         return false;
     }
 
     @Override
-    public boolean keyUp(int keycode) {
+    public boolean tap(float x, float y, int count, int button) {
         return false;
     }
 
     @Override
-    public boolean keyTyped(char character) {
+    public boolean longPress(float x, float y) {
         return false;
     }
 
     @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+    public boolean fling(float velocityX, float velocityY, int button) {
         return false;
     }
 
     @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        float x = Gdx.input.getDeltaX();
-        float y = Gdx.input.getDeltaY();
-
-        camera.translate(-x,y);
+    public boolean pan(float x, float y, float deltaX, float deltaY) {
+        camera.translate(-deltaX*camera.zoom,deltaY*camera.zoom);
         return true;
     }
 
     @Override
-    public boolean mouseMoved(int screenX, int screenY) {
+    public boolean panStop(float x, float y, int pointer, int button) {
         return false;
     }
 
     @Override
-    public boolean scrolled(float amountX, float amountY) {
+    public boolean zoom(float initialDistance, float distance) {
+//        if(camera.zoom >= zoomMax && camera.zoom <= zoomMin) {
+            if (initialDistance >= distance) {
+                camera.zoom += initialDistance*0.001f-distance*0.001f;
+            } else {
+                camera.zoom -= distance*0.001f-initialDistance*0.001f;
+            }
+//        }
+//        if(camera.zoom>=zoomMax){
+//            camera.zoom = zoomMax;
+//        }
+//        else if(camera.zoom <= zoomMin)
+//            camera.zoom = zoomMin;
+       return true;
+    }
+
+    @Override
+    public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
         return false;
+    }
+
+    @Override
+    public void pinchStop() {
+
     }
 
 //всё что ниже - одна из попыток найти способ отрисовки заполненного цветом полигона - Богд
