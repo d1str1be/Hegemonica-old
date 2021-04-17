@@ -2,6 +2,7 @@ package com.hegemonica.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.hegemonica.game.screens.mainmenu.MainMenuScreen;
 import com.hegemonica.game.screens.playscreen.TestVersionScreen;
 
 
@@ -17,7 +18,7 @@ public class Core extends Game {
 	@Override
 	public void create () {
 		Gdx.files.internal("english.json"); //настройка языка. на первое время напрямую при запуске пропишем - Богдан
-		this.setScreen(new TestVersionScreen(this));
+		this.setScreen(new MainMenuScreen(this));
 	}
 
 	@Override

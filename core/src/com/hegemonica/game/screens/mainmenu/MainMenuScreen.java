@@ -20,6 +20,7 @@ import com.hegemonica.game.PointInPolygonTest;
 import com.hegemonica.game.localization.CountryLoc;
 import com.hegemonica.game.localization.MenuLoc;
 import com.hegemonica.game.screens.playscreen.PlayScreen;
+import com.hegemonica.game.screens.playscreen.TestVersionScreen;
 
 public class MainMenuScreen implements Screen {
     Core game;
@@ -84,7 +85,7 @@ public class MainMenuScreen implements Screen {
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                game.setScreen(new PlayScreen());
+                game.setScreen(new TestVersionScreen(game));
                 music.dispose();
                 stage.dispose();
                 return true;
