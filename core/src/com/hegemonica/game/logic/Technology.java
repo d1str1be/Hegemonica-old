@@ -22,4 +22,5 @@ public class Technology {
         this.cost = cost;
         this.requiredTechnologies = requiredTechnologies;
     }
+
 }
