@@ -37,11 +37,9 @@ public class Province {
     HashMap <Building, Integer> buildings = new HashMap<Building, Integer>(){
     };
 
-<<<<<<< HEAD
     //public int maxBuildings(double population) {
     //    return (1 + (int)(Math.ceil(population) - 1) / 5);
     //}
-=======
     public Province(int id, String name, int climateType, int landscape, Country owner, int resourceID) {
         this.id = id;
         this.name = name;
@@ -52,7 +50,6 @@ public class Province {
     }
     public void update(){
         switch (climate){
->>>>>>> ba91c32eca08a09c80d747b9c9b6af7951ef8f63
 
         }
         switch (landscape){
@@ -69,14 +66,5 @@ public class Province {
         public class Landscape {}
 
     }
-<<<<<<< HEAD
-    //рельеф
-    public class Landscape {}
 
-    public Province () {
-        
-    }
-=======
-
->>>>>>> ba91c32eca08a09c80d747b9c9b6af7951ef8f63
 }
