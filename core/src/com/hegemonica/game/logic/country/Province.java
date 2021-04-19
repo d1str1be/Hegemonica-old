@@ -7,6 +7,42 @@ import java.util.HashMap;
 
 public class Province {
 
+    public boolean isCity;
+
+    public int numberOfLibraries;
+    public int numberOfUniversities;
+    public int numberOfWorkshops;
+    public int numberOfShipyards;
+    public int numberOfFarms;
+    public int numberOfMines;
+
+    public void OnTurn() {
+        foodScore += numberOfFarms - neededFood;
+
+    }
+
+    public int foodScore;
+    public int neededFoodScore;
+    public int population;
+    public int neededFood;
+
+    public int id;
+    public String name;
+
+    public void ProvinceGrow() {
+        population += 1;
+        neededFood += 1;
+        foodScore -= neededFoodScore;
+        neededFoodScore += 1;
+    }
+
+    public void ProvinceDecrease() {
+        population -= 1;
+        neededFood -= 1;
+        foodScore += neededFoodScore - 1;
+        neededFoodScore -= 1;
+    }
+
     public class Climate{
         public static final int ARCTIC = -3; // арктический
         public static final int COLD = -2; // холодный
@@ -26,20 +62,10 @@ public class Province {
 
     public Resource resource;
 
-    public int id;
-    public String name;
-
-    public double population;
-    public double neededFood;
-
     public Country owner;
 
-    HashMap <Building, Integer> buildings = new HashMap<Building, Integer>(){
-    };
 
-    //public int maxBuildings(double population) {
-    //    return (1 + (int)(Math.ceil(population) - 1) / 5);
-    //}
+
     public Province(int id, String name, int climateType, int landscape, Country owner, int resourceID) {
         this.id = id;
         this.name = name;
