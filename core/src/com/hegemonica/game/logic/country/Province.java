@@ -2,14 +2,27 @@ package com.hegemonica.game.logic.country;
 
 import com.hegemonica.game.logic.buildings.Building;
 import com.hegemonica.game.logic.resource.Resource;
+import com.hegemonica.game.logic.scenarios.gemelch.Gemelch;
 
 import java.util.HashMap;
 
 public class Province {
-    public int foodScore;
-    public int neededFoodScore;
+    public int startFoodproduction;
+    public int foodPoints;
+    public int neededFoodPoints;
     public int population;
     public int neededFood;
+    public int productionPoints;
+    public int neededProductionPoints;
+    public int gainedSciencePoints;
+    public int mineProduction;
+    public int farmProduction;
+    public int workshopProduction;
+    public int shipyardProduction;
+    public int libraryProduction;
+    public int universityProduction;
+
+    public Building chosenBuilding;
 
     public int id;
     public String name;
@@ -34,13 +47,11 @@ public class Province {
 
 
 
-    public Province(int id, String name, int climateType, int landscape, Country owner, int resourceID) {
+    public Province(int id, int population, String name, Country owner) {
         this.id = id;
+        this.population = population;
         this.name = name;
-        this.climate = climateType;
-        this.landscape = landscape;
         this.owner = owner;
-        this.resource = new Resource(resourceID);
     }
     public void update(){
 
@@ -71,23 +82,43 @@ public class Province {
         public class Landscape {}
 
     }
+
     public void provinceGrow() {
         population += 1;
         neededFood += 1;
-        foodScore -= neededFoodScore;
-        neededFoodScore += 1;
+        foodPoints -= neededFoodPoints;
+        neededFoodPoints += 1;
     }
 
     public void provinceDecrease() {
         population -= 1;
         neededFood -= 1;
-        foodScore += neededFoodScore - 1;
-        neededFoodScore -= 1;
+        foodPoints += neededFoodPoints - 1;
+        neededFoodPoints -= 1;
     }
+
     public void onTurn() {
-        foodScore += numberOfFarms - neededFood;
+        foodPoints += numberOfFarms * farmProduction - neededFood + startFoodproduction;
+        if (foodPoints > neededFoodPoints) {
+            provinceGrow();
+        }
+        else if (foodPoints < 0) {
+            provinceDecrease();
+        }
+        productionPoints += population + numberOfMines * mineProduction + numberOfWorkshops * workshopProduction + numberOfShipyards * shipyardProduction;
+        //дописать neededProductionPoints
+        gainedSciencePoints = population + numberOfLibraries * libraryProduction + numberOfUniversities * universityProduction;
     }
 
+    public void choseBuilding(Building chosenBuilding) {
+        this.chosenBuilding = chosenBuilding;
+        //сдедать switch для установления neededProductionPoints
+    }
 
-
+    public void onCreate() {
+        neededFood = population;
+        neededFoodPoints = 2 + population * 3;
+        foodPoints = 0;
+        gainedSciencePoints = 0;
+    }
 }
