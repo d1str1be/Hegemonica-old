@@ -2,9 +2,11 @@ package com.hegemonica.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.hegemonica.game.screens.mainmenu.MainMenuScreen;
-public class Core extends com.badlogic.gdx.Game {
+import com.hegemonica.game.screens.playscreen.TestVersionScreen;
+
+
+public class Core extends Game {
 
 	public static class Tags {
 		final static public String DEFAULT = "Default";

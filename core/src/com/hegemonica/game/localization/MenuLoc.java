@@ -1,10 +1,8 @@
 package com.hegemonica.game.localization;
 
-public class MenuLocalization {
+public class MenuLoc {
 
-    public enum Loc {
+    public enum Buttons {
         Play, Settings, Exit
-
-
     }
 }

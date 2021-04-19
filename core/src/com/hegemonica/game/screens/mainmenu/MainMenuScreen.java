@@ -17,7 +17,10 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.hegemonica.game.Framerate;
 import com.hegemonica.game.Core;
 import com.hegemonica.game.PointInPolygonTest;
+import com.hegemonica.game.localization.CountryLoc;
+import com.hegemonica.game.localization.MenuLoc;
 import com.hegemonica.game.screens.playscreen.PlayScreen;
+import com.hegemonica.game.screens.playscreen.TestVersionScreen;
 
 public class MainMenuScreen implements Screen {
     Core game;
@@ -72,7 +75,7 @@ public class MainMenuScreen implements Screen {
         stage.addActor(hegemonicaLabel);
 
         //кнопка "играть"
-        bPlay = new TextButton("Play", GlassyUI);
+        bPlay = new TextButton(MenuLoc.Buttons.Play.toString(), GlassyUI);
         bPlay.setSize(centerButtonWidth, centerButtonHeight);
         bPlay.setPosition((Gdx.graphics.getWidth()-centerButtonWidth)/2,Gdx.graphics.getHeight()-centerButtonHeight*5);
         bPlay.addListener(new InputListener(){
@@ -82,7 +85,7 @@ public class MainMenuScreen implements Screen {
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                game.setScreen(new PlayScreen());
+                game.setScreen(new TestVersionScreen(game));
                 music.dispose();
                 stage.dispose();
                 return true;
@@ -91,7 +94,7 @@ public class MainMenuScreen implements Screen {
         stage.addActor(bPlay);
 
         //кнопка "настройки"
-        bSettings = new TextButton("Settings", GlassyUI);
+        bSettings = new TextButton(MenuLoc.Buttons.Settings.toString(), GlassyUI);
         bSettings.setSize(centerButtonWidth, centerButtonHeight);
         bSettings.setPosition((Gdx.graphics.getWidth()-centerButtonWidth)/2,Gdx.graphics.getHeight()-centerButtonHeight*6);
         bSettings.addListener(new InputListener(){
@@ -108,7 +111,7 @@ public class MainMenuScreen implements Screen {
         stage.addActor(bSettings);
 
         //кнопка "выйти"
-        bExit = new TextButton("Exit", GlassyUI);
+        bExit = new TextButton(MenuLoc.Buttons.Exit.toString(), GlassyUI);
         bExit.setSize(centerButtonWidth, centerButtonHeight);
         bExit.setPosition((Gdx.graphics.getWidth()-centerButtonWidth)/2,Gdx.graphics.getHeight()-centerButtonHeight*7);
         bExit.addListener(new InputListener(){
