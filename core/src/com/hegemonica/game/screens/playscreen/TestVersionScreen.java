@@ -5,19 +5,21 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.hegemonica.game.Core;
 import com.hegemonica.game.Framerate;
+import com.hegemonica.game.logic.scenarios.gemelch.Gemelch;
+
+import java.awt.Polygon;
 
 public class TestVersionScreen implements Screen {
     TestMap testMap;
-
+    Gemelch gemelch;
     Core game;
-
     public TestVersionScreen(Core game){
         this.game = game;
     }
     @Override
     public void show() {
         testMap = new TestMap();
-
+        gemelch = new Gemelch();
     }
 
     @Override
@@ -25,7 +27,6 @@ public class TestVersionScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         testMap.render();
-
     }
 
     @Override
