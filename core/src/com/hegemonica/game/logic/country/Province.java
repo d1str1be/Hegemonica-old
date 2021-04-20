@@ -97,6 +97,30 @@ public class Province {
         neededFoodPoints -= 1;
     }
 
+    public void build(Building building) {
+        switch (building.id) {
+            case Building.ID.FARM:
+                numberOfFarms += 1;
+                productionPoints -= owner.farm.productionCost;
+            case Building.ID.MINE:
+                numberOfMines += 1;
+                productionPoints -= owner.mine.productionCost;
+            case Building.ID.LIBRARY:
+                numberOfLibraries = 1;
+                productionPoints -= owner.library.productionCost;
+            case Building.ID.UNIVERSITY:
+                numberOfUniversities = 1;
+                productionPoints -= owner.university.productionCost;
+            case Building.ID.WORKSHOP:
+                numberOfWorkshops = 1;
+                productionPoints -= owner.workshop.productionCost;
+            case Building.ID.SHIPYARD:
+                numberOfShipyards = 1;
+                productionPoints -= owner.shipyard.productionCost;
+        }
+
+    }
+
     public void onTurn() {
         foodPoints += numberOfFarms * farmProduction - neededFood + startFoodproduction;
         if (foodPoints > neededFoodPoints) {

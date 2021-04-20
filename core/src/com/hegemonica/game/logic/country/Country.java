@@ -56,12 +56,12 @@ public class Country {
         public Resource Cows;
     }
 
-    public Building library = new Building();
-    public Building university = new Building();
-    public Building shipyard = new Building();
-    public Building workshop = new Building();
-    public Building farm = new Building();
-    public Building mine = new Building();
+    public Building library = new Building(Building.ID.LIBRARY);
+    public Building university = new Building(Building.ID.UNIVERSITY);
+    public Building shipyard = new Building(Building.ID.SHIPYARD);
+    public Building workshop = new Building(Building.ID.WORKSHOP);
+    public Building farm = new Building(Building.ID.FARM);
+    public Building mine = new Building(Building.ID.MINE);
 
     public boolean checkRequiredTechnologiesForBuilding(Building building) {
         switch (building.id) {
