@@ -14,4 +14,13 @@ public class Building {
         canBuild = false;
     }
 
+    public class ID {
+        public final static int FARM = 1;
+        public final static int MINE = 2;
+        public final static int LIBRARY = 3;
+        public final static int UNIVERSITY = 4;
+        public final static int WORKSHOP = 5;
+        public final static int SHIPYARD = 6;
+    }
+
 }

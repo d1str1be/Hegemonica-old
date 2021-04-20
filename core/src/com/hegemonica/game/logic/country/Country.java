@@ -1,5 +1,6 @@
 package com.hegemonica.game.logic.country;
 
+import com.hegemonica.game.logic.Technologies;
 import com.hegemonica.game.logic.Technology;
 import com.hegemonica.game.logic.buildings.Building;
 import com.hegemonica.game.logic.resource.Resource;
@@ -18,6 +19,8 @@ public class Country {
     public float inflation;
     public boolean hasCrisis;
     public boolean inWar;
+
+    public Technologies technologies;
 
     //наличие персонажа в стране
     public boolean hasBohema;
@@ -40,16 +43,7 @@ public class Country {
         inflation = 0f;
     }
 
-    public class Technologies {
-        public Technology engineering = new Technology(50, new Technology[]{});
-        public Technology paper = new Technology(50, new Technology[]{});
-        public Technology simplyChemistry = new Technology(50, new Technology[]{});
-        public Technology machinery = new Technology(100, new Technology[]{engineering});
-        public Technology apprientship = new Technology(100, new Technology[]{engineering, paper});
-        public Technology education = new Technology(100, new Technology[]{paper, simplyChemistry});
-        public Technology updatedShipbuilding = new Technology(75, new Technology[]{});
-        public Technology oceanExploration = new Technology(150, new Technology[]{updatedShipbuilding, engineering, paper});
-    }
+
 
 
     public class Resources {
@@ -68,6 +62,25 @@ public class Country {
     public Building workshop = new Building();
     public Building farm = new Building();
     public Building mine = new Building();
+
+    public boolean checkRequiredTechnologiesForBuilding(Building building) {
+        switch (building.id) {
+            case Building.ID.FARM:
+                return true;
+            case Building.ID.MINE:
+                return true;
+            case Building.ID.LIBRARY:
+                return technologies.paper.isResearched;
+            case Building.ID.UNIVERSITY:
+                return technologies.education.isResearched;
+            case Building.ID.SHIPYARD:
+                return technologies.updatedShipbuilding.isResearched;
+            case Building.ID.WORKSHOP:
+                return technologies.engineering.isResearched;
+            default:
+                return true;
+        }
+    }
 
 
 //    public static class Ethnoses {
