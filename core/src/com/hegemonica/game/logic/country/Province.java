@@ -217,7 +217,8 @@ public class Province {
         int Ycoords[] = new int[provCoords.size/2];
         Ycoords[0] = (int) provCoords.items[1];
         for(int i=1; i<provCoords.size;i+=2){
-            Xcoords[i-1/2] = (int) provCoords.items[i];
+            Ycoords[i-1/2] = (int) provCoords.items[i];
         }
+        return Ycoords;
     }
 }
