@@ -87,7 +87,7 @@ public class TestMap implements Disposable, GestureDetector.GestureListener {
         pix.fill();
         texture = new Texture(pix);
         textureReg = new TextureRegion(texture);
-        polyReg = new PolygonRegion(textureReg, provCoords.levianProv.toArray(), triangulate(provCoords.levianProv).toArray());
+        polyReg = new PolygonRegion(textureReg, ProvCoords.levianProv.toArray(), triangulate(ProvCoords.levianProv).toArray());
         polySprite = new PolygonSprite(polyReg);
         polyBatch = new PolygonSpriteBatch();
 

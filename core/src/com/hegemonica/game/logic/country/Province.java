@@ -70,12 +70,21 @@ public class Province {
 
 
 
-    public Province(int id, String name, Country owner, boolean[] neighbours) {
+    public Province(int id, String name, Country owner, FloatArray provCoords, boolean[] neighbours, boolean isCity) {
         this.id = id;
-        this.population = population;
+        this.provCoords = provCoords;
         this.name = name;
         this.owner = owner;
         this.neighbourProvinces = neighbours;
+        this.isCity = isCity;
+        population = 1;
+        numberOfShipyards = 0;
+        numberOfWorkshops = 0;
+        numberOfUniversities = 0;
+        numberOfLibraries = 0;
+        numberOfMines = 0;
+        numberOfFarms = 0;
+        numberOfBuildings = 0;
     }
     public void update(){
 
@@ -209,7 +218,7 @@ public class Province {
         int Xcoords[] = new int[provCoords.size/2];
         Xcoords[0] = (int) provCoords.items[0];
         for(int i=2; i<provCoords.size;i+=2){
-            Xcoords[i-1] = (int) provCoords.items[i];
+            Xcoords[i/2] = (int) provCoords.items[i];
         }
         return Xcoords;
     }

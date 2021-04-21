@@ -9,6 +9,15 @@
     "Play": "Play",
     "Settings": "Settings",
     "Exit": "Exit"
+  },
+  "class": "com.hegemonica.game.localization.ProvinceLoc",
+  "map": {
+    "Levian": "Levian",
+    "Valinia": "Valinia",
+    "Haadra": "Haadra",
+    "Eliria": "Eliria",
+    "Gasiliya": "Gasiliya",
+    "Odar": "Odar"
   }
 }
 
