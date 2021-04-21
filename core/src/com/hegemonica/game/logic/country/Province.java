@@ -21,8 +21,9 @@ public class Province {
     public int shipyardProduction;
     public int libraryProduction;
     public int universityProduction;
+    public int numberOfBuildings;
 
-    public Building chosenBuilding;
+    public Building buildingInProcess;
 
     public int id;
     public String name;
@@ -101,21 +102,27 @@ public class Province {
         switch (building.id) {
             case Building.ID.FARM:
                 numberOfFarms += 1;
+                numberOfBuildings += 1;
                 productionPoints -= owner.farm.productionCost;
             case Building.ID.MINE:
                 numberOfMines += 1;
+                numberOfBuildings += 1;
                 productionPoints -= owner.mine.productionCost;
             case Building.ID.LIBRARY:
                 numberOfLibraries = 1;
+                numberOfBuildings += 1;
                 productionPoints -= owner.library.productionCost;
             case Building.ID.UNIVERSITY:
                 numberOfUniversities = 1;
+                numberOfBuildings += 1;
                 productionPoints -= owner.university.productionCost;
             case Building.ID.WORKSHOP:
                 numberOfWorkshops = 1;
+                numberOfBuildings += 1;
                 productionPoints -= owner.workshop.productionCost;
             case Building.ID.SHIPYARD:
                 numberOfShipyards = 1;
+                numberOfBuildings += 1;
                 productionPoints -= owner.shipyard.productionCost;
         }
 
@@ -134,15 +141,37 @@ public class Province {
         gainedSciencePoints = population + numberOfLibraries * libraryProduction + numberOfUniversities * universityProduction;
     }
 
-    public void choseBuilding(Building chosenBuilding) {
-        this.chosenBuilding = chosenBuilding;
-        //сдедать switch для установления neededProductionPoints
+    public boolean isBuildingAvailible(Building building) {
+        if (owner.checkRequiredTechnologiesForBuilding(building) && numberOfBuildings < population) {
+            if (building.isNeedCity == false || building.isNeedCity == isCity) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            return  false;
+        }
     }
 
-    public void onCreate() {
-        neededFood = population;
-        neededFoodPoints = 2 + population * 3;
-        foodPoints = 0;
-        gainedSciencePoints = 0;
+    public void choseBuilding(Building building) {
+        if (isBuildingAvailible(building)) {
+            buildingInProcess = building;
+
+        }
+    }
+
+    public Province(Country owner, boolean isCity) {
+        this.owner = owner;
+        this.isCity = isCity;
+        population = 1;
+        numberOfShipyards = 0;
+        numberOfWorkshops = 0;
+        numberOfUniversities = 0;
+        numberOfLibraries = 0;
+        numberOfMines = 0;
+        numberOfFarms = 0;
+        numberOfBuildings = 0;
     }
 }
