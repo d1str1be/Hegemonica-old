@@ -1,5 +1,15 @@
 package com.hegemonica.game.logic.country;
 
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.PolygonRegion;
+import com.badlogic.gdx.graphics.g2d.PolygonSprite;
+import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.EarClippingTriangulator;
+import com.badlogic.gdx.utils.FloatArray;
+import com.badlogic.gdx.utils.ShortArray;
 import com.hegemonica.game.logic.buildings.Building;
 import com.hegemonica.game.logic.resource.Resource;
 import com.hegemonica.game.logic.scenarios.gemelch.Gemelch;
@@ -45,14 +55,27 @@ public class Province {
 
     public Resource resource;
     public Country owner;
+    public boolean neighbourProvinces[];
+
+    private final EarClippingTriangulator triangulator = new EarClippingTriangulator();
+    public FloatArray provCoords;
+    private ShapeRenderer shapeRenderer;
+    private Texture texture;
+    private TextureRegion textureReg;
+    private PolygonRegion polyReg;
+    private PolygonSprite polySprite;
+    private PolygonSpriteBatch polyBatch;
+    private Pixmap pix;
 
 
 
-    public Province(int id, int population, String name, Country owner) {
+
+    public Province(int id, String name, Country owner, boolean[] neighbours) {
         this.id = id;
         this.population = population;
         this.name = name;
         this.owner = owner;
+        this.neighbourProvinces = neighbours;
     }
     public void update(){
 
@@ -173,5 +196,28 @@ public class Province {
         numberOfMines = 0;
         numberOfFarms = 0;
         numberOfBuildings = 0;
+    }
+
+    //math and graphics
+    public void render(){
+
+    }
+    private ShortArray triangulate(FloatArray polygonVertices){
+        return triangulator.computeTriangles(polygonVertices);
+    }
+    public int[] getXcoords(){
+        int Xcoords[] = new int[provCoords.size/2];
+        Xcoords[0] = (int) provCoords.items[0];
+        for(int i=2; i<provCoords.size;i+=2){
+            Xcoords[i-1] = (int) provCoords.items[i];
+        }
+        return Xcoords;
+    }
+    public int[] getYcoords(){
+        int Ycoords[] = new int[provCoords.size/2];
+        Ycoords[0] = (int) provCoords.items[1];
+        for(int i=1; i<provCoords.size;i+=2){
+            Xcoords[i-1/2] = (int) provCoords.items[i];
+        }
     }
 }

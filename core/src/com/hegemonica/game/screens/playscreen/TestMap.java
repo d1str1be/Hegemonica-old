@@ -1,15 +1,12 @@
 package com.hegemonica.game.screens.playscreen;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.graphics.g2d.PolygonSprite;
@@ -26,7 +23,7 @@ import com.badlogic.gdx.utils.ShortArray;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.hegemonica.game.Framerate;
-import com.hegemonica.game.TestCamera;
+import com.hegemonica.game.logic.scenarios.gemelch.ProvCoords;
 
 import java.util.Random;
 
@@ -50,6 +47,7 @@ public class TestMap implements Disposable, GestureDetector.GestureListener {
     private PolygonSprite polySprite;
     private PolygonSpriteBatch polyBatch;
     private Pixmap pix;
+
     Framerate fps;
     BitmapFont font;
     SpriteBatch batch;
