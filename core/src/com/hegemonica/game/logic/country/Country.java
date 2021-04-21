@@ -41,8 +41,12 @@ public class Country {
         prestige = 1;
         stability = 1;
         inflation = 0f;
+        technologies = new Technologies();
     }
 
+    public void onTurn(){
+
+    }
 
 
 
