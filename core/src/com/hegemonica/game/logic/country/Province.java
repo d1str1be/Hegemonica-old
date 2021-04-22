@@ -103,6 +103,8 @@ public class Province {
         workshop = new Building(Building.ID.WORKSHOP, this);
         farm = new Building(Building.ID.FARM, this);
         mine = new Building(Building.ID.MINE, this);
+
+        setMathRender();
     }
     public void update(){
 
