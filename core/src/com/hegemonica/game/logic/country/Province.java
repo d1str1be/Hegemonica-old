@@ -5,12 +5,17 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.graphics.g2d.PolygonSprite;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.EarClippingTriangulator;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.FloatArray;
 import com.badlogic.gdx.utils.ShortArray;
 import com.hegemonica.game.logic.buildings.Building;
@@ -63,6 +68,7 @@ public class Province {
 
     private final EarClippingTriangulator triangulator = new EarClippingTriangulator();
     public FloatArray provCoords;
+    private Polygon polygon;
     private ShapeRenderer shapeRenderer;
     private Texture texture;
     private TextureRegion textureReg;
@@ -70,6 +76,8 @@ public class Province {
     private PolygonSprite polySprite;
     private PolygonSpriteBatch polyBatch;
     private Pixmap pix;
+    private BitmapFont font;
+    private SpriteBatch batch;
     private boolean drawFilledPolygons = false; //DEBUG setting
 
     //постройки
@@ -79,6 +87,8 @@ public class Province {
     public Building workshop;
     public Building farm;
     public Building mine;
+
+
 
 
     public Province(int id, String name, Country owner, FloatArray provCoords, boolean[] neighbours, boolean isCity) {
@@ -103,6 +113,7 @@ public class Province {
         workshop = new Building(Building.ID.WORKSHOP, this);
         farm = new Building(Building.ID.FARM, this);
         mine = new Building(Building.ID.MINE, this);
+
 
         setMathRender();
     }
@@ -196,7 +207,7 @@ public class Province {
 
     public boolean isBuildingAvailible(Building building) {
         if (owner.checkRequiredTechnologiesForBuilding(building)) {
-            if (building.isNeedCity == false || building.isNeedCity == isCity) {
+            if (!building.isNeedCity || building.isNeedCity == isCity) {
                 return true;
             }
             else {
@@ -208,12 +219,12 @@ public class Province {
         }
     }
 
-    public void choseBuilding(Building building) {
+    public void chooseBuilding(Building building) {
         if (isBuildingAvailible(building)) {
             buildingInProcess = building;
         }
         else {
-            choseBuilding(building);
+            chooseBuilding(building);
         }
     }
 
@@ -238,12 +249,18 @@ public class Province {
             polySprite.draw(polyBatch);
             polyBatch.end();
         }
-        else
+        else {
             shapeRenderer.setProjectionMatrix(camera.combined);
             shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
             shapeRenderer.setColor(Color.WHITE);
             shapeRenderer.polygon(provCoords.toArray());
+            shapeRenderer.rect(polygon.getBoundingRectangle().getX(),polygon.getBoundingRectangle().getY(),polygon.getBoundingRectangle().getWidth(), polygon.getBoundingRectangle().getHeight());
             shapeRenderer.end();
+        }
+        batch.setProjectionMatrix(camera.combined);
+        batch.begin();
+        font.draw(batch, name, polygon.getBoundingRectangle().getX()+polygon.getBoundingRectangle().getWidth()/2-font.getScaleX(),polygon.getBoundingRectangle().getY()+polygon.getBoundingRectangle().getHeight()/2-font.getScaleY());
+        batch.end();
     }
     public void setMathRender(){
         shapeRenderer = new ShapeRenderer();
@@ -255,12 +272,17 @@ public class Province {
         polyReg = new PolygonRegion(textureReg, ProvCoords.levianProv.toArray(), triangulate(ProvCoords.levianProv).toArray());
         polySprite = new PolygonSprite(polyReg);
         polyBatch = new PolygonSpriteBatch();
+
+        polygon = new Polygon(provCoords.toArray());
+        batch = new SpriteBatch();
+        font = new BitmapFont();
+        font.getData().setScale(0.5f);
     }
     private ShortArray triangulate(FloatArray polygonVertices){
         return triangulator.computeTriangles(polygonVertices);
     }
     public int[] getXcoords(){
-        int Xcoords[] = new int[provCoords.size/2];
+        int[] Xcoords = new int[provCoords.size/2];
         Xcoords[0] = (int) provCoords.items[0];
         for(int i=2; i<provCoords.size;i+=2){
             Xcoords[i/2] = (int) provCoords.items[i];
@@ -268,7 +290,7 @@ public class Province {
         return Xcoords;
     }
     public int[] getYcoords(){
-        int Ycoords[] = new int[provCoords.size/2];
+        int[] Ycoords = new int[provCoords.size/2];
         Ycoords[0] = (int) provCoords.items[1];
         for(int i=1; i<provCoords.size;i+=2){
             Ycoords[i-1/2] = (int) provCoords.items[i];

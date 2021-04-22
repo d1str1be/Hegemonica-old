@@ -1,5 +1,6 @@
 package com.hegemonica.game.screens.playscreen;
 
+import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -17,10 +18,12 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.EarClippingTriangulator;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.FloatArray;
 import com.badlogic.gdx.utils.ShortArray;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.hegemonica.game.Framerate;
 import com.hegemonica.game.logic.scenarios.gemelch.ProvCoords;
@@ -28,6 +31,7 @@ import com.hegemonica.game.logic.scenarios.gemelch.ProvCoords;
 import java.util.Random;
 
 public class TestMap implements Disposable, GestureDetector.GestureListener {
+
     private ProvCoords provCoords;
     boolean coordsAreSame;
     public OrthographicCamera camera;
@@ -47,6 +51,9 @@ public class TestMap implements Disposable, GestureDetector.GestureListener {
     private PolygonSprite polySprite;
     private PolygonSpriteBatch polyBatch;
     private Pixmap pix;
+    private Skin UIskin;
+    private TextButton textButton;
+    private Stage stage;
 
     Framerate fps;
     BitmapFont font;
@@ -90,9 +97,17 @@ public class TestMap implements Disposable, GestureDetector.GestureListener {
         polySprite = new PolygonSprite(polyReg);
         polyBatch = new PolygonSpriteBatch();
 
+        UIskin = new Skin(Gdx.files.internal("ui/default/skin/uiskin.json"));
         fps = new Framerate();
         font = new BitmapFont();
         batch = new SpriteBatch();
+
+        textButton = new TextButton("Turn", UIskin, "default");
+        textButton.setWidth(Gdx.graphics.getWidth()/15f);
+        textButton.setHeight(Gdx.graphics.getHeight()/6f);
+        textButton.setPosition(Gdx.graphics.getWidth()-textButton.getWidth(),Gdx.graphics.getHeight()-textButton.getHeight());
+        stage = new Stage(viewport, batch);
+        stage.addActor(textButton);
     }
 
     private ShortArray triangulate(FloatArray polygonVertices){
@@ -108,10 +123,14 @@ public class TestMap implements Disposable, GestureDetector.GestureListener {
 //        shapeRenderer.end();
         camera.update();
 //        polyBatch.setProjectionMatrix(camera.combined);
+        fps.update();
         fps.render();
 //        polyBatch.begin();
 //        polySprite.draw(polyBatch);
 //        polyBatch.end();
+        stage.act(Gdx.graphics.getDeltaTime());
+        stage.draw();
+
         batch.begin();
         font.draw(batch, "zoom = " + camera.zoom, Gdx.graphics.getWidth()-250f, Gdx.graphics.getHeight()-250f);
         batch.end();
@@ -119,12 +138,16 @@ public class TestMap implements Disposable, GestureDetector.GestureListener {
 
 
     public void resize(int width, int height) {
-
+        fps.resize(width, height);
     }
     @Override
     public void dispose() {
+        fps.dispose();
         texture.dispose();
         pix.dispose();
+        batch.dispose();
+        shapeRenderer.dispose();
+        polyBatch.dispose();
     }
 
 //    @Override
@@ -205,18 +228,26 @@ public class TestMap implements Disposable, GestureDetector.GestureListener {
     @Override
     public boolean zoom(float initialDistance, float distance) {
 //        if(camera.zoom >= zoomMax && camera.zoom <= zoomMin) {
+        if(camera.zoom>=0.2f&&camera.zoom<=1f) {
             if (initialDistance >= distance) {
-                camera.zoom += initialDistance*0.001f-distance*0.001f;
+                camera.zoom += initialDistance * 0.00005f - distance * 0.00005f;
+                return true;
             } else {
-                camera.zoom -= distance*0.001f-initialDistance*0.001f;
+                camera.zoom -= distance * 0.00005f - initialDistance * 0.00005f;
+                return true;
             }
+        }
+        else if(camera.zoom<0.2f)
+            camera.zoom=0.2f;
+        else
+            camera.zoom=1f;
 //        }
 //        if(camera.zoom>=zoomMax){
 //            camera.zoom = zoomMax;
 //        }
 //        else if(camera.zoom <= zoomMin)
 //            camera.zoom = zoomMin;
-       return true;
+       return false;
     }
 
     @Override
