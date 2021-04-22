@@ -1,5 +1,8 @@
 package com.hegemonica.game.logic.country;
 
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.PolygonRegion;
@@ -13,6 +16,7 @@ import com.badlogic.gdx.utils.ShortArray;
 import com.hegemonica.game.logic.buildings.Building;
 import com.hegemonica.game.logic.resource.Resource;
 import com.hegemonica.game.logic.scenarios.gemelch.Gemelch;
+import com.hegemonica.game.logic.scenarios.gemelch.ProvCoords;
 
 import java.util.HashMap;
 
@@ -66,8 +70,15 @@ public class Province {
     private PolygonSprite polySprite;
     private PolygonSpriteBatch polyBatch;
     private Pixmap pix;
+    private boolean drawFilledPolygons = false; //DEBUG setting
 
-
+    //постройки
+    public Building library;
+    public Building university;
+    public Building shipyard;
+    public Building workshop;
+    public Building farm;
+    public Building mine;
 
 
     public Province(int id, String name, Country owner, FloatArray provCoords, boolean[] neighbours, boolean isCity) {
@@ -85,6 +96,13 @@ public class Province {
         numberOfMines = 0;
         numberOfFarms = 0;
         numberOfBuildings = 0;
+
+        library = new Building(Building.ID.LIBRARY, this);
+        university = new Building(Building.ID.UNIVERSITY, this);
+        shipyard = new Building(Building.ID.SHIPYARD, this);
+        workshop = new Building(Building.ID.WORKSHOP, this);
+        farm = new Building(Building.ID.FARM, this);
+        mine = new Building(Building.ID.MINE, this);
     }
     public void update(){
 
@@ -135,27 +153,27 @@ public class Province {
             case Building.ID.FARM:
                 numberOfFarms += 1;
                 numberOfBuildings += 1;
-                productionPoints -= owner.farm.productionCost;
+                productionPoints -= farm.productionCost;
             case Building.ID.MINE:
                 numberOfMines += 1;
                 numberOfBuildings += 1;
-                productionPoints -= owner.mine.productionCost;
+                productionPoints -= mine.productionCost;
             case Building.ID.LIBRARY:
                 numberOfLibraries = 1;
                 numberOfBuildings += 1;
-                productionPoints -= owner.library.productionCost;
+                productionPoints -= library.productionCost;
             case Building.ID.UNIVERSITY:
                 numberOfUniversities = 1;
                 numberOfBuildings += 1;
-                productionPoints -= owner.university.productionCost;
+                productionPoints -= university.productionCost;
             case Building.ID.WORKSHOP:
                 numberOfWorkshops = 1;
                 numberOfBuildings += 1;
-                productionPoints -= owner.workshop.productionCost;
+                productionPoints -= workshop.productionCost;
             case Building.ID.SHIPYARD:
                 numberOfShipyards = 1;
                 numberOfBuildings += 1;
-                productionPoints -= owner.shipyard.productionCost;
+                productionPoints -= shipyard.productionCost;
         }
 
     }
@@ -208,8 +226,30 @@ public class Province {
     }
 
     //math and graphics
-    public void render(){
-
+    public void render(OrthographicCamera camera){
+        if(drawFilledPolygons){
+            polyBatch.setProjectionMatrix(camera.combined);
+            polyBatch.begin();
+            polySprite.draw(polyBatch);
+            polyBatch.end();
+        }
+        else
+            shapeRenderer.setProjectionMatrix(camera.combined);
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+            shapeRenderer.setColor(Color.WHITE);
+            shapeRenderer.polygon(provCoords.toArray());
+            shapeRenderer.end();
+    }
+    public void setMathRender(){
+        shapeRenderer = new ShapeRenderer();
+        pix = new Pixmap(1 , 1, Pixmap.Format.RGBA8888);
+        pix.setColor(Color.RED);
+        pix.fill();
+        texture = new Texture(pix);
+        textureReg = new TextureRegion(texture);
+        polyReg = new PolygonRegion(textureReg, ProvCoords.levianProv.toArray(), triangulate(ProvCoords.levianProv).toArray());
+        polySprite = new PolygonSprite(polyReg);
+        polyBatch = new PolygonSpriteBatch();
     }
     private ShortArray triangulate(FloatArray polygonVertices){
         return triangulator.computeTriangles(polygonVertices);

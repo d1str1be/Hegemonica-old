@@ -11,8 +11,10 @@ public class Building {
     public Technology requiredTechnology;
     public Province province;
     public boolean isNeedCity;
-
-    public Building(int id){
+    public int countOfBuildingInProvince;
+    public Building(int id, Province province){
+        this.province = province;
+        countOfBuildingInProvince = 0;
         switch (id) {
             case ID.FARM:
                 productionCost = 15;
@@ -50,4 +52,7 @@ public class Building {
         public final static int SHIPYARD = 6;
     }
 
+    public Province getProvince() {
+        return province;
+    }
 }

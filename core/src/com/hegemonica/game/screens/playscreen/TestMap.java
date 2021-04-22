@@ -53,12 +53,11 @@ public class TestMap implements Disposable, GestureDetector.GestureListener {
     SpriteBatch batch;
     float zoomMin = 3f;
     float zoomMax = 0.25f;
-    public TestMap() {
+    public TestMap(OrthographicCamera camera, Viewport viewport) {
         Gdx.input.setInputProcessor(new GestureDetector(this));
-        provCoords = new ProvCoords();
-        camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        camera.translate(camera.viewportWidth / 2, camera.viewportHeight / 2);
-        viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
+//        provCoords = new ProvCoords();
+        this.camera = camera;
+        this.viewport = viewport;
         shapeRenderer = new ShapeRenderer();
 
         testVertices = new FloatArray(new float[]{651, 507,
@@ -100,7 +99,7 @@ public class TestMap implements Disposable, GestureDetector.GestureListener {
         return triangulator.computeTriangles(polygonVertices);
     }
 
-    public void render(){
+    public void render(OrthographicCamera camera){
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 //        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
@@ -108,11 +107,11 @@ public class TestMap implements Disposable, GestureDetector.GestureListener {
 //        shapeRenderer.polygon(testVertices);
 //        shapeRenderer.end();
         camera.update();
-        polyBatch.setProjectionMatrix(camera.combined);
+//        polyBatch.setProjectionMatrix(camera.combined);
         fps.render();
-        polyBatch.begin();
-        polySprite.draw(polyBatch);
-        polyBatch.end();
+//        polyBatch.begin();
+//        polySprite.draw(polyBatch);
+//        polyBatch.end();
         batch.begin();
         font.draw(batch, "zoom = " + camera.zoom, Gdx.graphics.getWidth()-250f, Gdx.graphics.getHeight()-250f);
         batch.end();

@@ -3,6 +3,9 @@ package com.hegemonica.game.screens.playscreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.hegemonica.game.Core;
 import com.hegemonica.game.Framerate;
 import com.hegemonica.game.logic.scenarios.gemelch.Gemelch;
@@ -13,12 +16,18 @@ public class TestVersionScreen implements Screen {
     TestMap testMap;
     Gemelch gemelch;
     Core game;
+    public OrthographicCamera camera;
+    public Viewport viewport;
     public TestVersionScreen(Core game){
         this.game = game;
     }
     @Override
     public void show() {
-        testMap = new TestMap();
+        camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        camera.translate(camera.viewportWidth / 2, camera.viewportHeight / 2);
+        viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
+
+        testMap = new TestMap(camera, viewport);
         gemelch = new Gemelch();
     }
 
@@ -26,7 +35,8 @@ public class TestVersionScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        testMap.render();
+        testMap.render(camera);
+        gemelch.render(camera);
     }
 
     @Override
