@@ -11,34 +11,41 @@ public class Building {
     public Technology requiredTechnology;
     public Province province;
     public boolean isNeedCity;
+    public boolean isLimited;
     public int countOfBuildingInProvince;
     public Building(int id, Province province){
         this.province = province;
         countOfBuildingInProvince = 0;
         switch (id) {
             case ID.FARM:
-                productionCost = 15;
+                productionCost = PRODUCTIONCOST.FARM;
+                isLimited = false;
                 isNeedCity = false;
                 requiredTechnology = null;
             case ID.MINE:
-                productionCost = 15;
+                productionCost = PRODUCTIONCOST.MINE;
                 isNeedCity = false;
+                isLimited = false;
                 requiredTechnology = null;
             case ID.LIBRARY:
-                productionCost = 50;
+                productionCost = PRODUCTIONCOST.LIBRARY;
                 isNeedCity = true;
+                isLimited = true;
                 requiredTechnology = province.owner.technologies.paper;
             case ID.UNIVERSITY:
-                productionCost = 120;
+                productionCost = PRODUCTIONCOST.UNIVERSITY;
                 isNeedCity = true;
+                isLimited = true;
                 requiredTechnology = province.owner.technologies.education;
             case ID.WORKSHOP:
-                productionCost = 60;
+                productionCost = PRODUCTIONCOST.WORKSHOP;
                 isNeedCity = true;
+                isLimited = true;
                 requiredTechnology = province.owner.technologies.engineering;
             case ID.SHIPYARD:
-                productionCost = 40;
+                productionCost = PRODUCTIONCOST.SHIPYARD;
                 isNeedCity = true;
+                isLimited = true;
                 requiredTechnology = province.owner.technologies.updatedShipbuilding;
         }
     }
@@ -50,6 +57,15 @@ public class Building {
         public final static int UNIVERSITY = 4;
         public final static int WORKSHOP = 5;
         public final static int SHIPYARD = 6;
+    }
+
+    public class PRODUCTIONCOST {
+        public final static int FARM = 15;
+        public final static int MINE = 15;
+        public final static int LIBRARY = 50;
+        public final static int UNIVERSITY = 120;
+        public final static int WORKSHOP = 60;
+        public final static int SHIPYARD = 40;
     }
 
     public Province getProvince() {

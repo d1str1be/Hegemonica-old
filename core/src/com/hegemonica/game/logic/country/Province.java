@@ -35,7 +35,7 @@ public class Province {
     public int shipyardProduction;
     public int libraryProduction;
     public int universityProduction;
-    public int numberOfBuildings;
+    public int numberOfLimitedBuildings;
 
     public Building buildingInProcess;
 
@@ -95,7 +95,7 @@ public class Province {
         numberOfLibraries = 0;
         numberOfMines = 0;
         numberOfFarms = 0;
-        numberOfBuildings = 0;
+        numberOfLimitedBuildings = 0;
 
         library = new Building(Building.ID.LIBRARY, this);
         university = new Building(Building.ID.UNIVERSITY, this);
@@ -154,27 +154,25 @@ public class Province {
         switch (building.id) {
             case Building.ID.FARM:
                 numberOfFarms += 1;
-                numberOfBuildings += 1;
                 productionPoints -= farm.productionCost;
             case Building.ID.MINE:
                 numberOfMines += 1;
-                numberOfBuildings += 1;
                 productionPoints -= mine.productionCost;
             case Building.ID.LIBRARY:
                 numberOfLibraries = 1;
-                numberOfBuildings += 1;
+                numberOfLimitedBuildings += 1;
                 productionPoints -= library.productionCost;
             case Building.ID.UNIVERSITY:
                 numberOfUniversities = 1;
-                numberOfBuildings += 1;
+                numberOfLimitedBuildings += 1;
                 productionPoints -= university.productionCost;
             case Building.ID.WORKSHOP:
                 numberOfWorkshops = 1;
-                numberOfBuildings += 1;
+                numberOfLimitedBuildings += 1;
                 productionPoints -= workshop.productionCost;
             case Building.ID.SHIPYARD:
                 numberOfShipyards = 1;
-                numberOfBuildings += 1;
+                numberOfLimitedBuildings += 1;
                 productionPoints -= shipyard.productionCost;
         }
 
@@ -189,12 +187,15 @@ public class Province {
             provinceDecrease();
         }
         productionPoints += population + numberOfMines * mineProduction + numberOfWorkshops * workshopProduction + numberOfShipyards * shipyardProduction;
-        //дописать neededProductionPoints
+        if (productionPoints >= neededProductionPoints) {
+            build(buildingInProcess);
+            buildingInProcess = null;
+        }
         gainedSciencePoints = population + numberOfLibraries * libraryProduction + numberOfUniversities * universityProduction;
     }
 
     public boolean isBuildingAvailible(Building building) {
-        if (owner.checkRequiredTechnologiesForBuilding(building) && numberOfBuildings < population) {
+        if (owner.checkRequiredTechnologiesForBuilding(building)) {
             if (building.isNeedCity == false || building.isNeedCity == isCity) {
                 return true;
             }
@@ -210,7 +211,9 @@ public class Province {
     public void choseBuilding(Building building) {
         if (isBuildingAvailible(building)) {
             buildingInProcess = building;
-
+        }
+        else {
+            choseBuilding(building);
         }
     }
 
@@ -224,7 +227,7 @@ public class Province {
         numberOfLibraries = 0;
         numberOfMines = 0;
         numberOfFarms = 0;
-        numberOfBuildings = 0;
+        numberOfLimitedBuildings = 0;
     }
 
     //math and graphics
