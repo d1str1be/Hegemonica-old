@@ -1,4 +1,4 @@
-package com.hegemonica.game.screens.funscreen;
+package com.hegemonica.game.noneed.funscreen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
