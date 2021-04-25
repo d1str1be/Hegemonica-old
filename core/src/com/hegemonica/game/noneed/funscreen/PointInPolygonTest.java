@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
-import com.hegemonica.game.noneed.funscreen.PlayScreen;
 
 public class PointInPolygonTest extends PlayScreen {
     Vector2 a = new Vector2(), b = new Vector2(), c = new Vector2(), d = new Vector2();

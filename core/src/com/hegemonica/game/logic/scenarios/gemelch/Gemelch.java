@@ -5,8 +5,6 @@ import com.hegemonica.game.localization.ProvinceLoc;
 import com.hegemonica.game.logic.country.Country;
 import com.hegemonica.game.logic.country.Province;
 
-import java.util.ArrayList;
-
 // ЭТО СЦЕНАРИЙ. ЗДЕСЬ ЗАДАЕМ ВСЕ СТРАНЫ ЭТОГО СЦЕНАРИЯ, КАРТУ "ПАНГЕЯ" И ВСЕ ОСТАЛЬНОЕ
 public class Gemelch {
     public static final int COUNT_OF_RESOURCES = 26;

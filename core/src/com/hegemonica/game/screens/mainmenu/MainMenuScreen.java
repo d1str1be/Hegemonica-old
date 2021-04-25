@@ -2,7 +2,6 @@ package com.hegemonica.game.screens.mainmenu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -14,12 +13,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.hegemonica.game.Framerate;
 import com.hegemonica.game.Core;
+import com.hegemonica.game.Framerate;
 import com.hegemonica.game.localization.MenuLoc;
 import com.hegemonica.game.screens.playscreen.TestVersionScreen;
-
-import jdk.incubator.jpackage.internal.Log;
 
 public class MainMenuScreen implements Screen {
     Core game;

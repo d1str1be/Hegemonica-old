@@ -1,6 +1,5 @@
 package com.hegemonica.game.screens.playscreen;
 
-import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
