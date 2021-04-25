@@ -16,11 +16,10 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.hegemonica.game.Framerate;
 import com.hegemonica.game.Core;
-import com.hegemonica.game.PointInPolygonTest;
-import com.hegemonica.game.localization.CountryLoc;
 import com.hegemonica.game.localization.MenuLoc;
-import com.hegemonica.game.screens.playscreen.PlayScreen;
 import com.hegemonica.game.screens.playscreen.TestVersionScreen;
+
+import jdk.incubator.jpackage.internal.Log;
 
 public class MainMenuScreen implements Screen {
     Core game;
@@ -34,42 +33,39 @@ public class MainMenuScreen implements Screen {
     Skin GlassyUI;
     Stage stage;
     Label hegemonicaLabel;
-    Music music;
+
     Framerate fps;
 
     float centerButtonHeight;
     float centerButtonWidth;
 
-    int starttime;
+    int startTime;
     int timeTillStart;
 
 
-
-    public MainMenuScreen(Core game){
+    public MainMenuScreen(Core game) {
         this.game = game;
     }
+
     @Override
     public void show() {
         menufont = new BitmapFont(Gdx.files.internal("fonts/land.fnt"), Gdx.files.internal("fonts/land.png"), false);
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         fps = new Framerate();
-        //музыка тест
-        music = Gdx.audio.newMusic(Gdx.files.internal("music/mainmenu.mp3"));
-        music.setLooping(true);
-        music.play();
+
 
         //таймер с начала игры
-        starttime = (int) System.currentTimeMillis();
+        startTime = (int) System.currentTimeMillis();
 
-        centerButtonHeight = Gdx.graphics.getHeight()/8;
-        centerButtonWidth = Gdx.graphics.getWidth()/12*5;
+        centerButtonHeight = Gdx.graphics.getHeight() / 8f;
+        centerButtonWidth = Gdx.graphics.getWidth() / 12f * 5f;
 
         GlassyUI = new Skin(Gdx.files.internal("ui/glassy/skin/glassy-ui.json"));
         //надпись "гегемоника"
         hegemonicaLabel = new Label("Hegemonica", GlassyUI, "big");
         hegemonicaLabel.setAlignment(Align.center);
-        hegemonicaLabel.setY(Gdx.graphics.getHeight()*2/3);
+        hegemonicaLabel.setY(Gdx.graphics.getHeight() * 2 / 3f);
         hegemonicaLabel.setWidth(Gdx.graphics.getWidth());
         hegemonicaLabel.setFontScale(2);
         stage.addActor(hegemonicaLabel);
@@ -77,17 +73,17 @@ public class MainMenuScreen implements Screen {
         //кнопка "играть"
         bPlay = new TextButton(MenuLoc.Buttons.Play.toString(), GlassyUI);
         bPlay.setSize(centerButtonWidth, centerButtonHeight);
-        bPlay.setPosition((Gdx.graphics.getWidth()-centerButtonWidth)/2,Gdx.graphics.getHeight()-centerButtonHeight*5);
-        bPlay.addListener(new InputListener(){
+        bPlay.setPosition((Gdx.graphics.getWidth() - centerButtonWidth) / 2, Gdx.graphics.getHeight() - centerButtonHeight * 5);
+        bPlay.addListener(new InputListener() {
             @Override
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-
-            }
-            @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 game.setScreen(new TestVersionScreen(game));
-                music.dispose();
-                stage.dispose();
+                dispose();
+            }
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+
                 return true;
             }
         });
@@ -96,15 +92,18 @@ public class MainMenuScreen implements Screen {
         //кнопка "настройки"
         bSettings = new TextButton(MenuLoc.Buttons.Settings.toString(), GlassyUI);
         bSettings.setSize(centerButtonWidth, centerButtonHeight);
-        bSettings.setPosition((Gdx.graphics.getWidth()-centerButtonWidth)/2,Gdx.graphics.getHeight()-centerButtonHeight*6);
-        bSettings.addListener(new InputListener(){
+        bSettings.setPosition((Gdx.graphics.getWidth() - centerButtonWidth) / 2, Gdx.graphics.getHeight() - centerButtonHeight * 6);
+        bSettings.addListener(new InputListener() {
             @Override
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                bSettings.setText("Settings Menu is not ready yet");
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                Gdx.app.log(Core.Tags.DEFAULT, "Zapustil");
+                game.setScreen(new MainMenuSettingsScreen(game));
+                dispose();
             }
+
             @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                bSettings.setText("Settings");
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+
                 return true;
             }
         });
@@ -113,21 +112,21 @@ public class MainMenuScreen implements Screen {
         //кнопка "выйти"
         bExit = new TextButton(MenuLoc.Buttons.Exit.toString(), GlassyUI);
         bExit.setSize(centerButtonWidth, centerButtonHeight);
-        bExit.setPosition((Gdx.graphics.getWidth()-centerButtonWidth)/2,Gdx.graphics.getHeight()-centerButtonHeight*7);
-        bExit.addListener(new InputListener(){
+        bExit.setPosition((Gdx.graphics.getWidth() - centerButtonWidth) / 2, Gdx.graphics.getHeight() - centerButtonHeight * 7);
+        bExit.addListener(new InputListener() {
             @Override
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-
-            }
-            @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 Gdx.app.exit();
+            }
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 return true;
             }
         });
         stage.addActor(bExit);
 
-        Gdx.app.log(Core.Tags.ENGINE,"Engine log");
+        Gdx.app.log(Core.Tags.ENGINE, "Engine log");
 
         // creating animations
 //        tweenManager = new TweenManager();
@@ -147,7 +146,7 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0,0,0,1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
         stage.draw();
@@ -177,9 +176,9 @@ public class MainMenuScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
-        music.dispose();
     }
-    public void timerupdate(){
-        timeTillStart = (int) ((System.currentTimeMillis() - starttime) / 1000);
+
+    public void timerupdate() {
+        timeTillStart = (int) ((System.currentTimeMillis() - startTime) / 1000);
     }
 }

@@ -26,6 +26,7 @@ import com.badlogic.gdx.utils.FloatArray;
 import com.badlogic.gdx.utils.ShortArray;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.hegemonica.game.Framerate;
+import com.hegemonica.game.logic.scenarios.gemelch.Gemelch;
 import com.hegemonica.game.logic.scenarios.gemelch.ProvCoords;
 
 import java.util.Random;
@@ -35,7 +36,8 @@ public class TestMap implements Disposable, GestureDetector.GestureListener {
     private ProvCoords provCoords;
     boolean coordsAreSame;
     public OrthographicCamera camera;
-    public Viewport viewport;
+    public Viewport MainViewport;
+//    private Viewport UIviewport;
     private ShapeRenderer shapeRenderer;
     private final float WORLD_HEIGHT = 100;
     private final float WORLD_WIDTH = 50;
@@ -54,17 +56,19 @@ public class TestMap implements Disposable, GestureDetector.GestureListener {
     private Skin UIskin;
     private TextButton textButton;
     private Stage stage;
+    private Gemelch gemelch;
 
     Framerate fps;
     BitmapFont font;
     SpriteBatch batch;
     float zoomMin = 3f;
     float zoomMax = 0.25f;
-    public TestMap(OrthographicCamera camera, Viewport viewport) {
+    public TestMap(OrthographicCamera camera, Viewport viewport, Gemelch gemelch) {
         Gdx.input.setInputProcessor(new GestureDetector(this));
+        this.gemelch = gemelch;
 //        provCoords = new ProvCoords();
         this.camera = camera;
-        this.viewport = viewport;
+        this.MainViewport = viewport;
         shapeRenderer = new ShapeRenderer();
 
         testVertices = new FloatArray(new float[]{651, 507,
@@ -106,7 +110,7 @@ public class TestMap implements Disposable, GestureDetector.GestureListener {
         textButton.setWidth(Gdx.graphics.getWidth()/15f);
         textButton.setHeight(Gdx.graphics.getHeight()/6f);
         textButton.setPosition(Gdx.graphics.getWidth()-textButton.getWidth(),Gdx.graphics.getHeight()-textButton.getHeight());
-        stage = new Stage(viewport, batch);
+        stage = new Stage();
         stage.addActor(textButton);
     }
 
@@ -150,50 +154,6 @@ public class TestMap implements Disposable, GestureDetector.GestureListener {
         polyBatch.dispose();
     }
 
-//    @Override
-//    public boolean keyDown(int keycode) {
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean keyUp(int keycode) {
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean keyTyped(char character) {
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean touchDragged(int screenX, int screenY, int pointer) {
-//        float x = Gdx.input.getDeltaX();
-//        float y = Gdx.input.getDeltaY();
-//
-//        camera.translate(-x,y);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean mouseMoved(int screenX, int screenY) {
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean scrolled(float amountX, float amountY) {
-//        return false;
-//    }
-
     @Override
     public boolean touchDown(float x, float y, int pointer, int button) {
         return false;
@@ -201,7 +161,7 @@ public class TestMap implements Disposable, GestureDetector.GestureListener {
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
-        return false;
+        return true;
     }
 
     @Override
@@ -228,12 +188,12 @@ public class TestMap implements Disposable, GestureDetector.GestureListener {
     @Override
     public boolean zoom(float initialDistance, float distance) {
 //        if(camera.zoom >= zoomMax && camera.zoom <= zoomMin) {
-        if(camera.zoom>=0.2f&&camera.zoom<=1f) {
+        if(camera.zoom>=zoomMax&&camera.zoom<=zoomMin) {
             if (initialDistance >= distance) {
-                camera.zoom += initialDistance * 0.00005f - distance * 0.00005f;
+                camera.zoom += (initialDistance-distance) * 0.00005f * (1/camera.zoom);
                 return true;
             } else {
-                camera.zoom -= distance * 0.00005f - initialDistance * 0.00005f;
+                camera.zoom -= (distance-initialDistance) * 0.00005f * (1/camera.zoom);
                 return true;
             }
         }

@@ -8,10 +8,10 @@ public class Crossbows extends WarUnit {
     public boolean isSeaUnit = false;
 
     public Crossbows() {
-        super(IDs.CROSSBOWS, 7, 1.5, 1, 1, false);
+//        super(IDs.CROSSBOWS, 7, 1.5, 1, 1, false);
     }
 
     public Crossbows(int id, int startBuyCost, double startTurnCost, double startStrength, double startNeededMP, boolean isSeaUnit) {
-        super(IDs.CROSSBOWS, 7, 1.5, 1, 1, false);
+//        super(IDs.CROSSBOWS, 7, 1.5, 1, 1, false);
     }
 }

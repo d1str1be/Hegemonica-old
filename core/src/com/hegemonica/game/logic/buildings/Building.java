@@ -51,12 +51,12 @@ public class Building {
     }
 
     public class ID {
-        public final static int FARM = 1;
-        public final static int MINE = 2;
-        public final static int LIBRARY = 3;
-        public final static int UNIVERSITY = 4;
-        public final static int WORKSHOP = 5;
-        public final static int SHIPYARD = 6;
+        public final static int FARM = 0;
+        public final static int MINE = 1;
+        public final static int LIBRARY = 2;
+        public final static int UNIVERSITY = 3;
+        public final static int WORKSHOP = 4;
+        public final static int SHIPYARD = 5;
     }
 
     public class PRODUCTIONCOST {

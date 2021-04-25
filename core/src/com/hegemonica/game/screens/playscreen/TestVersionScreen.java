@@ -27,7 +27,7 @@ public class TestVersionScreen implements Screen {
         camera.translate(camera.viewportWidth / 2, camera.viewportHeight / 2);
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
 
-        testMap = new TestMap(camera, viewport);
+        testMap = new TestMap(camera, viewport, gemelch);
         gemelch = new Gemelch();
     }
 

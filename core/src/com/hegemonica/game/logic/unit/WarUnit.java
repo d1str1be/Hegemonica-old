@@ -1,16 +1,20 @@
 package com.hegemonica.game.logic.unit;
 
+import com.hegemonica.game.logic.country.Province;
+
 class WarUnit {
-    public static int id;
-    public static int startBuyCost;
-    public static double startTurnCost;
-    public static double startStrength;
-    public static double startNeededMP; // МП - менпауер
-    public static int BuyCost;
-    public static double TurnCost;
-    public static double Strength;
-    public static double NeededMP;
-    public static boolean isSeaUnit;
+    public int id;
+    public int startBuyCost;
+    public float startTurnCost;
+    public float startStrength;
+    public float startNeededMP; // МП - менпауер
+    public int BuyCost;
+    public float TurnCost;
+    public float Strength;
+    public float NeededMP;
+    public boolean isSeaUnit;
+
+    public Province province;
 
     public WarUnit(){
         id = IDs.WARUNIT;
@@ -20,7 +24,7 @@ class WarUnit {
         startNeededMP = 0;
         isSeaUnit = false;
     }
-    public WarUnit (int id, int startBuyCost, double startTurnCost, double startStrength, double startNeededMP, boolean isSeaUnit) {
+    public WarUnit (int id, int startBuyCost, float startTurnCost, float startStrength, float startNeededMP, boolean isSeaUnit) {
         this.id = id;
         this.startBuyCost = startBuyCost;
         this.startTurnCost = startTurnCost;

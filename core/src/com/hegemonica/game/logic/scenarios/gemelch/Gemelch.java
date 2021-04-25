@@ -1,14 +1,11 @@
 package com.hegemonica.game.logic.scenarios.gemelch;
 
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.physics.bullet.collision._btMprSimplex_t;
 import com.hegemonica.game.localization.ProvinceLoc;
-import com.hegemonica.game.logic.Technology;
-import com.hegemonica.game.logic.buildings.Building;
 import com.hegemonica.game.logic.country.Country;
 import com.hegemonica.game.logic.country.Province;
-import com.hegemonica.game.logic.resource.Resource;
+
+import java.util.ArrayList;
 
 // ЭТО СЦЕНАРИЙ. ЗДЕСЬ ЗАДАЕМ ВСЕ СТРАНЫ ЭТОГО СЦЕНАРИЯ, КАРТУ "ПАНГЕЯ" И ВСЕ ОСТАЛЬНОЕ
 public class Gemelch {
@@ -17,6 +14,7 @@ public class Gemelch {
     public int turnNumber;
     public Country test;
     public Country test1;
+    public Province[] provinces;
     public Province levian;
     public Province valinia;
 
@@ -29,7 +27,7 @@ public class Gemelch {
         test1 = new Country("Test Testov", 1);
         levian = new Province(0, ProvinceLoc.Names.Levian.toString(), test, ProvCoords.levianProv, new boolean[]{true, true}, true);
         valinia = new Province(1, ProvinceLoc.Names.Valinia.toString(), test1,ProvCoords.valiniaProv,  new boolean[]{true, true}, true);
-
+        provinces = new Province[]{levian, valinia};
     }
     public void onTurn(){
         test.onTurn();
@@ -43,7 +41,21 @@ public class Gemelch {
 //
 //    }
     public void render(OrthographicCamera camera){
-        levian.render(camera);
-        valinia.render(camera);
+        for (Province x:provinces) {
+            x.render(camera);
+        }
+    }
+
+    /**
+     * Returns selected point. Should be used in tap() method of GestureListener
+     * @return Selected province
+     */
+
+    public Province whichPolygonContainsPoint(float x, float y){
+        for(int i=0;i<provinces.length;i++){
+            if(provinces[i].contains(x,y))
+                return provinces[i];
+        }
+        return null;
     }
 }
