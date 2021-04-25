@@ -7,10 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.hegemonica.game.Core;
-import com.hegemonica.game.Framerate;
 import com.hegemonica.game.logic.scenarios.gemelch.Gemelch;
-
-import java.awt.Polygon;
 
 public class TestVersionScreen implements Screen {
     TestMap testMap;

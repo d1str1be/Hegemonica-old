@@ -4,7 +4,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.hegemonica.game.screens.mainmenu.MainMenuScreen;
-import com.hegemonica.game.screens.playscreen.TestVersionScreen;
 
 
 public class Core extends Game {

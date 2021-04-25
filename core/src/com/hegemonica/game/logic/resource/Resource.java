@@ -1,6 +1,5 @@
 package com.hegemonica.game.logic.resource;
 
-import com.hegemonica.game.logic.country.Country;
 import com.hegemonica.game.logic.country.Province;
 
 public class Resource {

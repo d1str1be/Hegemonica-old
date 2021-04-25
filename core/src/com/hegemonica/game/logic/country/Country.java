@@ -1,12 +1,9 @@
 package com.hegemonica.game.logic.country;
 
 import com.hegemonica.game.logic.Technologies;
-import com.hegemonica.game.logic.Technology;
 import com.hegemonica.game.logic.buildings.Building;
 import com.hegemonica.game.logic.resource.Resource;
 import com.hegemonica.game.logic.scenarios.gemelch.Gemelch;
-
-import java.util.HashMap;
 
 public class Country {
     public String name;

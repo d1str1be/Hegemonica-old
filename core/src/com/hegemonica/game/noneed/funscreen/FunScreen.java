@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.hegemonica.game.Framerate;
 import com.hegemonica.game.Core;
+import com.hegemonica.game.Framerate;
 
 import java.util.Random;
 
