@@ -69,27 +69,7 @@ public class TestMap implements Disposable, GestureDetector.GestureListener {
         this.camera = camera;
         this.MainViewport = viewport;
         shapeRenderer = new ShapeRenderer();
-
-        testVertices = new FloatArray(new float[]{651, 507,
-                645, 505, 642, 504,
-                639, 500, 644, 496,
-                647, 490, 648, 479,
-                654, 480, 659, 479,
-                661, 474, 671, 479,
-                672, 481, 675, 481,
-                678, 477, 678, 472,
-                673, 467, 673, 463,
-                676, 461, 680, 641,
-                691, 464, 698, 461,
-                697, 457, 697, 452,
-                702, 448, 706, 443,
-                711, 437, 711, 453,
-                718, 455, 719, 462,
-                711, 464, 706, 474, 609,
-                479, 693, 481, 690, 486,
-                681, 490, 673, 493, 668,
-                497, 663, 497, 661, 502,
-                651, 502, 651, 507});
+        
 
         pix = new Pixmap(1 , 1, Format.RGBA8888);
         pix.setColor(Color.RED);
