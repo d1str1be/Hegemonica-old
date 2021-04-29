@@ -1,6 +1,25 @@
 {
-  "class": "com.hegemonica.game.localization.CountryLoc",
+  "class": "com.hegemonica.game.localization.LocalizationKeys",
   "map": {
+    "Hegemonica": "Hegemonica",
+    "Play": "Играть",
+    "Settings": "Настройки",
+    "Back": "Назад",
+    "Exit": "Выйти",
+    "Language": "Выбор языка",
+    "English": "Английский",
+    "Russian": "Русский",
+    "Sound_Volume": "Громкость звуков",
+    "Music_Volume": "Громкость музыки",
+
+    "Levian": "Levian",
+    "Valinia": "Valinia",
+    "Haadra": "Haadra",
+    "Eliria": "Eliria",
+    "Gasiliya": "Gasiliya",
+    "Odar": "Odar",
+
     "Svadia": "Свадия"
   }
 }
+

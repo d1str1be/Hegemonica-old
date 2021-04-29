@@ -3,6 +3,7 @@ package com.hegemonica.game.screens.mainmenu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -12,11 +13,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
+import com.hegemonica.game.AudioManager;
 import com.hegemonica.game.Core;
 import com.hegemonica.game.Framerate;
-import com.hegemonica.game.localization.MenuLoc;
+import com.hegemonica.game.Log;
 import com.hegemonica.game.screens.playscreen.TestVersionScreen;
+
+import static com.hegemonica.game.Log.Tags.HEGEMONICA;
+import static com.hegemonica.game.localization.LocalizationKeys.Keys;
 
 public class MainMenuScreen implements Screen {
     Core game;
@@ -39,6 +45,8 @@ public class MainMenuScreen implements Screen {
     int startTime;
     int timeTillStart;
 
+    OrthographicCamera camera;
+    Viewport viewport;
 
     public MainMenuScreen(Core game) {
         this.game = game;
@@ -46,8 +54,12 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void show() {
+        camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        camera.translate(camera.viewportWidth / 2, camera.viewportHeight / 2);
+        viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
+
         menufont = new BitmapFont(Gdx.files.internal("fonts/land.fnt"), Gdx.files.internal("fonts/land.png"), false);
-        stage = new Stage(new ScreenViewport());
+        stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
         fps = new Framerate();
 
@@ -60,7 +72,7 @@ public class MainMenuScreen implements Screen {
 
         GlassyUI = new Skin(Gdx.files.internal("ui/glassy/skin/glassy-ui.json"));
         //надпись "гегемоника"
-        hegemonicaLabel = new Label("Hegemonica", GlassyUI, "big");
+        hegemonicaLabel = new Label(game.loc.getString(Keys.Hegemonica), GlassyUI, "big");
         hegemonicaLabel.setAlignment(Align.center);
         hegemonicaLabel.setY(Gdx.graphics.getHeight() * 2 / 3f);
         hegemonicaLabel.setWidth(Gdx.graphics.getWidth());
@@ -68,13 +80,14 @@ public class MainMenuScreen implements Screen {
         stage.addActor(hegemonicaLabel);
 
         //кнопка "играть"
-        bPlay = new TextButton(MenuLoc.Buttons.Play.toString(), GlassyUI);
+        bPlay = new TextButton(game.loc.getString(Keys.Play), GlassyUI);
         bPlay.setSize(centerButtonWidth, centerButtonHeight);
         bPlay.setPosition((Gdx.graphics.getWidth() - centerButtonWidth) / 2, Gdx.graphics.getHeight() - centerButtonHeight * 5);
         bPlay.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 game.setScreen(new TestVersionScreen(game));
+                game.audio.playSound(AudioManager.Sounds.UI_CLICK);
                 dispose();
             }
 
@@ -87,13 +100,14 @@ public class MainMenuScreen implements Screen {
         stage.addActor(bPlay);
 
         //кнопка "настройки"
-        bSettings = new TextButton(MenuLoc.Buttons.Settings.toString(), GlassyUI);
+        bSettings = new TextButton(game.loc.getString(Keys.Settings), GlassyUI);
         bSettings.setSize(centerButtonWidth, centerButtonHeight);
         bSettings.setPosition((Gdx.graphics.getWidth() - centerButtonWidth) / 2, Gdx.graphics.getHeight() - centerButtonHeight * 6);
         bSettings.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.app.log(Core.Tags.DEFAULT, "Zapustil");
+                Gdx.app.log(Log.Tags.MAINMENU, "Opened Settings");
+                game.audio.playSound(AudioManager.Sounds.UI_CLICK);
                 game.setScreen(new MainMenuSettingsScreen(game));
                 dispose();
             }
@@ -107,12 +121,13 @@ public class MainMenuScreen implements Screen {
         stage.addActor(bSettings);
 
         //кнопка "выйти"
-        bExit = new TextButton(MenuLoc.Buttons.Exit.toString(), GlassyUI);
+        bExit = new TextButton(game.loc.getString(Keys.Exit), GlassyUI);
         bExit.setSize(centerButtonWidth, centerButtonHeight);
         bExit.setPosition((Gdx.graphics.getWidth() - centerButtonWidth) / 2, Gdx.graphics.getHeight() - centerButtonHeight * 7);
         bExit.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                game.audio.playSound(AudioManager.Sounds.UI_CLICK);
                 Gdx.app.exit();
             }
 
@@ -122,8 +137,6 @@ public class MainMenuScreen implements Screen {
             }
         });
         stage.addActor(bExit);
-
-        Gdx.app.log(Core.Tags.ENGINE, "Engine log");
 
         // creating animations
 //        tweenManager = new TweenManager();
@@ -148,12 +161,15 @@ public class MainMenuScreen implements Screen {
         stage.act();
         stage.draw();
         fps.render();
-        timerupdate();
+        timerUpdate();
     }
 
     @Override
     public void resize(int width, int height) {
+        viewport.update(width, height);
+        camera.setToOrtho(false, viewport.getScreenWidth(), viewport.getScreenHeight());
 
+        Gdx.app.log(HEGEMONICA,"Width of app: " + Gdx.graphics.getWidth() + "\nHeight of app: " + Gdx.graphics.getHeight());
     }
 
     @Override
@@ -175,7 +191,7 @@ public class MainMenuScreen implements Screen {
         stage.dispose();
     }
 
-    public void timerupdate() {
+    public void timerUpdate() {
         timeTillStart = (int) ((System.currentTimeMillis() - startTime) / 1000);
     }
 }
