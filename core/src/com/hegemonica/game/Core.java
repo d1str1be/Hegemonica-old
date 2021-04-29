@@ -2,28 +2,35 @@ package com.hegemonica.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.hegemonica.game.localization.LocalizationManager;
+import com.badlogic.gdx.audio.Music;
 import com.hegemonica.game.screens.mainmenu.MainMenuScreen;
-
-import static com.hegemonica.game.Log.Tags.HEGEMONICA;
 
 
 public class Core extends Game {
-	private static final float VERSION  = 0.20f;
+	public static final float VERSION  = 0.30f;
+	public float musicVolume = 1f;
+	public float soundVolume = 1f;
 
-	public LocalizationManager loc;
-	public AudioManager audio;
+	public Music music;
 
+	public static class Tags {
+		final static public String DEFAULT = "Default";
+		public static final String HEGEMONICA = "Hegemonica";
+		final static public String ENGINE = "Engine Logs";
+		final static public String COUNTRY = "Country Logs";
+		final static public String PROVINCE = "Province Logs";
+	}
 	@Override
 	public void create () {
-		Gdx.app.log(HEGEMONICA,"Width of app: " + Gdx.graphics.getWidth() + "\nHeight of app: " + Gdx.graphics.getHeight());
-		Gdx.input.setCatchKey(Input.Keys.BACK,true); // перехват сист.кнопки "назад" на андроиде
-		audio = new AudioManager();
-		loc = new LocalizationManager();
+		//музыка тест
+		music = Gdx.audio.newMusic(Gdx.files.internal("music/mainmenu.mp3"));
+		music.setVolume(this.musicVolume);
+		music.setLooping(true);
+		music.play();
+
+
+		Gdx.files.internal("english.json"); //настройка языка. на первое время напрямую при запуске пропишем - Богдан
 		this.setScreen(new MainMenuScreen(this));
-
-
 	}
 
 	@Override
@@ -42,6 +49,10 @@ public class Core extends Game {
 	}
 
 	@Override
-	public void dispose () { super.dispose(); ;
+	public void dispose () { super.dispose(); music.dispose();
+	}
+
+	public void setMusicVolume(float value){
+		music.setVolume(value);
 	}
 }

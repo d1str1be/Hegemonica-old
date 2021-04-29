@@ -16,9 +16,6 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.hegemonica.game.Core;
 
-import static com.hegemonica.game.AudioManager.Sounds.UI_CLICK;
-import static com.hegemonica.game.localization.LocalizationKeys.Keys;
-
 class MainMenuSettingsScreen implements Screen {
     Core game;
 
@@ -30,9 +27,7 @@ class MainMenuSettingsScreen implements Screen {
     Label lSettings;
     SelectBox<String> languageSelection;
     Slider musicSlider;
-    Label musicSliderLabel;
     Slider soundSlider;
-    Label soundSliderLabel;
     TextButton bBack;
 
     Array<String> languageBoxItems = new Array<>(true, 2);
@@ -56,87 +51,40 @@ class MainMenuSettingsScreen implements Screen {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
-        languageBoxItems.add(game.loc.getString(Keys.English));
-        // languageBoxItems.add(game.loc.getString(Keys.English), game.loc.getString(Keys.Russian));
+        languageBoxItems.add("English", "Russian");
 
-        lSettings = new Label(Keys.Settings.toString(), GlassyUI, "big");
+        lSettings = new Label("Settings", GlassyUI, "big");
         lSettings.setWidth(Gdx.graphics.getWidth());
         lSettings.setScale(1.5f);
 
         languageSelection = new SelectBox<String>(GlassyUI);
-        languageSelection.setName(game.loc.getString(Keys.Language));
+        languageSelection.setName("Language");
         languageSelection.setWidth(Gdx.graphics.getWidth());
         languageSelection.setItems(languageBoxItems);
         languageSelection.setScale(5f);
-        languageSelection.addListener(new InputListener(){
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            }
 
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                switch (languageSelection.getSelectedIndex()){
-                    case 0: //english
-                        game.loc.updateLanguage(game.loc.englishLocFile);
-                    case 1: //russian
-                        game.loc.updateLanguage(game.loc.russianLocFile);
-                    default:
-                        game.loc.updateLanguage(game.loc.englishLocFile);
-                }
-            }
-        });
-
-        musicSliderLabel = new Label(game.loc.getString(Keys.Music_Volume), GlassyUI);
         musicSlider = new Slider(0, 1, 0.05f, false, GlassyUI);
-        musicSlider.setValue(game.audio.getMusicVolume());
+        musicSlider.setValue(1);
+        musicSlider.setName("Music Volume");
         musicSlider.setWidth(Gdx.graphics.getWidth());
         musicSlider.addListener(new InputListener(){
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-
+                game.setMusicVolume(musicSlider.getValue());
             }
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 return true;
             }
-
-            @Override
-            public void touchDragged(InputEvent event, float x, float y, int pointer) {
-                game.audio.setMusicVolume(musicSlider.getValue());
-            }
         });
-
-        soundSliderLabel = new Label(game.loc.getString(Keys.Sound_Volume), GlassyUI);
         soundSlider = new Slider(0, 1, 0.05f, false, GlassyUI);
-        soundSlider.setValue(game.audio.getSoundVolume());
-        soundSlider.setWidth(Gdx.graphics.getWidth());
-        soundSlider.addListener(new InputListener(){
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
-            }
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            }
-
-            @Override
-            public void touchDragged(InputEvent event, float x, float y, int pointer) {
-                game.audio.setSoundVolume(soundSlider.getValue());
-            }
-
-        });
-
-        bBack = new TextButton(game.loc.getString(Keys.Back), GlassyUI);
+        bBack = new TextButton("Back", GlassyUI);
         bBack.setSize(bWidth, bHeight);
-        bBack.setPosition(Gdx.graphics.getWidth()-bBack.getWidth(), 0);
         bBack.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                game.audio.playSound(UI_CLICK);
                 game.setScreen(new MainMenuScreen(game));
                 dispose();
             }
@@ -148,19 +96,14 @@ class MainMenuSettingsScreen implements Screen {
         });
 
 
-
         table = new Table(GlassyUI);
         table.setSize(stage.getWidth(), stage.getHeight());
         table.setOrigin(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() * 0.65f);
         table.add(lSettings);
-        table.row().colspan(3);
+        table.row();
         table.add(languageSelection);
-        table.row().colspan(2);
-        table.add(musicSliderLabel);
-        table.add(musicSlider).width(Gdx.graphics.getWidth() / 3f);
-        table.row().colspan(2);
-        table.add(soundSliderLabel);
-        table.add(soundSlider).width(Gdx.graphics.getWidth() / 3f);
+        table.row();
+        table.add(musicSlider);
         table.row();
         table.add(bBack);
 

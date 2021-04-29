@@ -1,17 +1,17 @@
 {
-  "class": "com.hegemonica.game.localization.LocalizationKeys",
+  "class": "com.hegemonica.game.localization.CountryLoc",
   "map": {
-    "Hegemonica": "Hegemonica",
+    "Svadia": "Svadia"
+  },
+
+  "class": "com.hegemonica.game.localization.MenuLoc",
+  "map": {
     "Play": "Play",
     "Settings": "Settings",
-    "Language": "Language",
-    "English": "English",
-    "Russian": "Russian",
-    "Sound_Volume": "Sound Volume",
-    "Music_Volume": "Music Volume",
-    "Back": "Back",
-    "Exit": "Exit",
-
+    "Exit": "Exit"
+  },
+  "class": "com.hegemonica.game.localization.ProvinceLoc",
+  "map": {
     "Levian": "Levian",
     "Valinia": "Valinia",
     "Haadra": "Haadra",
