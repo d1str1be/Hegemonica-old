@@ -4,6 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -17,6 +20,7 @@ import com.hegemonica.game.localization.LocalizationKeys;
 import com.hegemonica.game.logic.scenarios.gemelch.Gemelch;
 import com.hegemonica.game.screens.mainmenu.MainMenuScreen;
 
+import static com.hegemonica.game.AudioManager.Sounds.Chill;
 import static com.hegemonica.game.AudioManager.Sounds.UI_CLICK;
 
 public class TestVersionScreen implements Screen {
@@ -28,16 +32,21 @@ public class TestVersionScreen implements Screen {
 
     Skin GlassyUI;
 
+    SpriteBatch spriteBatch;
+    Texture texture;
     Stage stage;
     TextButton bBack;
     final float bWidth = Gdx.graphics.getWidth() / 12f * 3f;
     final float bHeight = Gdx.graphics.getHeight() / 8f;
 
+
     public TestVersionScreen(Core game){
         this.game = game;
+
     }
     @Override
     public void show() {
+        game.audio.playSound(Chill);
         stage = new Stage(new ScreenViewport());
 
         Gdx.input.setInputProcessor(stage);
@@ -77,6 +86,12 @@ public class TestVersionScreen implements Screen {
         gemelch.render(camera);
         stage.act(delta);
         stage.draw();
+        Texture texture = new Texture(Gdx.files.internal("fonts/chill.jpg"));
+
+        SpriteBatch spriteBatch = new SpriteBatch();
+        spriteBatch.begin();
+        spriteBatch.draw(texture, 0, 0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+        spriteBatch.end();
     }
 
     @Override

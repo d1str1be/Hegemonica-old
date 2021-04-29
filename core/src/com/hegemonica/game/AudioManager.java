@@ -10,10 +10,12 @@ public class AudioManager {
 
     private final Music testMusic;
     private final Sound uiClickSound;
+    private final Sound ChillSound;
 
 
     public static class Sounds {
         final static public String UI_CLICK = "1";
+        final static public String Chill = "2";
     }
 
 
@@ -27,6 +29,11 @@ public class AudioManager {
         //звук тест
         uiClickSound = Gdx.audio.newSound(Gdx.files.internal("sound/confirm.wav"));
         uiClickSound.setVolume(1, this.soundVolume);
+
+        ChillSound = Gdx.audio.newSound(Gdx.files.internal("sound/chill.wav"));
+        ChillSound.setVolume(1, 100);
+
+
     }
 
     public void setMusicVolume(float value){
@@ -44,6 +51,8 @@ public class AudioManager {
         switch (soundId){
             case Sounds.UI_CLICK:
                 uiClickSound.play(soundVolume);
+            case Sounds.Chill:
+                ChillSound.play(100);
         }
     }
 
