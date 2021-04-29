@@ -19,7 +19,7 @@ buildscript {
 allprojects {
     apply plugin: "eclipse"
 
-    version = '0.15'
+    version = '0.30'
     ext {
         appName = "Hegemonica"
         gdxVersion = '1.9.12'

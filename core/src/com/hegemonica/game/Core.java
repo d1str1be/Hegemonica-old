@@ -10,7 +10,7 @@ import static com.hegemonica.game.Log.Tags.HEGEMONICA;
 
 
 public class Core extends Game {
-	private static final float VERSION  = 0.20f;
+	private static final float VERSION  = 0.30f;
 
 	public LocalizationManager loc;
 	public AudioManager audio;
