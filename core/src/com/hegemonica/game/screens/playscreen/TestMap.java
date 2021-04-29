@@ -24,13 +24,16 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.FloatArray;
 import com.badlogic.gdx.utils.ShortArray;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.hegemonica.game.Core;
 import com.hegemonica.game.Framerate;
+import com.hegemonica.game.localization.LocalizationKeys;
 import com.hegemonica.game.logic.scenarios.gemelch.Gemelch;
 import com.hegemonica.game.logic.scenarios.gemelch.ProvCoords;
 
 import java.util.Random;
 
 public class TestMap implements Disposable, GestureDetector.GestureListener {
+    Core game;
 
     private ProvCoords provCoords;
     boolean coordsAreSame;
@@ -62,14 +65,15 @@ public class TestMap implements Disposable, GestureDetector.GestureListener {
     SpriteBatch batch;
     float zoomMin = 3f;
     float zoomMax = 0.25f;
-    public TestMap(OrthographicCamera camera, Viewport viewport, Gemelch gemelch) {
+    public TestMap(Core game, OrthographicCamera camera, Viewport viewport, Gemelch gemelch) {
+        this.game = game;
         Gdx.input.setInputProcessor(new GestureDetector(this));
         this.gemelch = gemelch;
 //        provCoords = new ProvCoords();
         this.camera = camera;
         this.MainViewport = viewport;
         shapeRenderer = new ShapeRenderer();
-        
+
 
         pix = new Pixmap(1 , 1, Format.RGBA8888);
         pix.setColor(Color.RED);
@@ -85,7 +89,7 @@ public class TestMap implements Disposable, GestureDetector.GestureListener {
         font = new BitmapFont();
         batch = new SpriteBatch();
 
-        textButton = new TextButton("Turn", UIskin, "default");
+        textButton = new TextButton(game.loc.getString(LocalizationKeys.Keys.Turn), UIskin, "default");
         textButton.setWidth(Gdx.graphics.getWidth()/15f);
         textButton.setHeight(Gdx.graphics.getHeight()/6f);
         textButton.setPosition(Gdx.graphics.getWidth()-textButton.getWidth(),Gdx.graphics.getHeight()-textButton.getHeight());

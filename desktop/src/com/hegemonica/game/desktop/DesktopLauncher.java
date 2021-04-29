@@ -1,12 +1,12 @@
-package com.chiposlavia.game.desktop;
+package com.hegemonica.game.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.chiposlavia.game.Main;
+import com.hegemonica.game.Core;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		new LwjglApplication(new Main(), config);
+		new LwjglApplication(new Core(), config);
 	}
 }
