@@ -11,7 +11,8 @@ public class Building {
     public boolean isNeedCity;
     public boolean isLimited;
     public int countOfBuildingInProvince;
-    public Building(int id, Province province){
+
+    public Building(int id, Province province) {
         this.province = province;
         countOfBuildingInProvince = 0;
         switch (id) {

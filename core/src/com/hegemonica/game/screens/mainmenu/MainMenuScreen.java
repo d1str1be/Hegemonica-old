@@ -86,6 +86,7 @@ public class MainMenuScreen implements Screen {
         bPlay.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                game.discord.onPlaying();
                 game.setScreen(new TestVersionScreen(game));
                 game.audio.playSound(AudioManager.Sounds.UI_CLICK);
                 dispose();
@@ -169,7 +170,7 @@ public class MainMenuScreen implements Screen {
         viewport.update(width, height);
         camera.setToOrtho(false, viewport.getScreenWidth(), viewport.getScreenHeight());
 
-        Gdx.app.log(HEGEMONICA,"Width of app: " + Gdx.graphics.getWidth() + "\nHeight of app: " + Gdx.graphics.getHeight());
+        Gdx.app.log(HEGEMONICA, "Width of app: " + Gdx.graphics.getWidth() + "\nHeight of app: " + Gdx.graphics.getHeight());
     }
 
     @Override

@@ -22,7 +22,7 @@ import com.hegemonica.game.logic.scenarios.gemelch.ProvCoords;
 public class Province {
     public int id;
     public String name;
-    
+
     public int startFoodProduction;
     public int foodPoints;
     public int neededFoodPoints;
@@ -31,14 +31,14 @@ public class Province {
     public int productionPoints;
     public int neededProductionPoints;
     public int gainedSciencePoints;
-    
+
     public int mineProduction;
     public int farmProduction;
     public int workshopProduction;
     public int shipyardProduction;
     public int libraryProduction;
     public int universityProduction;
-    
+
     public int numberOfLimitedBuildings;
 
     public Building buildingInProcess;

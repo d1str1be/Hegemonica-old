@@ -17,7 +17,7 @@ public class AudioManager {
     }
 
 
-    public AudioManager(){
+    public AudioManager() {
         //музыка тест
         testMusic = Gdx.audio.newMusic(Gdx.files.internal("music/mainmenu.mp3"));
         testMusic.setVolume(this.musicVolume);
@@ -29,19 +29,23 @@ public class AudioManager {
         uiClickSound.setVolume(1, this.soundVolume);
     }
 
-    public void setMusicVolume(float value){
+    public void setMusicVolume(float value) {
         musicVolume = value;
         testMusic.setVolume(value);
     }
-    public void setSoundVolume(float value){
+
+    public void setSoundVolume(float value) {
         soundVolume = value;
-        uiClickSound.setVolume(1,value);
+        uiClickSound.setVolume(1, value);
     }
 
-    public void dispose(){ testMusic.dispose(); uiClickSound.dispose(); }
+    public void dispose() {
+        testMusic.dispose();
+        uiClickSound.dispose();
+    }
 
-    public void playSound(String soundId){
-        switch (soundId){
+    public void playSound(String soundId) {
+        switch (soundId) {
             case Sounds.UI_CLICK:
                 uiClickSound.play(soundVolume);
         }

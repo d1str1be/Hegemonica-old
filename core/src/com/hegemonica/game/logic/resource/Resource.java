@@ -14,8 +14,9 @@ public class Resource {
         this.id = id;
         canObtain = false;
     }
-    public void update(){ // эффект от ресурса на следующий ход
-        switch(id){
+
+    public void update() { // эффект от ресурса на следующий ход
+        switch (id) {
             // case GOLD:
         }
     }

@@ -12,7 +12,7 @@ import com.hegemonica.game.Framerate;
 
 import java.util.Random;
 
-public class FunScreen implements Screen{
+public class FunScreen implements Screen {
     Core game;
     Texture img;
     BitmapFont testfont;
@@ -24,27 +24,28 @@ public class FunScreen implements Screen{
     private final int CHIPO_COUNT = 10;
     ChipoIcon[] chpo = new ChipoIcon[CHIPO_COUNT];
 
-    String string_height="";
-    String string_width="";
+    String string_height = "";
+    String string_width = "";
 
 
-    public FunScreen(Core game){
+    public FunScreen(Core game) {
         this.game = game;
     }
+
     @Override
     public void show() {
         batch = new SpriteBatch();
         heightOfScreen = Gdx.graphics.getHeight();
         widthOfScreen = Gdx.graphics.getWidth();
         fps = new Framerate();
-        string_height ="Высота окна этого устройства: " + String.valueOf(heightOfScreen) + " пикселей";
+        string_height = "Высота окна этого устройства: " + String.valueOf(heightOfScreen) + " пикселей";
         string_width = "Ширина окна этого устройства: " + String.valueOf(widthOfScreen) + " пикселей";
 
-        testfont = new BitmapFont(Gdx.files.internal("fonts/test.fnt"), Gdx.files.internal("fonts/test.png"),false);
+        testfont = new BitmapFont(Gdx.files.internal("fonts/test.fnt"), Gdx.files.internal("fonts/test.png"), false);
         ChipoIcon.setMyTexture(new Texture("icons/chipo.png"));
 
-        for (int i = 0;i < CHIPO_COUNT; i++){
-            chpo[i] = new ChipoIcon(new Vector2(1+rand.nextInt(800), 1+(rand.nextInt(2000))), new Vector2(15.0f * (rand.nextFloat()-0.5f), 15.0f * (rand.nextFloat()-0.5f)));
+        for (int i = 0; i < CHIPO_COUNT; i++) {
+            chpo[i] = new ChipoIcon(new Vector2(1 + rand.nextInt(800), 1 + (rand.nextInt(2000))), new Vector2(15.0f * (rand.nextFloat() - 0.5f), 15.0f * (rand.nextFloat() - 0.5f)));
         }
     }
 
@@ -52,26 +53,28 @@ public class FunScreen implements Screen{
     public void render(float delta) {
         fps.update();
         this.update();
-        Gdx.gl.glClearColor(0,0,0,1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
 
-        testfont.draw(batch, string_width,200,100);
-        testfont.draw(batch, string_height,200,240);
-        for (int i = 0; i < CHIPO_COUNT ; i++) {
+        testfont.draw(batch, string_width, 200, 100);
+        testfont.draw(batch, string_height, 200, 240);
+        for (int i = 0; i < CHIPO_COUNT; i++) {
             chpo[i].render(batch);
         }
         fps.render();
         batch.end();
 
     }
-    public void update(){
-        for (int i = 0; i < CHIPO_COUNT ; i++) {
+
+    public void update() {
+        for (int i = 0; i < CHIPO_COUNT; i++) {
             chpo[i].update();
         }
 
 
     }
+
     @Override
     public void resize(int width, int height) {
 
@@ -96,8 +99,6 @@ public class FunScreen implements Screen{
     public void dispose() {
         batch.dispose();
     }
-
-
 
 
 }

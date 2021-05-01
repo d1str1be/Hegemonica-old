@@ -16,12 +16,12 @@ public class LocalizationManager {
         loc = json.fromJson(LocalizationKeys.class, Gdx.files.internal("english.json"));
     }
 
-    public void updateLanguage(String langJSONFilePath){
+    public void updateLanguage(String langJSONFilePath) {
         loc = json.fromJson(LocalizationKeys.class, Gdx.files.internal(langJSONFilePath));
-        Gdx.app.log(Log.Tags.HEGEMONICA,"Changed language to: " + langJSONFilePath);
+        Gdx.app.log(Log.Tags.HEGEMONICA, "Changed language to: " + langJSONFilePath);
     }
 
-    public String getString(LocalizationKeys.Keys key){
+    public String getString(LocalizationKeys.Keys key) {
         return loc.getValue(key);
     }
 

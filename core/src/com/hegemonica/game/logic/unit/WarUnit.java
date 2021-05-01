@@ -16,7 +16,7 @@ class WarUnit {
 
     public Province province;
 
-    public WarUnit(){
+    public WarUnit() {
         id = IDs.WARUNIT;
         startBuyCost = 0;
         startTurnCost = 0;
@@ -24,7 +24,8 @@ class WarUnit {
         startNeededMP = 0;
         isSeaUnit = false;
     }
-    public WarUnit (int id, int startBuyCost, float startTurnCost, float startStrength, float startNeededMP, boolean isSeaUnit) {
+
+    public WarUnit(int id, int startBuyCost, float startTurnCost, float startStrength, float startNeededMP, boolean isSeaUnit) {
         this.id = id;
         this.startBuyCost = startBuyCost;
         this.startTurnCost = startTurnCost;
@@ -32,7 +33,6 @@ class WarUnit {
         this.startNeededMP = startNeededMP; // МП - менпауер, людские ресурсы для найма юнита
         this.isSeaUnit = isSeaUnit;
     }
-
 
 
     protected static class IDs { // https://media.discordapp.net/attachments/774236986406862870/780117623575805992/YpJz5_SFXKI.png отсюда добавить

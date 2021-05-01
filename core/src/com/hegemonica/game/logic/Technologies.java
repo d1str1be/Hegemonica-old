@@ -10,7 +10,7 @@ public class Technologies {
     public Technology updatedShipbuilding = new Technology(75, new Technology[]{});
     public Technology oceanExploration = new Technology(150, new Technology[]{updatedShipbuilding, engineering, paper});
 
-    public Technologies(){
+    public Technologies() {
 
     }
 }

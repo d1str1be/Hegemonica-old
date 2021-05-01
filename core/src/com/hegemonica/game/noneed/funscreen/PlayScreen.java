@@ -51,8 +51,7 @@ public class PlayScreen implements Screen, InputProcessor, GestureDetector.Gestu
     public void render(float delta) {
         try {
             polygonTest.update();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             Gdx.app.error(Log.Tags.HEGEMONICA, "error message:", e);
         }
         Gdx.gl.glClearColor(0, 0, 0, 1);

@@ -31,8 +31,7 @@ public class Country {
     public Gemelch gemelch;
 
 
-
-    public Country (String name, int id) {
+    public Country(String name, int id) {
         this.name = name;
         this.id = id;
         cash = 50;
@@ -43,10 +42,9 @@ public class Country {
 
     }
 
-    public void onTurn(){
+    public void onTurn() {
 
     }
-
 
 
     public class Resources {
@@ -58,7 +56,6 @@ public class Country {
         public Resource Horses;
         public Resource Cows;
     }
-
 
 
     public boolean checkRequiredTechnologiesForBuilding(Building building) {

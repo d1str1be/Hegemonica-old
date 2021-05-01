@@ -16,9 +16,11 @@ public class Person {
         this.skill = skill;
         this.skillLvl = skillLvl;
     }
+
     public static class IDs {
         final static public int BOHEMA = 1;
     }
-    public void update(){
+
+    public void update() {
     }
 }

@@ -68,7 +68,7 @@ class MainMenuSettingsScreen implements Screen {
         languageSelection.setWidth(Gdx.graphics.getWidth());
         languageSelection.setItems(languageBoxItems);
         languageSelection.setScale(5f);
-        languageSelection.addListener(new InputListener(){
+        languageSelection.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 return true;
@@ -76,7 +76,7 @@ class MainMenuSettingsScreen implements Screen {
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                switch (languageSelection.getSelectedIndex()){
+                switch (languageSelection.getSelectedIndex()) {
                     case 0: //english
                         game.loc.updateLanguage(game.loc.englishLocFile);
                     case 1: //russian
@@ -91,7 +91,7 @@ class MainMenuSettingsScreen implements Screen {
         musicSlider = new Slider(0, 1, 0.05f, false, GlassyUI);
         musicSlider.setValue(game.audio.getMusicVolume());
         musicSlider.setWidth(Gdx.graphics.getWidth());
-        musicSlider.addListener(new InputListener(){
+        musicSlider.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
@@ -112,7 +112,7 @@ class MainMenuSettingsScreen implements Screen {
         soundSlider = new Slider(0, 1, 0.05f, false, GlassyUI);
         soundSlider.setValue(game.audio.getSoundVolume());
         soundSlider.setWidth(Gdx.graphics.getWidth());
-        soundSlider.addListener(new InputListener(){
+        soundSlider.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
@@ -132,7 +132,7 @@ class MainMenuSettingsScreen implements Screen {
 
         bBack = new TextButton(game.loc.getString(Keys.Back), GlassyUI);
         bBack.setSize(bWidth, bHeight);
-        bBack.setPosition(Gdx.graphics.getWidth()-bBack.getWidth(), 0);
+        bBack.setPosition(Gdx.graphics.getWidth() - bBack.getWidth(), 0);
         bBack.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
@@ -146,7 +146,6 @@ class MainMenuSettingsScreen implements Screen {
                 return true;
             }
         });
-
 
 
         table = new Table(GlassyUI);

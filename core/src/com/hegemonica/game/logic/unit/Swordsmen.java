@@ -12,7 +12,7 @@ public class Swordsmen extends WarUnit {
         super(IDs.SWORDSMEN, 7, 1, 1, 1, false);
     }
 
-    public Swordsmen () {
+    public Swordsmen() {
         this(IDs.SWORDSMEN, 7, 1, 1, 1, false);
     }
 }

@@ -8,9 +8,10 @@ public class Archer extends WarUnit {
     public double startNeededMP = 1;
     public boolean isSeaUnit = false;
 
-    public Archer () {
+    public Archer() {
         super(IDs.ARCHERS, 5, 1, 1, 1, false);
     }
 
-    public Archer(int id, int startBuyCost, double startTurnCost, double startStrength, double startNeededMP, boolean isSeaUnit) { }
+    public Archer(int id, int startBuyCost, double startTurnCost, double startStrength, double startNeededMP, boolean isSeaUnit) {
+    }
 }

@@ -39,13 +39,13 @@ public class TestMap implements Disposable, GestureDetector.GestureListener {
     boolean coordsAreSame;
     public OrthographicCamera camera;
     public Viewport MainViewport;
-//    private Viewport UIviewport;
+    //    private Viewport UIviewport;
     private ShapeRenderer shapeRenderer;
     private final float WORLD_HEIGHT = 100;
     private final float WORLD_WIDTH = 50;
     private FloatArray testVertices;
-            //719, 431, 736, 427, 744, 428, 753, 432,
-            //760, 433,
+    //719, 431, 736, 427, 744, 428, 753, 432,
+    //760, 433,
     private ShortArray testTriangleVertices;
     private final EarClippingTriangulator triangulator = new EarClippingTriangulator();
     private Random random = new Random(System.currentTimeMillis());
@@ -65,6 +65,7 @@ public class TestMap implements Disposable, GestureDetector.GestureListener {
     SpriteBatch batch;
     float zoomMin = 3f;
     float zoomMax = 0.25f;
+
     public TestMap(Core game, OrthographicCamera camera, Viewport viewport, Gemelch gemelch) {
         this.game = game;
         Gdx.input.setInputProcessor(new GestureDetector(this));
@@ -75,7 +76,7 @@ public class TestMap implements Disposable, GestureDetector.GestureListener {
         shapeRenderer = new ShapeRenderer();
 
 
-        pix = new Pixmap(1 , 1, Format.RGBA8888);
+        pix = new Pixmap(1, 1, Format.RGBA8888);
         pix.setColor(Color.RED);
         pix.fill();
         texture = new Texture(pix);
@@ -90,18 +91,18 @@ public class TestMap implements Disposable, GestureDetector.GestureListener {
         batch = new SpriteBatch();
 
         textButton = new TextButton(game.loc.getString(LocalizationKeys.Keys.Turn), UIskin, "default");
-        textButton.setWidth(Gdx.graphics.getWidth()/15f);
-        textButton.setHeight(Gdx.graphics.getHeight()/6f);
-        textButton.setPosition(Gdx.graphics.getWidth()-textButton.getWidth(),Gdx.graphics.getHeight()-textButton.getHeight());
+        textButton.setWidth(Gdx.graphics.getWidth() / 15f);
+        textButton.setHeight(Gdx.graphics.getHeight() / 6f);
+        textButton.setPosition(Gdx.graphics.getWidth() - textButton.getWidth(), Gdx.graphics.getHeight() - textButton.getHeight());
         stage = new Stage();
         stage.addActor(textButton);
     }
 
-    private ShortArray triangulate(FloatArray polygonVertices){
+    private ShortArray triangulate(FloatArray polygonVertices) {
         return triangulator.computeTriangles(polygonVertices);
     }
 
-    public void render(OrthographicCamera camera){
+    public void render(OrthographicCamera camera) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 //        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
@@ -119,7 +120,7 @@ public class TestMap implements Disposable, GestureDetector.GestureListener {
         stage.draw();
 
         batch.begin();
-        font.draw(batch, "zoom = " + camera.zoom, Gdx.graphics.getWidth()-250f, Gdx.graphics.getHeight()-250f);
+        font.draw(batch, "zoom = " + camera.zoom, Gdx.graphics.getWidth() - 250f, Gdx.graphics.getHeight() - 250f);
         batch.end();
     }
 
@@ -127,6 +128,7 @@ public class TestMap implements Disposable, GestureDetector.GestureListener {
     public void resize(int width, int height) {
         fps.resize(width, height);
     }
+
     @Override
     public void dispose() {
         fps.dispose();
@@ -159,7 +161,7 @@ public class TestMap implements Disposable, GestureDetector.GestureListener {
 
     @Override
     public boolean pan(float x, float y, float deltaX, float deltaY) {
-        camera.translate(-deltaX*camera.zoom,deltaY*camera.zoom);
+        camera.translate(-deltaX * camera.zoom, deltaY * camera.zoom);
         return true;
     }
 
@@ -171,26 +173,25 @@ public class TestMap implements Disposable, GestureDetector.GestureListener {
     @Override
     public boolean zoom(float initialDistance, float distance) {
 //        if(camera.zoom >= zoomMax && camera.zoom <= zoomMin) {
-        if(camera.zoom>=zoomMax&&camera.zoom<=zoomMin) {
+        if (camera.zoom >= zoomMax && camera.zoom <= zoomMin) {
             if (initialDistance >= distance) {
-                camera.zoom += (initialDistance-distance) * 0.00005f * (1/camera.zoom);
+                camera.zoom += (initialDistance - distance) * 0.00005f * (1 / camera.zoom);
                 return true;
             } else {
-                camera.zoom -= (distance-initialDistance) * 0.00005f * (1/camera.zoom);
+                camera.zoom -= (distance - initialDistance) * 0.00005f * (1 / camera.zoom);
                 return true;
             }
-        }
-        else if(camera.zoom<0.2f)
-            camera.zoom=0.2f;
+        } else if (camera.zoom < 0.2f)
+            camera.zoom = 0.2f;
         else
-            camera.zoom=1f;
+            camera.zoom = 1f;
 //        }
 //        if(camera.zoom>=zoomMax){
 //            camera.zoom = zoomMax;
 //        }
 //        else if(camera.zoom <= zoomMin)
 //            camera.zoom = zoomMin;
-       return false;
+        return false;
     }
 
     @Override

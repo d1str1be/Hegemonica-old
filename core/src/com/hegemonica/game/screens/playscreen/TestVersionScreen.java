@@ -33,9 +33,10 @@ public class TestVersionScreen implements Screen {
     final float bWidth = Gdx.graphics.getWidth() / 12f * 3f;
     final float bHeight = Gdx.graphics.getHeight() / 8f;
 
-    public TestVersionScreen(Core game){
+    public TestVersionScreen(Core game) {
         this.game = game;
     }
+
     @Override
     public void show() {
         stage = new Stage(new ScreenViewport());
@@ -52,7 +53,7 @@ public class TestVersionScreen implements Screen {
 
         bBack = new TextButton(game.loc.getString(LocalizationKeys.Keys.Back), GlassyUI);
         bBack.setSize(bWidth, bHeight);
-        bBack.setPosition(Gdx.graphics.getWidth()-bBack.getWidth(), 0);
+        bBack.setPosition(Gdx.graphics.getWidth() - bBack.getWidth(), 0);
         bBack.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {

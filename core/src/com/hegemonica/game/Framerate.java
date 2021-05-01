@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.TimeUtils;
 
-public class Framerate implements Disposable{
+public class Framerate implements Disposable {
     long lastTimeCounted;
     private float sinceChange;
     private float frameRate;
@@ -37,7 +37,7 @@ public class Framerate implements Disposable{
         lastTimeCounted = TimeUtils.millis();
 
         sinceChange += delta;
-        if(sinceChange >= 1000) {
+        if (sinceChange >= 1000) {
             sinceChange = 0;
             frameRate = Gdx.graphics.getFramesPerSecond();
         }
@@ -45,12 +45,13 @@ public class Framerate implements Disposable{
 
     public void render(int x, int y) {
         batch.begin();
-        font.draw(batch, (int)frameRate + " fps", x, y);
+        font.draw(batch, (int) frameRate + " fps", x, y);
         font.getData().setScale(2);
         batch.end();
     }
+
     public void render() {
-        render(10, (int) (Gdx.graphics.getHeight()-font.getLineHeight()));
+        render(10, (int) (Gdx.graphics.getHeight() - font.getLineHeight()));
     }
 
     public void dispose() {

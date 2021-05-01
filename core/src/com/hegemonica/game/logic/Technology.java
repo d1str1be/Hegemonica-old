@@ -14,7 +14,7 @@ public class Technology {
 
     public Technology[] requiredTechnologies;
 
-    public void onResearch(Country country){
+    public void onResearch(Country country) {
 
     }
 

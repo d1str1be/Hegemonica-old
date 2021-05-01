@@ -14,6 +14,7 @@ public class TestCamera extends ApplicationAdapter implements InputProcessor { /
     public Viewport viewport;
     public Matrix4 combined;
     public InputMultiplexer im;
+
     public TestCamera() {
         this.create();
         Gdx.input.setInputProcessor(this);
@@ -22,7 +23,8 @@ public class TestCamera extends ApplicationAdapter implements InputProcessor { /
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
         combined = camera.combined;
     }
-    public TestCamera(Viewport viewport){
+
+    public TestCamera(Viewport viewport) {
         this.create();
         this.viewport = viewport;
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -43,7 +45,8 @@ public class TestCamera extends ApplicationAdapter implements InputProcessor { /
     public void render() {
         camera.update();
     }
-    public void update(){
+
+    public void update() {
         camera.update();
     }
 
@@ -52,7 +55,7 @@ public class TestCamera extends ApplicationAdapter implements InputProcessor { /
         float x = Gdx.input.getDeltaX();
         float y = Gdx.input.getDeltaY();
 
-        camera.translate(-x,y);
+        camera.translate(-x, y);
         return true;
     }
 
@@ -60,7 +63,6 @@ public class TestCamera extends ApplicationAdapter implements InputProcessor { /
     public void resize(int width, int height) {
         viewport.update(width, height);
     }
-
 
 
     @Override
