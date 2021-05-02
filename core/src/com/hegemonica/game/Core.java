@@ -12,18 +12,29 @@ import static com.hegemonica.game.Log.Tags.HEGEMONICA;
 public class Core extends Game {
     private static final float VERSION = 0.30f;
 
+    /**
+     * Для релизных версий ставить false. DevMode нужен для отладки, тестирования и для пометки особого статуса в Discord и, вероятно, на других площадках вроде Steam
+     */
+    public final boolean DEV_MODE = true;
+    public final boolean enableDiscord;
     public LocalizationManager loc;
     public AudioManager audio;
 
     public Discord discord;
+
+    public Core(boolean enableDiscord) {
+        this.enableDiscord = enableDiscord;
+    }
+
     @Override
     public void create() {
         Gdx.app.log(HEGEMONICA, "Width of app: " + Gdx.graphics.getWidth() + "\nHeight of app: " + Gdx.graphics.getHeight());
         Gdx.input.setCatchKey(Input.Keys.BACK, true); // перехват сист.кнопки "назад" на андроиде
         audio = new AudioManager();
         loc = new LocalizationManager();
-        discord = new Discord();
-        discord.onMainMenu();
+        if(enableDiscord)
+            discord = new Discord(DEV_MODE);
+
         this.setScreen(new MainMenuScreen(this));
     }
 

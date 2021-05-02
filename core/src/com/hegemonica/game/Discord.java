@@ -12,13 +12,19 @@ import net.arikia.dev.drpc.callbacks.ReadyCallback;
 
 public class Discord {
     final String appID = "837736520789262386";
-
+    final boolean DEV_MODE;
     DiscordRPC rpc;
     LocalizationManager discordRPCLoc;
     DiscordRichPresence discordPresence;
-    public Discord(){
-        startup();
+    public Discord(boolean isDevMode){
+        this.startup();
         discordRPCLoc = new LocalizationManager();
+        DEV_MODE = isDevMode;
+        if(isDevMode)
+            this.devMode();
+        else
+            this.onMainMenu();
+
     }
 
     public void startup() {
@@ -47,6 +53,14 @@ public class Discord {
         rpc.discordClearPresence();
         DiscordRichPresence discordPresence = new DiscordRichPresence();
         discordPresence.state = discordRPCLoc.getString(LocalizationKeys.Keys.Playing);
+        discordPresence.startTimestamp = System.currentTimeMillis();
+        discordPresence.largeImageKey = "hegemonicalogo";
+        rpc.discordUpdatePresence(discordPresence);
+    }
+    public void devMode(){
+        rpc.discordClearPresence();
+        DiscordRichPresence discordPresence = new DiscordRichPresence();
+        discordPresence.state = "[DEV] Working on game";
         discordPresence.startTimestamp = System.currentTimeMillis();
         discordPresence.largeImageKey = "hegemonicalogo";
         rpc.discordUpdatePresence(discordPresence);

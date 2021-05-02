@@ -13,6 +13,6 @@ public class DesktopLauncher {
 		config.width = 1280;
 		config.height = 1024;
 		config.addIcon("icons/hegemonicalogo32x32.png", Files.FileType.Internal);
-		new LwjglApplication(new Core(), config);
+		new LwjglApplication(new Core(true), config);
 	}
 }
