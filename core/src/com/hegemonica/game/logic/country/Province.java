@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.FloatArray;
 import com.badlogic.gdx.utils.ShortArray;
 import com.hegemonica.game.logic.buildings.Building;
 import com.hegemonica.game.logic.resource.Resource;
+import com.hegemonica.game.logic.scenarios.gemelch.Gemelch;
 
 public class Province {
     public int id;
@@ -338,4 +339,5 @@ public class Province {
         }
         return Ycoords;
     }
+
 }
