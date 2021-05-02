@@ -10,5 +10,15 @@ public class ProvCoords { // тестовый класс для хранения
             763, 284, 760, 283, 757, 283, 755, 281, 755, 279, 751, 276, 753, 265, 754, 243, 751, 238, 749, 231});
 
     public ProvCoords() {
+        //future gemelch provinces
+//        public Province[] provinces;
+//        public Province levian;
+//        public Province valinia;
+//
+//        levian = new Province(0, game.loc.getString(LocalizationKeys.Keys.Levian), test, ProvCoords.levianProv, new boolean[]{true, true}, true);
+//        valinia = new Province(1, game.loc.getString(LocalizationKeys.Keys.Valinia), test1, ProvCoords.valiniaProv, new boolean[]{true, true}, true);
+//        provinces = new Province[]{levian, valinia};
     }
+
+
 }

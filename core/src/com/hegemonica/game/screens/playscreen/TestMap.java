@@ -175,25 +175,25 @@ public class TestMap implements Disposable, GestureDetector.GestureListener {
     @Override
     public boolean zoom(float initialDistance, float distance) {
 //        if(camera.zoom >= zoomMax && camera.zoom <= zoomMin) {
-        if (camera.zoom >= zoomMax && camera.zoom <= zoomMin) {
+        if (camera.zoom < zoomMax) {
+            camera.zoom = zoomMax;
+            return true;
+        }
+        else if(camera.zoom > zoomMin) {
+            camera.zoom = zoomMin;
+            return true;
+        }
+        while (zoomMax <= camera.zoom && camera.zoom <= zoomMin) {
             if (initialDistance >= distance) {
-                camera.zoom += (initialDistance - distance) * 0.00005f * (1 / camera.zoom);
+                camera.zoom += (initialDistance - distance) * 0.00005f * camera.zoom;
+                HegemonicaLog.log(HegemonicaLog.Tags.INPUT, "Zooming camera");
                 return true;
             } else {
-                camera.zoom -= (distance - initialDistance) * 0.00005f * (1 / camera.zoom);
+                camera.zoom -= (distance - initialDistance) * 0.00005f * camera.zoom;
+                HegemonicaLog.log(HegemonicaLog.Tags.INPUT, "Zooming camera");
                 return true;
             }
-        } else if (camera.zoom <= 0.2f)
-            camera.zoom = 0.2f;
-        else
-            camera.zoom = 1f;
-//        }
-//        if(camera.zoom>=zoomMax){
-//            camera.zoom = zoomMax;
-//        }
-//        else if(camera.zoom <= zoomMin)
-//            camera.zoom = zoomMin;
-        HegemonicaLog.log(HegemonicaLog.Tags.INPUT, "Zooming camera");
+        }
         return false;
     }
 

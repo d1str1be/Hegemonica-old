@@ -2,7 +2,6 @@ package com.hegemonica.game.logic.scenarios.gemelch;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.hegemonica.game.Core;
-import com.hegemonica.game.localization.LocalizationKeys;
 import com.hegemonica.game.logic.country.Country;
 import com.hegemonica.game.logic.country.Province;
 
@@ -14,9 +13,8 @@ public class Gemelch {
     public int turnNumber;
     public Country test;
     public Country test1;
+
     public Province[] provinces;
-    public Province levian;
-    public Province valinia;
 
     public Gemelch(Core game) {
         this.game = game;
@@ -27,9 +25,14 @@ public class Gemelch {
         turnNumber = 1;
         test = new Country("Test1", 0);
         test1 = new Country("Test2", 1);
-        levian = new Province(0, game.loc.getString(LocalizationKeys.Keys.Levian), test, ProvCoords.levianProv, new boolean[]{true, true}, true);
-        valinia = new Province(1, game.loc.getString(LocalizationKeys.Keys.Valinia), test1, ProvCoords.valiniaProv, new boolean[]{true, true}, true);
-        provinces = new Province[]{levian, valinia};
+
+        provinces = new Province[25];
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                int iterator = i * 5 + j;
+                provinces[iterator] = new Province(iterator, "Province " + iterator, test, new boolean[]{true}, false, 50 * j, 50 * i, 50, 50);
+            }
+        }
     }
 
     public void onTurn() {

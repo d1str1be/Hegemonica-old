@@ -10,7 +10,7 @@ import static com.hegemonica.game.HegemonicaLog.Tags.HEGEMONICA;
 
 
 public class Core extends Game {
-    private static final float VERSION = 0.30f;
+    private static final float VERSION = 0.40f;
 
     /**
      * Для релизных версий ставить false. DevMode нужен для отладки, тестирования и для пометки особого статуса в Discord и, вероятно, на других площадках вроде Steam
@@ -36,6 +36,8 @@ public class Core extends Game {
             discord = new Discord(DEV_MODE);
 
         this.setScreen(new MainMenuScreen(this));
+
+
     }
 
     @Override

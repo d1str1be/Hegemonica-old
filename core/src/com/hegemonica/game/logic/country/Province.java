@@ -17,7 +17,6 @@ import com.badlogic.gdx.utils.FloatArray;
 import com.badlogic.gdx.utils.ShortArray;
 import com.hegemonica.game.logic.buildings.Building;
 import com.hegemonica.game.logic.resource.Resource;
-import com.hegemonica.game.logic.scenarios.gemelch.ProvCoords;
 
 public class Province {
     public int id;
@@ -64,9 +63,15 @@ public class Province {
     public Country owner;
     public boolean[] neighbourProvinces;
 
-    private final EarClippingTriangulator triangulator = new EarClippingTriangulator();
     public FloatArray provCoords;
+    public float x;
+    public float y;
+    public float width;
+    public float height;
     private Polygon polygon;
+    private final EarClippingTriangulator triangulator = new EarClippingTriangulator();
+
+
     private ShapeRenderer shapeRenderer;
     private Texture texture;
     private TextureRegion textureReg;
@@ -87,7 +92,7 @@ public class Province {
     public Building mine;
 
 
-    public Province(int id, String name, Country owner, FloatArray provCoords, boolean[] neighbours, boolean isCity) {
+    public Province(int id, String name, Country owner, boolean[] neighbours, boolean isCity, FloatArray provCoords) {
         this.id = id;
         this.provCoords = provCoords;
         this.name = name;
@@ -110,6 +115,35 @@ public class Province {
         farm = new Building(Building.ID.FARM, this);
         mine = new Building(Building.ID.MINE, this);
 
+
+        this.setMathRender();
+    }
+
+    public Province(int id, String name, Country owner, boolean[] neighbours, boolean isCity, float x, float y, float width, float height) {
+        this.id = id;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.name = name;
+        this.owner = owner;
+        this.neighbourProvinces = neighbours;
+        this.isCity = isCity;
+        population = 1;
+        numberOfShipyards = 0;
+        numberOfWorkshops = 0;
+        numberOfUniversities = 0;
+        numberOfLibraries = 0;
+        numberOfMines = 0;
+        numberOfFarms = 0;
+        numberOfLimitedBuildings = 0;
+
+        library = new Building(Building.ID.LIBRARY, this);
+        university = new Building(Building.ID.UNIVERSITY, this);
+        shipyard = new Building(Building.ID.SHIPYARD, this);
+        workshop = new Building(Building.ID.WORKSHOP, this);
+        farm = new Building(Building.ID.FARM, this);
+        mine = new Building(Building.ID.MINE, this);
 
         this.setMathRender();
     }
@@ -238,36 +272,42 @@ public class Province {
         //DEBUG setting
         boolean drawFilledPolygons = false;
         if (drawFilledPolygons) {
-            polyBatch.setProjectionMatrix(camera.combined);
-            polyBatch.begin();
-            polySprite.draw(polyBatch);
-            polyBatch.end();
+//            polyBatch.setProjectionMatrix(camera.combined);
+//            polyBatch.begin();
+//            polySprite.draw(polyBatch);
+//            polyBatch.end();
         } else {
             shapeRenderer.setProjectionMatrix(camera.combined);
             shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
             shapeRenderer.setColor(Color.WHITE);
-            shapeRenderer.polygon(provCoords.toArray());
-            // shapeRenderer.rect(polygon.getBoundingRectangle().getX(),polygon.getBoundingRectangle().getY(),polygon.getBoundingRectangle().getWidth(), polygon.getBoundingRectangle().getHeight());
+            if (provCoords != null)
+                shapeRenderer.polygon(provCoords.toArray());
+            else
+                shapeRenderer.rect(x, y, width, height);
+//                shapeRenderer.rect(polygon.getBoundingRectangle().getX(),polygon.getBoundingRectangle().getY(),polygon.getBoundingRectangle().getWidth(), polygon.getBoundingRectangle().getHeight());
             shapeRenderer.end();
         }
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        font.draw(batch, name, polygon.getBoundingRectangle().getX() + polygon.getBoundingRectangle().getWidth() / 2 - (polygon.getBoundingRectangle().getWidth() * 0.25f), polygon.getBoundingRectangle().getY() + polygon.getBoundingRectangle().getHeight() / 2 - font.getScaleY());
+        if (provCoords != null) // если отрисовка полигоном, то центрируем по полигону
+            font.draw(batch, name, polygon.getBoundingRectangle().getX() + polygon.getBoundingRectangle().getWidth() / 2 - (polygon.getBoundingRectangle().getWidth() * 0.25f), polygon.getBoundingRectangle().getY() + polygon.getBoundingRectangle().getHeight() / 2 - font.getScaleY());
+        else //иначе у нас отрисовка прямоугольником, центрируем по координатам прямоугольника
+            font.draw(batch, name, x + (width / 2) - 18, y + (height / 2));
         batch.end();
     }
 
     public void setMathRender() {
         shapeRenderer = new ShapeRenderer();
-        pix = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
-        pix.setColor(Color.RED);
-        pix.fill();
-        texture = new Texture(pix);
-        textureReg = new TextureRegion(texture);
-        polyReg = new PolygonRegion(textureReg, ProvCoords.levianProv.toArray(), triangulate(ProvCoords.levianProv).toArray());
-        polySprite = new PolygonSprite(polyReg);
-        polyBatch = new PolygonSpriteBatch();
-
-        polygon = new Polygon(provCoords.toArray());
+//        pix = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+//        pix.setColor(Color.RED);
+//        pix.fill();
+//        texture = new Texture(pix);
+//        textureReg = new TextureRegion(texture);
+//        polyReg = new PolygonRegion(textureReg, ProvCoords.levianProv.toArray(), triangulate(ProvCoords.levianProv).toArray());
+//        polySprite = new PolygonSprite(polyReg);
+//        polyBatch = new PolygonSpriteBatch();
+        if (provCoords != null)
+            polygon = new Polygon(provCoords.toArray());
         batch = new SpriteBatch();
         font = new BitmapFont();
         font.getData().setScale(0.5f);
