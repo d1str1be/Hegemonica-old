@@ -14,7 +14,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.hegemonica.game.Log;
+import com.hegemonica.game.HegemonicaLog;
 
 //Игровой экран - тестовая карта с  4мя провинциями
 
@@ -52,7 +52,7 @@ public class PlayScreen implements Screen, InputProcessor, GestureDetector.Gestu
         try {
             polygonTest.update();
         } catch (Exception e) {
-            Gdx.app.error(Log.Tags.HEGEMONICA, "error message:", e);
+            Gdx.app.error(HegemonicaLog.Tags.HEGEMONICA, "error message:", e);
         }
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

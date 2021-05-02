@@ -2,7 +2,7 @@ package com.hegemonica.game.localization;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Json;
-import com.hegemonica.game.Log;
+import com.hegemonica.game.HegemonicaLog;
 
 public class LocalizationManager {
     public Json json;
@@ -18,7 +18,7 @@ public class LocalizationManager {
 
     public void updateLanguage(String langJSONFilePath) {
         loc = json.fromJson(LocalizationKeys.class, Gdx.files.internal(langJSONFilePath));
-        Gdx.app.log(Log.Tags.HEGEMONICA, "Changed language to: " + langJSONFilePath);
+        Gdx.app.log(HegemonicaLog.Tags.HEGEMONICA, "Changed language to: " + langJSONFilePath);
     }
 
     public String getString(LocalizationKeys.Keys key) {

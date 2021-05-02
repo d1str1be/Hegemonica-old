@@ -18,10 +18,10 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.hegemonica.game.AudioManager;
 import com.hegemonica.game.Core;
 import com.hegemonica.game.Framerate;
-import com.hegemonica.game.Log;
+import com.hegemonica.game.HegemonicaLog;
 import com.hegemonica.game.screens.playscreen.TestVersionScreen;
 
-import static com.hegemonica.game.Log.Tags.HEGEMONICA;
+import static com.hegemonica.game.HegemonicaLog.Tags.HEGEMONICA;
 import static com.hegemonica.game.localization.LocalizationKeys.Keys;
 
 public class MainMenuScreen implements Screen {
@@ -86,7 +86,8 @@ public class MainMenuScreen implements Screen {
         bPlay.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                game.discord.onPlaying();
+                if(game.enableDiscord)
+                    game.discord.onPlaying();
                 game.setScreen(new TestVersionScreen(game));
                 game.audio.playSound(AudioManager.Sounds.UI_CLICK);
                 dispose();
@@ -107,7 +108,7 @@ public class MainMenuScreen implements Screen {
         bSettings.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.app.log(Log.Tags.MAINMENU, "Opened Settings");
+                HegemonicaLog.log(HegemonicaLog.Tags.MAINMENU, "Opened Settings");
                 game.audio.playSound(AudioManager.Sounds.UI_CLICK);
                 game.setScreen(new MainMenuSettingsScreen(game));
                 dispose();

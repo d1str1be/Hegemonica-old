@@ -6,7 +6,7 @@ import com.badlogic.gdx.Input;
 import com.hegemonica.game.localization.LocalizationManager;
 import com.hegemonica.game.screens.mainmenu.MainMenuScreen;
 
-import static com.hegemonica.game.Log.Tags.HEGEMONICA;
+import static com.hegemonica.game.HegemonicaLog.Tags.HEGEMONICA;
 
 
 public class Core extends Game {
@@ -28,7 +28,7 @@ public class Core extends Game {
 
     @Override
     public void create() {
-        Gdx.app.log(HEGEMONICA, "Width of app: " + Gdx.graphics.getWidth() + "\nHeight of app: " + Gdx.graphics.getHeight());
+        HegemonicaLog.log(HEGEMONICA, "Width of app: " + Gdx.graphics.getWidth() + "\nHeight of app: " + Gdx.graphics.getHeight());
         Gdx.input.setCatchKey(Input.Keys.BACK, true); // перехват сист.кнопки "назад" на андроиде
         audio = new AudioManager();
         loc = new LocalizationManager();

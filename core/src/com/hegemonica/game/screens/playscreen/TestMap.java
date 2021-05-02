@@ -26,6 +26,7 @@ import com.badlogic.gdx.utils.ShortArray;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.hegemonica.game.Core;
 import com.hegemonica.game.Framerate;
+import com.hegemonica.game.HegemonicaLog;
 import com.hegemonica.game.localization.LocalizationKeys;
 import com.hegemonica.game.logic.scenarios.gemelch.Gemelch;
 import com.hegemonica.game.logic.scenarios.gemelch.ProvCoords;
@@ -162,6 +163,7 @@ public class TestMap implements Disposable, GestureDetector.GestureListener {
     @Override
     public boolean pan(float x, float y, float deltaX, float deltaY) {
         camera.translate(-deltaX * camera.zoom, deltaY * camera.zoom);
+        HegemonicaLog.log(HegemonicaLog.Tags.INPUT, "Moving camera");
         return true;
     }
 
@@ -181,7 +183,7 @@ public class TestMap implements Disposable, GestureDetector.GestureListener {
                 camera.zoom -= (distance - initialDistance) * 0.00005f * (1 / camera.zoom);
                 return true;
             }
-        } else if (camera.zoom < 0.2f)
+        } else if (camera.zoom <= 0.2f)
             camera.zoom = 0.2f;
         else
             camera.zoom = 1f;
@@ -191,6 +193,7 @@ public class TestMap implements Disposable, GestureDetector.GestureListener {
 //        }
 //        else if(camera.zoom <= zoomMin)
 //            camera.zoom = zoomMin;
+        HegemonicaLog.log(HegemonicaLog.Tags.INPUT, "Zooming camera");
         return false;
     }
 

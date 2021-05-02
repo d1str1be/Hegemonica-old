@@ -10,9 +10,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.hegemonica.game.Core;
+import com.hegemonica.game.HegemonicaLog;
 import com.hegemonica.game.localization.LocalizationKeys;
 import com.hegemonica.game.logic.scenarios.gemelch.Gemelch;
 import com.hegemonica.game.screens.mainmenu.MainMenuScreen;
@@ -39,7 +39,7 @@ public class TestVersionScreen implements Screen {
 
     @Override
     public void show() {
-        stage = new Stage(new ScreenViewport());
+        stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 
         Gdx.input.setInputProcessor(stage);
         GlassyUI = new Skin(Gdx.files.internal("ui/glassy/skin/glassy-ui.json"));
@@ -57,6 +57,7 @@ public class TestVersionScreen implements Screen {
         bBack.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                HegemonicaLog.log(HegemonicaLog.Tags.INPUT, "TouchUp Back button");
                 game.audio.playSound(UI_CLICK);
                 game.setScreen(new MainMenuScreen(game));
                 dispose();
@@ -64,6 +65,7 @@ public class TestVersionScreen implements Screen {
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                HegemonicaLog.log(HegemonicaLog.Tags.INPUT, "TouchDown Back button");
                 return true;
             }
         });
