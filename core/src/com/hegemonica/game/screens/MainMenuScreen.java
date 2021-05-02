@@ -1,4 +1,4 @@
-package com.hegemonica.game.screens.mainmenu;
+package com.hegemonica.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -19,7 +19,6 @@ import com.hegemonica.game.AudioManager;
 import com.hegemonica.game.Core;
 import com.hegemonica.game.Framerate;
 import com.hegemonica.game.HegemonicaLog;
-import com.hegemonica.game.screens.playscreen.TestVersionScreen;
 
 import static com.hegemonica.game.HegemonicaLog.Tags.HEGEMONICA;
 import static com.hegemonica.game.localization.LocalizationKeys.Keys;
@@ -88,7 +87,7 @@ public class MainMenuScreen implements Screen {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 if(game.enableDiscord)
                     game.discord.onPlaying();
-                game.setScreen(new TestVersionScreen(game));
+                game.setScreen(new PreparationScreen(game));
                 game.audio.playSound(AudioManager.Sounds.UI_CLICK);
                 dispose();
             }
