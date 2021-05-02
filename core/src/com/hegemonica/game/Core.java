@@ -4,18 +4,23 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.hegemonica.game.localization.LocalizationManager;
-import com.hegemonica.game.screens.mainmenu.MainMenuScreen;
+import com.hegemonica.game.screens.MainMenuScreen;
 
 import static com.hegemonica.game.HegemonicaLog.Tags.HEGEMONICA;
 
 
 public class Core extends Game {
     private static final float VERSION = 0.40f;
+    public static float gameWidth;
+    public static float gameHeight;
 
     /**
-     * Для релизных версий ставить false. DevMode нужен для отладки, тестирования и для пометки особого статуса в Discord и, вероятно, на других площадках вроде Steam
+     * Для релизных версий ставить false. DevMode нужен для отладки, тестирования и для пометки особого статуса в Discord и, вероятно, на других площадках вроде Steam.
      */
     public final boolean DEV_MODE = true;
+    /**
+     * Логическая переменная, отвечающая за доступ к интеграции Discord. Значение задаётся в классе лаунчера платформы через конструктор класса.
+     */
     public final boolean enableDiscord;
     public LocalizationManager loc;
     public AudioManager audio;
@@ -28,7 +33,10 @@ public class Core extends Game {
 
     @Override
     public void create() {
-        HegemonicaLog.log(HEGEMONICA, "Width of app: " + Gdx.graphics.getWidth() + "\nHeight of app: " + Gdx.graphics.getHeight());
+        gameWidth = Gdx.graphics.getWidth();
+        gameHeight = Gdx.graphics.getHeight();
+        HegemonicaLog.log(HEGEMONICA, "Width of app: " + gameWidth +
+                "\nHeight of app: " + gameHeight);
         Gdx.input.setCatchKey(Input.Keys.BACK, true); // перехват сист.кнопки "назад" на андроиде
         audio = new AudioManager();
         loc = new LocalizationManager();

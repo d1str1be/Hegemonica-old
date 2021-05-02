@@ -1,4 +1,4 @@
-package com.hegemonica.game.screens.playscreen;
+package com.hegemonica.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -33,7 +33,7 @@ import com.hegemonica.game.logic.scenarios.gemelch.ProvCoords;
 
 import java.util.Random;
 
-public class TestMap implements Disposable, GestureDetector.GestureListener {
+public class PlayScreenMap implements Disposable, GestureDetector.GestureListener {
     Core game;
 
     private ProvCoords provCoords;
@@ -67,7 +67,7 @@ public class TestMap implements Disposable, GestureDetector.GestureListener {
     float zoomMin = 3f;
     float zoomMax = 0.25f;
 
-    public TestMap(Core game, OrthographicCamera camera, Viewport viewport, Gemelch gemelch) {
+    public PlayScreenMap(Core game, OrthographicCamera camera, Viewport viewport, Gemelch gemelch) {
         this.game = game;
         Gdx.input.setInputProcessor(new GestureDetector(this));
         this.gemelch = gemelch;
