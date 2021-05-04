@@ -13,6 +13,17 @@ public class Gemelch {
     public int turnNumber;
     public int mapHeight;
     public int mapWidth;
+
+    //production
+    public int citizenProduction = 1;
+    public int mineProduction = 3;
+    public int shipyardProduction = 3;
+
+    //food production
+    public int startFoodProduction = 2;
+    public int farmFoodProduction = 3;
+    public int shipyardFoodProduction = 2;
+
     public Country test;
     public Country test1;
 
@@ -72,7 +83,8 @@ public class Gemelch {
         return null;
     }
 
-    public int[] getNeighborsIdList(int id) {
+    public int[] getNeighborsIdList(Province province) {
+        int id = province.id;
 
         //угловые
 
@@ -162,7 +174,7 @@ public class Gemelch {
     }
 
     public boolean[] getBooleanNeighborsList(Province province) {
-        int neighborsQuantity = getNeighborsIdList(province.id).length();
+        int neighborsQuantity = getNeighborsIdList(province).length;
         int[] neighborsIntList = new int[neighborsQuantity];
         boolean[] neighborsBooleanList = new boolean[mapWidth * mapHeight];
         for (int i = 0; i < mapWidth * mapHeight; i++) {

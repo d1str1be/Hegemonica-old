@@ -56,6 +56,7 @@ public class Building {
         public final static int UNIVERSITY = 3;
         public final static int WORKSHOP = 4;
         public final static int SHIPYARD = 5;
+        public final static int CITY = 6;
     }
 
     public class PRODUCTIONCOST {
@@ -65,6 +66,7 @@ public class Building {
         public final static int UNIVERSITY = 120;
         public final static int WORKSHOP = 60;
         public final static int SHIPYARD = 40;
+        public final static int CITY = 150;
     }
 
     public Province getProvince() {

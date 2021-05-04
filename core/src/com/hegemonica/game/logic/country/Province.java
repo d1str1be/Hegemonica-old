@@ -91,6 +91,7 @@ public class Province {
     public Building workshop;
     public Building farm;
     public Building mine;
+    public Building city;
 
 
     public Province(int id, String name, Country owner, boolean[] neighbours, boolean isCity, FloatArray provCoords) {
@@ -220,6 +221,9 @@ public class Province {
                 numberOfShipyards = 1;
                 numberOfLimitedBuildings += 1;
                 productionPoints -= shipyard.productionCost;
+            case Building.ID.CITY:
+                isCity = true;
+                productionPoints -= city.productionCost;
         }
 
     }
@@ -247,6 +251,7 @@ public class Province {
         }
     }
 
+    //переписать
     public void chooseBuilding(Building building) {
         if (isBuildingAvailiable(building)) {
             buildingInProcess = building;
