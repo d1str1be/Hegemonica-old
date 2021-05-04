@@ -2,6 +2,7 @@ package com.hegemonica.game.logic.scenarios.gemelch;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.hegemonica.game.Core;
+import com.hegemonica.game.HegemonicaLog;
 import com.hegemonica.game.logic.country.Country;
 import com.hegemonica.game.logic.country.Province;
 
@@ -9,29 +10,32 @@ import com.hegemonica.game.logic.country.Province;
 public class Gemelch {
     Core game;
     public static final int COUNT_OF_RESOURCES = 26;
-    public static final int PROVINCE_COUNT = 6;
     public int turnNumber;
     public int mapHeight;
     public int mapWidth;
     public Country test;
     public Country test1;
 
+    public int provCountWidth;
+    public int provCountHeight;
     public Province[] provinces;
 
-    public Gemelch(Core game) {
+    public Gemelch(Core game, int provCountWidth, int provCountHeight) {
         this.game = game;
-        onStart();
-    }
+        this.provCountWidth = provCountWidth;
+        this.provCountHeight = provCountHeight;
+        HegemonicaLog.log(HegemonicaLog.Tags.MAP,"prov in width = " + provCountWidth);
+        HegemonicaLog.log(HegemonicaLog.Tags.MAP,"prov in height = " + provCountHeight);
 
-    public void onStart() {
         turnNumber = 1;
         test = new Country("Test1", 0);
         test1 = new Country("Test2", 1);
 
-        provinces = new Province[25];
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                int iterator = i * 5 + j;
+        provinces = new Province[provCountWidth * provCountHeight];
+        for (int i = 0; i < provCountHeight; i++) {
+            for (int j = 0; j < provCountWidth; j++) {
+                int iterator = i * provCountWidth + j;
+                System.out.println(iterator);
                 provinces[iterator] = new Province(iterator, "Province " + iterator, test, new boolean[]{true}, false, 50 * j, 50 * i, 50, 50);
             }
         }

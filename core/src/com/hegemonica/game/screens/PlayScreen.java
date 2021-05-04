@@ -1,4 +1,4 @@
-package com.hegemonica.game.screens.playscreen;
+package com.hegemonica.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -15,12 +15,11 @@ import com.hegemonica.game.Core;
 import com.hegemonica.game.HegemonicaLog;
 import com.hegemonica.game.localization.LocalizationKeys;
 import com.hegemonica.game.logic.scenarios.gemelch.Gemelch;
-import com.hegemonica.game.screens.mainmenu.MainMenuScreen;
 
 import static com.hegemonica.game.AudioManager.Sounds.UI_CLICK;
 
-public class TestVersionScreen implements Screen {
-    TestMap testMap;
+public class PlayScreen implements Screen {
+    PlayScreenMap map;
     Gemelch gemelch;
     Core game;
     public OrthographicCamera camera;
@@ -33,23 +32,25 @@ public class TestVersionScreen implements Screen {
     final float bWidth = Gdx.graphics.getWidth() / 12f * 3f;
     final float bHeight = Gdx.graphics.getHeight() / 8f;
 
-    public TestVersionScreen(Core game) {
+
+
+    public PlayScreen(Core game, int provCountWidth, int provCountHeight) {
         this.game = game;
+        gemelch = new Gemelch(game, provCountWidth, provCountHeight);
     }
 
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(stage);
         stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 
-        Gdx.input.setInputProcessor(stage);
         GlassyUI = new Skin(Gdx.files.internal("ui/glassy/skin/glassy-ui.json"));
 
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.translate(camera.viewportWidth / 2, camera.viewportHeight / 2);
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
 
-        testMap = new TestMap(game, camera, viewport, gemelch);
-        gemelch = new Gemelch(game);
+        map = new PlayScreenMap(game, camera, viewport, gemelch);
 
         bBack = new TextButton(game.loc.getString(LocalizationKeys.Keys.Back), GlassyUI);
         bBack.setSize(bWidth, bHeight);
@@ -76,7 +77,7 @@ public class TestVersionScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        testMap.render(camera);
+        map.render(camera);
         gemelch.render(camera);
         stage.act(delta);
         stage.draw();
@@ -84,7 +85,7 @@ public class TestVersionScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        testMap.resize(width, height);
+        map.resize(width, height);
     }
 
     @Override
@@ -104,6 +105,6 @@ public class TestVersionScreen implements Screen {
 
     @Override
     public void dispose() {
-        testMap.dispose();
+        map.dispose();
     }
 }
