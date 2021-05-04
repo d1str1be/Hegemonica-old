@@ -157,44 +157,16 @@ public class Gemelch {
         }
     }
 
-
-
-//    public boolean isNeighbors(Province province1, Province province2) {
-//        if (province1.id == province2.id) {
-//            return true;
-//
-//        //угловые
-//
-//        } else if (province1.id == 0) {
-//            if (province2.id == 1 || province2.id == mapWidth || province2.id == mapWidth + 1) {
-//                return true;
-//            } else {
-//                return false;
-//            }
-//        } else if (province1.id == mapWidth - 1) {
-//            if (province2.id == mapWidth - 2 || province2.id == 2 * mapWidth - 1 || province2.id == province1.id + mapWidth - 1) {
-//                return true;
-//            } else {
-//                return false;
-//            }
-//        } else if (province1.id == mapWidth * (mapHeight - 1)) {
-//            if (province2.id == province1.id + 1 || province2.id == province1.id - mapWidth || province2.id == province1.id - mapWidth + 1) {
-//                return true;
-//            } else {
-//                return false;
-//            }
-//        } else if (province1.id == mapHeight * mapWidth - 1) {
-//            if (province2.id == province1.id - 1 || province2.id == province1.id - mapWidth || province2.id == province1.id - mapWidth - 1) {
-//                return true;
-//            } else {
-//                return false;
-//            }
-//
-//        //крайние
-//
-//        } else if (province1.id < mapWidth) {
-//
-//        }
-//
-//    }
+    public boolean[] getBooleanNeighborsList(Province province) {
+        int neighborsQuantity = getNeighborsIdList(province.id).length();
+        int[] neighborsIntList = new int[neighborsQuantity];
+        boolean[] neighborsBooleanList = new boolean[mapWidth * mapHeight];
+        for (int i = 0; i < mapWidth * mapHeight; i++) {
+            neighborsBooleanList[i] = false;
+        }
+        for (int i = 0; i < neighborsQuantity; i++) {
+            neighborsBooleanList[neighborsIntList[i]] = true;
+        }
+        return neighborsBooleanList;
+    }
 }
