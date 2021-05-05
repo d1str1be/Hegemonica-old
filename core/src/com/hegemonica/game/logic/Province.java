@@ -15,6 +15,12 @@ import com.badlogic.gdx.math.EarClippingTriangulator;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.utils.FloatArray;
 import com.badlogic.gdx.utils.ShortArray;
+import com.hegemonica.game.logic.units.DefenseUnit;
+import com.hegemonica.game.logic.units.MeleeUnit;
+import com.hegemonica.game.logic.units.RangedUnit;
+import com.hegemonica.game.logic.units.WarUnit;
+
+import java.util.ArrayList;
 
 public class Province {
     public int id;
@@ -41,6 +47,19 @@ public class Province {
     public int numberOfShipyards;
     public int numberOfFarms;
     public int numberOfMines;
+
+    //units
+    public boolean isUnitThere;
+    public int meleeCounter;
+    public int defenseCounter;
+    public int rangedCounter;
+    public ArrayList<MeleeUnit> meleeUnits;
+    public ArrayList<DefenseUnit> defenseUnits;
+    public ArrayList<RangedUnit> rangedUnits;
+
+    public MeleeUnit meleeUnitThere;
+    public DefenseUnit defenseUnitThere;
+    public RangedUnit rangedUnitThere;
 
     public int climate;
     public int landscape;
@@ -106,6 +125,9 @@ public class Province {
         farm = new Building(Building.ID.FARM, this);
         mine = new Building(Building.ID.MINE, this);
 
+        meleeCounter = 1;
+        defenseCounter = 1;
+        rangedCounter = 1;
 
         this.setMathRender();
     }
@@ -135,6 +157,10 @@ public class Province {
         workshop = new Building(Building.ID.WORKSHOP, this);
         farm = new Building(Building.ID.FARM, this);
         mine = new Building(Building.ID.MINE, this);
+
+        meleeCounter = 1;
+        defenseCounter = 1;
+        rangedCounter = 1;
 
         this.setMathRender();
     }
@@ -217,6 +243,26 @@ public class Province {
 
     }
 
+    public void createUnit (int id) {
+        switch (id) {
+            case WarUnit.ID.WARRIOR:
+                meleeUnits.add(new MeleeUnit(WarUnit.ID.WARRIOR, owner, WarUnit.COST.WARRIOR, WarUnit.ATTACKSTRENGTH.WARRIOR, WarUnit.DEFENSESTRENGTH.WARRIOR, WarUnit.MOVEMENTPOINTS.WARRIOR, this, meleeCounter, MeleeUnit.UPGRADELEVEL.WARRIOR, "Warrior" ));
+                meleeCounter++;
+            case WarUnit.ID.ARCHER:
+                rangedUnits.add(new RangedUnit(WarUnit.ID.ARCHER, owner, WarUnit.COST.ARCHER, WarUnit.ATTACKSTRENGTH.ARCHER, WarUnit.DEFENSESTRENGTH.ARCHER, WarUnit.MOVEMENTPOINTS.ARCHER, this, rangedCounter, RangedUnit.UPGRADELEVEL.ARCHER, "Archer" ));
+                rangedCounter++;
+            case WarUnit.ID.SHIELDER:
+                defenseUnits.add(new DefenseUnit(WarUnit.ID.SHIELDER, owner, WarUnit.COST.SHIELDER, WarUnit.ATTACKSTRENGTH.SHIELDER, WarUnit.DEFENSESTRENGTH.SHIELDER, WarUnit.MOVEMENTPOINTS.SHIELDER, this, defenseCounter, DefenseUnit.UPGRADELEVEL.SHIELDER, "Shielder" ));
+                defenseCounter++;
+            case WarUnit.ID.CROSSBOWS:
+                rangedUnits.add(new RangedUnit(WarUnit.ID.CROSSBOWS, owner, WarUnit.COST.CROSSBOWS, WarUnit.ATTACKSTRENGTH.CROSSBOWS, WarUnit.DEFENSESTRENGTH.CROSSBOWS, WarUnit.MOVEMENTPOINTS.CROSSBOWS, this, rangedCounter, RangedUnit.UPGRADELEVEL.CROSSBOWS, "Crossbows" ));
+                rangedCounter++;
+            case WarUnit.ID.SWORDSMAN:
+                meleeUnits.add(new MeleeUnit(WarUnit.ID.SWORDSMAN, owner, WarUnit.COST.SWORDSMAN, WarUnit.ATTACKSTRENGTH.SWORDSMAN, WarUnit.DEFENSESTRENGTH.SWORDSMAN, WarUnit.MOVEMENTPOINTS.SWORDSMAN, this, meleeCounter, MeleeUnit.UPGRADELEVEL.SWORDSMAN, "Swordsman" ));
+                meleeCounter++;
+        }
+    }
+
     public void onTurn() {
         foodPoints += numberOfFarms * owner.farmProduction - neededFood + owner.startFoodProduction + numberOfShipyards * owner.startFoodProduction;
         if (foodPoints > neededFoodPoints) {
@@ -241,11 +287,13 @@ public class Province {
     }
 
     //переписать
-    public void chooseBuilding(Building building) {
+    public boolean chooseBuilding(Building building) {
         if (isBuildingAvailiable(building)) {
             buildingInProcess = building;
+            return true;
         } else {
-            chooseBuilding(building);
+            buildingInProcess = null;
+            return false;
         }
     }
 

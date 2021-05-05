@@ -6,20 +6,12 @@ import com.hegemonica.game.logic.Technology;
 
 public class MeleeUnit extends WarUnit{
 
-    public int id;
-    public int cost;
-    public int attackStrength;
-    public int defenseStrength;
+    public MeleeUnit(int id, Country owner, int cost, int attackStrength, int defenseStrength, int movementPoints, Province homeProvince, int number, int upgradeLevel, String name) {
+        super(id, owner, cost, attackStrength, defenseStrength, movementPoints, homeProvince, number, upgradeLevel, name);
+    }
 
-    public int number;
-    public Province homeProvince;
-    public Province province;
-
-    public Country owner;
-
-    public Technology[] requiredTechnologies;
-
-    public MeleeUnit(int id, int cost, int attackStrength, int defenseStrength, Province homeProvince, int number, Technology[] requiredTechnologies) {
-        super(id, cost, attackStrength, defenseStrength, homeProvince, number, requiredTechnologies);
+    public class UPGRADELEVEL {
+        public final static int WARRIOR = 0;
+        public final static int SWORDSMAN = 1;
     }
 }
