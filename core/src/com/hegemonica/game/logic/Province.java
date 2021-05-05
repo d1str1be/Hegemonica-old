@@ -20,7 +20,6 @@ public class Province {
     public int id;
     public String name;
 
-    public int startFoodProduction;
     public int foodPoints;
     public int neededFoodPoints;
     public int population;
@@ -28,13 +27,6 @@ public class Province {
     public int productionPoints;
     public int neededProductionPoints;
     public int gainedSciencePoints;
-
-    public int mineProduction;
-    public int farmProduction;
-    public int workshopProduction;
-    public int shipyardProduction;
-    public int libraryProduction;
-    public int universityProduction;
 
     public int numberOfLimitedBuildings;
 
@@ -226,18 +218,18 @@ public class Province {
     }
 
     public void onTurn() {
-        foodPoints += numberOfFarms * farmProduction - neededFood + startFoodProduction;
+        foodPoints += numberOfFarms * owner.farmProduction - neededFood + owner.startFoodProduction + numberOfShipyards * owner.startFoodProduction;
         if (foodPoints > neededFoodPoints) {
             provinceGrow();
         } else if (foodPoints < 0) {
             provinceDecrease();
         }
-        productionPoints += population + numberOfMines * mineProduction + numberOfWorkshops * workshopProduction + numberOfShipyards * shipyardProduction;
+        productionPoints += population + numberOfMines * owner.mineProduction + numberOfWorkshops * owner.workshopProduction + numberOfShipyards * owner.shipyardProduction;
         if (productionPoints >= neededProductionPoints) {
             build(buildingInProcess);
             buildingInProcess = null;
         }
-        gainedSciencePoints = population + numberOfLibraries * libraryProduction + numberOfUniversities * universityProduction;
+        gainedSciencePoints = population + numberOfLibraries * owner.libraryProduction + numberOfUniversities * owner.universityProduction;
     }
 
     public boolean isBuildingAvailiable(Building building) {
