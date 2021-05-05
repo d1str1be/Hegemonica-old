@@ -1,47 +1,40 @@
 package com.hegemonica.game.logic.units;
 
+import com.hegemonica.game.logic.Country;
 import com.hegemonica.game.logic.Province;
+import com.hegemonica.game.logic.Technology;
 
 class WarUnit {
     public int id;
-    public int startBuyCost;
-    public float startTurnCost;
-    public float startStrength;
-    public float startNeededMP; // МП - менпауер
-    public int BuyCost;
-    public float TurnCost;
-    public float Strength;
-    public float NeededMP;
-    public boolean isSeaUnit;
+    public int cost;
+    public int attackStrength;
+    public int defenseStrength;
 
+    public int number;
+    public Province homeProvince;
     public Province province;
 
-    public WarUnit() {
-        id = IDs.WARUNIT;
-        startBuyCost = 0;
-        startTurnCost = 0;
-        startStrength = 0;
-        startNeededMP = 0;
-        isSeaUnit = false;
-    }
+    public Country owner;
 
-    public WarUnit(int id, int startBuyCost, float startTurnCost, float startStrength, float startNeededMP, boolean isSeaUnit) {
+    public Technology[] requiredTechnologies;
+
+    public WarUnit(int id, int cost, int attackStrength, int defenseStrength, Province homeProvince, int number, Technology[] requiredTechnologies) {
         this.id = id;
-        this.startBuyCost = startBuyCost;
-        this.startTurnCost = startTurnCost;
-        this.startStrength = startStrength;
-        this.startNeededMP = startNeededMP; // МП - менпауер, людские ресурсы для найма юнита
-        this.isSeaUnit = isSeaUnit;
+        this.cost = cost;
+        this.attackStrength = attackStrength;
+        this.defenseStrength = defenseStrength;
+        this.homeProvince = homeProvince;
+        this.province = homeProvince;
+        this.number = number;
+        this.requiredTechnologies = requiredTechnologies;
     }
 
 
-    protected static class IDs { // https://media.discordapp.net/attachments/774236986406862870/780117623575805992/YpJz5_SFXKI.png отсюда добавить
-        final static public int WARUNIT = 0;
-        final static public int ARCHERS = 1;
-        final static public int CROSSBOWS = 2;
-        final static public int SWORDSMEN = 3;
-        final static public int SPEARMEN = 4;
-        final static public int HEAVYSWORDMEN = 5;
-        final static public int HORSEMEN = 6;
+    class ID { // https://media.discordapp.net/attachments/774236986406862870/780117623575805992/YpJz5_SFXKI.png отсюда добавить
+        public final static int WARRIOR = 0;
+        public final static int ARCHER = 1;
+        public final static int SHIELDER = 2;
+        public final static int CROSSBOWS = 3;
+        public final static int SWORDSMAN = 4;
     }
 }
