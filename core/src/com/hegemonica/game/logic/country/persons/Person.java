@@ -1,6 +1,6 @@
 package com.hegemonica.game.logic.country.persons;
 
-import com.hegemonica.game.logic.country.Country;
+import com.hegemonica.game.logic.Country;
 
 public class Person {
     Country country;

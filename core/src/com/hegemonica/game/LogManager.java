@@ -2,7 +2,7 @@ package com.hegemonica.game;
 
 import com.badlogic.gdx.Gdx;
 
-public class HegemonicaLog {
+public class LogManager {
     public static class Tags {
         final static public String HEGEMONICA = "Hegemonica";
         final static public String INPUT = "Input";

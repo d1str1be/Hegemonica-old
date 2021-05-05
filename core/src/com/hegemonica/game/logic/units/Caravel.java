@@ -1,4 +1,4 @@
-package com.hegemonica.game.logic.unit;
+package com.hegemonica.game.logic.units;
 
 public class Caravel {
 

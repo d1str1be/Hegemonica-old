@@ -1,6 +1,6 @@
-package com.hegemonica.game.logic.unit;
+package com.hegemonica.game.logic.units;
 
-import com.hegemonica.game.logic.country.Province;
+import com.hegemonica.game.logic.Province;
 
 class WarUnit {
     public int id;

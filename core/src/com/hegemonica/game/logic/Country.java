@@ -1,9 +1,4 @@
-package com.hegemonica.game.logic.country;
-
-import com.hegemonica.game.logic.Technologies;
-import com.hegemonica.game.logic.buildings.Building;
-import com.hegemonica.game.logic.resource.Resource;
-import com.hegemonica.game.logic.scenarios.gemelch.Gemelch;
+package com.hegemonica.game.logic;
 
 public class Country {
     public String name;

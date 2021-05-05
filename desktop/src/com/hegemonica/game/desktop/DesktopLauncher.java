@@ -10,8 +10,8 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.title = "Hegemonica";
 		config.vSyncEnabled = false;
-		config.width = 1280;
-		config.height = 1024;
+		config.width = 640;
+		config.height = 480;
 		config.addIcon("icons/hegemonicalogo32x32.png", Files.FileType.Internal);
 		new LwjglApplication(new Core(true), config);
 	}

@@ -17,10 +17,10 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.hegemonica.game.AudioManager;
 import com.hegemonica.game.Core;
-import com.hegemonica.game.Framerate;
-import com.hegemonica.game.HegemonicaLog;
+import com.hegemonica.game.FPS;
+import com.hegemonica.game.LogManager;
 
-import static com.hegemonica.game.HegemonicaLog.Tags.HEGEMONICA;
+import static com.hegemonica.game.LogManager.Tags.HEGEMONICA;
 import static com.hegemonica.game.localization.LocalizationKeys.Keys;
 
 public class MainMenuScreen implements Screen {
@@ -36,7 +36,7 @@ public class MainMenuScreen implements Screen {
     Stage stage;
     Label hegemonicaLabel;
 
-    Framerate fps;
+    FPS fps;
 
     float centerButtonHeight;
     float centerButtonWidth;
@@ -60,7 +60,7 @@ public class MainMenuScreen implements Screen {
         menufont = new BitmapFont(Gdx.files.internal("fonts/land.fnt"), Gdx.files.internal("fonts/land.png"), false);
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
-        fps = new Framerate();
+        fps = new FPS();
 
 
         //таймер с начала игры
@@ -107,7 +107,7 @@ public class MainMenuScreen implements Screen {
         bSettings.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                HegemonicaLog.log(HegemonicaLog.Tags.MAINMENU, "Opened Settings");
+                LogManager.log(LogManager.Tags.MAINMENU, "Opened Settings");
                 game.audio.playSound(AudioManager.Sounds.UI_CLICK);
                 game.setScreen(new MainMenuSettingsScreen(game));
                 dispose();

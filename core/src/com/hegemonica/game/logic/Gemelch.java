@@ -1,14 +1,10 @@
-package com.hegemonica.game.logic.scenarios.gemelch;
+package com.hegemonica.game.logic;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.hegemonica.game.Core;
-import com.hegemonica.game.HegemonicaLog;
-import com.hegemonica.game.logic.country.Country;
-import com.hegemonica.game.logic.country.Province;
+import com.hegemonica.game.LogManager;
 
 // ЭТО СЦЕНАРИЙ. ЗДЕСЬ ЗАДАЕМ ВСЕ СТРАНЫ ЭТОГО СЦЕНАРИЯ, КАРТУ "ПАНГЕЯ" И ВСЕ ОСТАЛЬНОЕ
 public class Gemelch {
-    Core game;
     public static final int COUNT_OF_RESOURCES = 26;
     public int turnNumber;
     public int mapHeight;
@@ -31,12 +27,11 @@ public class Gemelch {
     public int provCountHeight;
     public Province[] provinces;
 
-    public Gemelch(Core game, int provCountWidth, int provCountHeight) {
-        this.game = game;
+    public Gemelch(int provCountWidth, int provCountHeight) {
         this.provCountWidth = provCountWidth;
         this.provCountHeight = provCountHeight;
-        HegemonicaLog.log(HegemonicaLog.Tags.MAP,"prov in width = " + provCountWidth);
-        HegemonicaLog.log(HegemonicaLog.Tags.MAP,"prov in height = " + provCountHeight);
+        LogManager.log(LogManager.Tags.MAP,"prov in width = " + provCountWidth);
+        LogManager.log(LogManager.Tags.MAP,"prov in height = " + provCountHeight);
 
         turnNumber = 1;
         test = new Country("Test1", 0);

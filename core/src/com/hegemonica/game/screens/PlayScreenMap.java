@@ -23,23 +23,25 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.FloatArray;
 import com.badlogic.gdx.utils.ShortArray;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.hegemonica.game.Core;
-import com.hegemonica.game.Framerate;
-import com.hegemonica.game.HegemonicaLog;
+import com.hegemonica.game.FPS;
+import com.hegemonica.game.LogManager;
 import com.hegemonica.game.localization.LocalizationKeys;
-import com.hegemonica.game.logic.scenarios.gemelch.Gemelch;
+import com.hegemonica.game.logic.Gemelch;
 import com.hegemonica.game.logic.scenarios.gemelch.ProvCoords;
 
 import java.util.Random;
 
 public class PlayScreenMap implements Disposable, GestureDetector.GestureListener {
     Core game;
+    HUD hud;
 
     private ProvCoords provCoords;
     boolean coordsAreSame;
     public OrthographicCamera camera;
-    public Viewport MainViewport;
+    public Viewport viewport;
     //    private Viewport UIviewport;
     private ShapeRenderer shapeRenderer;
     private final float WORLD_HEIGHT = 100;
@@ -61,19 +63,22 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
     private Stage stage;
     private Gemelch gemelch;
 
-    Framerate fps;
+    FPS fps;
     BitmapFont font;
     SpriteBatch batch;
     float zoomMin = 3f;
     float zoomMax = 0.25f;
 
-    public PlayScreenMap(Core game, OrthographicCamera camera, Viewport viewport, Gemelch gemelch) {
+    public PlayScreenMap(Core game, int provCountWidth, int provCountHeight) {
         this.game = game;
+        hud = new HUD(game);
         Gdx.input.setInputProcessor(new GestureDetector(this));
-        this.gemelch = gemelch;
+        gemelch = new Gemelch(provCountWidth, provCountHeight);
 //        provCoords = new ProvCoords();
-        this.camera = camera;
-        this.MainViewport = viewport;
+
+        camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        camera.translate(camera.viewportWidth / 2, camera.viewportHeight / 2);
+        viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
         shapeRenderer = new ShapeRenderer();
 
 
@@ -87,7 +92,7 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
         polyBatch = new PolygonSpriteBatch();
 
         UIskin = new Skin(Gdx.files.internal("ui/default/skin/uiskin.json"));
-        fps = new Framerate();
+        fps = new FPS();
         font = new BitmapFont();
         batch = new SpriteBatch();
 
@@ -103,7 +108,7 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
         return triangulator.computeTriangles(polygonVertices);
     }
 
-    public void render(OrthographicCamera camera) {
+    public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 //        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
@@ -117,9 +122,12 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
 //        polyBatch.begin();
 //        polySprite.draw(polyBatch);
 //        polyBatch.end();
-        stage.act(Gdx.graphics.getDeltaTime());
+        stage.act(delta);
         stage.draw();
 
+        hud.render(delta);
+
+        gemelch.render(camera);
         batch.begin();
         font.draw(batch, "zoom = " + camera.zoom, Gdx.graphics.getWidth() - 250f, Gdx.graphics.getHeight() - 250f);
         batch.end();
@@ -163,7 +171,7 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
     @Override
     public boolean pan(float x, float y, float deltaX, float deltaY) {
         camera.translate(-deltaX * camera.zoom, deltaY * camera.zoom);
-        HegemonicaLog.log(HegemonicaLog.Tags.INPUT, "Moving camera");
+        LogManager.log(LogManager.Tags.INPUT, "Moving camera");
         return true;
     }
 
@@ -186,11 +194,11 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
         while (zoomMax <= camera.zoom && camera.zoom <= zoomMin) {
             if (initialDistance >= distance) {
                 camera.zoom += (initialDistance - distance) * 0.00005f * camera.zoom;
-                HegemonicaLog.log(HegemonicaLog.Tags.INPUT, "Zooming camera");
+                LogManager.log(LogManager.Tags.INPUT, "Zooming camera");
                 return true;
             } else {
                 camera.zoom -= (distance - initialDistance) * 0.00005f * camera.zoom;
-                HegemonicaLog.log(HegemonicaLog.Tags.INPUT, "Zooming camera");
+                LogManager.log(LogManager.Tags.INPUT, "Zooming camera");
                 return true;
             }
         }

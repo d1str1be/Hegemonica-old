@@ -1,6 +1,6 @@
-package com.hegemonica.game.logic.resource;
+package com.hegemonica.game.logic;
 
-import com.hegemonica.game.logic.country.Province;
+import com.hegemonica.game.logic.Province;
 
 public class Resource {
     boolean canObtain;

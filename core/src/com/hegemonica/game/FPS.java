@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.TimeUtils;
 
-public class Framerate implements Disposable {
+public class FPS implements Disposable {
     long lastTimeCounted;
     private float sinceChange;
     private float frameRate;
@@ -16,7 +16,7 @@ public class Framerate implements Disposable {
     private OrthographicCamera cam;
 
 
-    public Framerate() {
+    public FPS() {
         lastTimeCounted = TimeUtils.millis();
         sinceChange = 0;
         frameRate = Gdx.graphics.getFramesPerSecond();

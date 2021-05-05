@@ -10,13 +10,13 @@ import net.arikia.dev.drpc.DiscordRichPresence;
 import net.arikia.dev.drpc.DiscordUser;
 import net.arikia.dev.drpc.callbacks.ReadyCallback;
 
-public class Discord {
+public class DiscordManager {
     final String appID = "837736520789262386";
     final boolean DEV_MODE;
     DiscordRPC rpc;
     LocalizationManager discordRPCLoc;
     DiscordRichPresence discordPresence;
-    public Discord(boolean isDevMode){
+    public DiscordManager(boolean isDevMode){
         this.startup();
         discordRPCLoc = new LocalizationManager();
         DEV_MODE = isDevMode;
@@ -31,7 +31,7 @@ public class Discord {
         DiscordEventHandlers handlers = new DiscordEventHandlers.Builder().setReadyEventHandler(new ReadyCallback() {
             @Override
             public void apply(DiscordUser user) {
-                Gdx.app.log(HegemonicaLog.Tags.HEGEMONICA, "Welcome " + user.username + "#" + user.discriminator + "!");
+                Gdx.app.log(LogManager.Tags.HEGEMONICA, "Welcome " + user.username + "#" + user.discriminator + "!");
             }
         }).build();
 

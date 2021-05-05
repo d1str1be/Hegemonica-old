@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.hegemonica.game.Core;
-import com.hegemonica.game.Framerate;
+import com.hegemonica.game.FPS;
 
 import java.util.Random;
 
@@ -17,7 +17,7 @@ public class FunScreen implements Screen {
     Texture img;
     BitmapFont testfont;
     Random rand = new Random();
-    Framerate fps;
+    FPS fps;
     int heightOfScreen;
     int widthOfScreen;
     SpriteBatch batch;
@@ -37,7 +37,7 @@ public class FunScreen implements Screen {
         batch = new SpriteBatch();
         heightOfScreen = Gdx.graphics.getHeight();
         widthOfScreen = Gdx.graphics.getWidth();
-        fps = new Framerate();
+        fps = new FPS();
         string_height = "Высота окна этого устройства: " + String.valueOf(heightOfScreen) + " пикселей";
         string_width = "Ширина окна этого устройства: " + String.valueOf(widthOfScreen) + " пикселей";
 

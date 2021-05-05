@@ -1,7 +1,7 @@
-package com.hegemonica.game.logic.buildings;
+package com.hegemonica.game.logic;
 
 import com.hegemonica.game.logic.Technology;
-import com.hegemonica.game.logic.country.Province;
+import com.hegemonica.game.logic.Province;
 
 public class Building {
     public int id;

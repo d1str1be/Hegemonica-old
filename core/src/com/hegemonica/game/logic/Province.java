@@ -1,4 +1,4 @@
-package com.hegemonica.game.logic.country;
+package com.hegemonica.game.logic;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -15,9 +15,6 @@ import com.badlogic.gdx.math.EarClippingTriangulator;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.utils.FloatArray;
 import com.badlogic.gdx.utils.ShortArray;
-import com.hegemonica.game.logic.buildings.Building;
-import com.hegemonica.game.logic.resource.Resource;
-import com.hegemonica.game.logic.scenarios.gemelch.Gemelch;
 
 public class Province {
     public int id;
