@@ -14,6 +14,7 @@ public class WarUnit {
     public int movementPoints;
     public int upgradeLevel;
     public int health;
+    public boolean isHealing;
 
     public String name;
 
@@ -40,6 +41,9 @@ public class WarUnit {
     }
 
     public void onTurn() {
+        if (isHealing) {
+            heal();
+        }
         switch (id) {
             case ID.WARRIOR:
                 movementPoints = MOVEMENTPOINTS.WARRIOR;
@@ -60,6 +64,10 @@ public class WarUnit {
 
     public void setDefenseStrength() {
         defenseStrength = startDefenseStrength - Math.round(COEFFICENTS.STRENGTHHEALTHCOEFFICENT * ((float)health / 100));
+    }
+
+    public void heal() {
+        health += 20;
     }
 
     public void move(Province province) {
@@ -93,11 +101,16 @@ public class WarUnit {
             setDefenseStrength();
             unit.setAttackStrength();
             unit.setDefenseStrength();
+            movementPoints = 0;
         }
     }
 
     public void defense(WarUnit unit) {
         health -= Math.round(30 * Math.pow(2.72, (unit.attackStrength - defenseStrength) / 25));
+    }
+
+    public void upgrade() {
+        upgradeLevel++;
     }
 
     public void destroy() {
@@ -147,7 +160,12 @@ public class WarUnit {
     }
 
     public class COEFFICENTS {
-        public final static int STRENGTHHEALTHCOEFFICENT = 5;
+        public final static int STRENGTHHEALTHCOEFFICENT = 10;
+    }
+
+    public class ACTIONID {
+        public final static int ATTACK = 0;
+        public final static int CAPTURE = 1;
     }
 
 }

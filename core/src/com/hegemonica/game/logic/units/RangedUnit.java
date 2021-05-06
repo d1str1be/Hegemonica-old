@@ -13,6 +13,7 @@ public class RangedUnit extends WarUnit{
     @Override
     public void attack(WarUnit unit) {
         unit.defense(this);
+        movementPoints = 0;
     }
 
     public class UPGRADELEVEL {
