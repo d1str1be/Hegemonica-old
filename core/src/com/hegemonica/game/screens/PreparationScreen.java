@@ -111,9 +111,9 @@ public class PreparationScreen implements Screen {
         stage.dispose();
     }
 
-    public void setListeners(){
+    public void setListeners() {
         Gdx.input.setInputProcessor(stage);
-        bPlay.addListener(new InputListener(){
+        bPlay.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 return true;
@@ -125,7 +125,7 @@ public class PreparationScreen implements Screen {
                 game.setScreen(new PlayScreen(game, provCountWidth, provCountHeight));
             }
         });
-        bBack.addListener(new InputListener(){
+        bBack.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 return true;
@@ -137,7 +137,7 @@ public class PreparationScreen implements Screen {
                 game.setScreen(new MainMenuScreen(game));
             }
         });
-        sProvCount1.addListener(new InputListener(){
+        sProvCount1.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 return true;
@@ -149,7 +149,7 @@ public class PreparationScreen implements Screen {
                 lIntProvCount1.setText(Integer.toString(provCountWidth));
             }
         });
-        sProvCount2.addListener(new InputListener(){
+        sProvCount2.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 return true;

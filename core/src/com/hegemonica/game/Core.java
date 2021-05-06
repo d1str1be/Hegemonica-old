@@ -42,7 +42,7 @@ public class Core extends Game {
         Gdx.input.setCatchKey(Input.Keys.BACK, true); // перехват сист.кнопки "назад" на андроиде
         audio = new AudioManager();
         loc = new LocalizationManager();
-        if(enableDiscord)
+        if (enableDiscord)
             discord = new DiscordManager(DEV_MODE);
 
         this.setScreen(new MainMenuScreen(this));
