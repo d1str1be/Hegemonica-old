@@ -176,8 +176,6 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
     public boolean pan(float x, float y, float deltaX, float deltaY) {
         cameraMovementX += deltaX;
         cameraMovementY += deltaY;
-        HegeLog.log("Camera", "cameraMovementX: " + cameraMovementX);
-        HegeLog.log("Camera", "cameraMovementY: " + cameraMovementY);
         camera.translate(-deltaX * camera.zoom, deltaY * camera.zoom);
         return true;
     }
