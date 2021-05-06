@@ -2,7 +2,6 @@ package com.hegemonica.game.logic.units;
 
 import com.hegemonica.game.logic.Country;
 import com.hegemonica.game.logic.Province;
-import com.hegemonica.game.logic.Technology;
 
 public class WarUnit {
     public int id;
@@ -55,11 +54,11 @@ public class WarUnit {
     }
 
     public void setAttackStrength() {
-        attackStrength = startAttackStrength - Math.round(COEFFICENTS.STRENGTHHEALTHCOEFFICENT * ((float)health / 100));
+        attackStrength = startAttackStrength - Math.round(COEFFICENTS.STRENGTHHEALTHCOEFFICENT * ((float) health / 100));
     }
 
     public void setDefenseStrength() {
-        defenseStrength = startDefenseStrength - Math.round(COEFFICENTS.STRENGTHHEALTHCOEFFICENT * ((float)health / 100));
+        defenseStrength = startDefenseStrength - Math.round(COEFFICENTS.STRENGTHHEALTHCOEFFICENT * ((float) health / 100));
     }
 
     public void move(Province province) {

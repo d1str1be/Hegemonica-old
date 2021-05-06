@@ -1,8 +1,5 @@
 package com.hegemonica.game.logic;
 
-import com.hegemonica.game.logic.Technology;
-import com.hegemonica.game.logic.Province;
-
 public class Building {
     public int id;
     public int productionCost;

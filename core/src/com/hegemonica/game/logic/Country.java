@@ -94,7 +94,7 @@ public class Country {
         public Resource Cows;
     }
 
-    public void techonogyResearch (Technology technology) {
+    public void techonogyResearch(Technology technology) {
         switch (technology.id) {
             case Technology.ID.ENGINEERING:
                 technologies.engineering.isResearched = true;
@@ -140,7 +140,7 @@ public class Country {
         }
     }
 
-    public boolean checkRequiredTechnologiesForTechnology (Technology technology) {
+    public boolean checkRequiredTechnologiesForTechnology(Technology technology) {
         for (int i = 0; i < technology.requiredTechnologies.length; i++) {
             if (technology.requiredTechnologies[i].isResearched == false) {
                 return false;
@@ -148,7 +148,6 @@ public class Country {
         }
         return true;
     }
-
 
 
 //    public static class Ethnoses {

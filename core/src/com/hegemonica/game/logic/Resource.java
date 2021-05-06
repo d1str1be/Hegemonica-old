@@ -1,7 +1,5 @@
 package com.hegemonica.game.logic;
 
-import com.hegemonica.game.logic.Province;
-
 public class Resource {
     boolean canObtain;
     boolean isObtained;

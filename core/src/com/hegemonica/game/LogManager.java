@@ -12,7 +12,7 @@ public class LogManager {
         final static public String PROVINCE = "Province Logs";
     }
 
-    public static void log(String logTag, String message){
+    public static void log(String logTag, String message) {
         Gdx.app.log(logTag, message);
     }
 }
