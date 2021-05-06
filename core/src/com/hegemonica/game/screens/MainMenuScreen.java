@@ -18,9 +18,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.hegemonica.game.AudioManager;
 import com.hegemonica.game.Core;
 import com.hegemonica.game.FPS;
-import com.hegemonica.game.LogManager;
+import com.hegemonica.game.HegeLog;
 
-import static com.hegemonica.game.LogManager.Tags.HEGEMONICA;
 import static com.hegemonica.game.localization.LocalizationKeys.Keys;
 
 public class MainMenuScreen implements Screen {
@@ -107,7 +106,7 @@ public class MainMenuScreen implements Screen {
         bSettings.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                LogManager.log(LogManager.Tags.MAINMENU, "Opened Settings");
+                HegeLog.log(HegeLog.MAINMENU, "Opened Settings");
                 game.audio.playSound(AudioManager.Sounds.UI_CLICK);
                 game.setScreen(new MainMenuSettingsScreen(game));
                 dispose();
@@ -170,7 +169,7 @@ public class MainMenuScreen implements Screen {
         viewport.update(width, height);
         camera.setToOrtho(false, viewport.getScreenWidth(), viewport.getScreenHeight());
 
-        Gdx.app.log(HEGEMONICA, "Width of app: " + Gdx.graphics.getWidth() + "\nHeight of app: " + Gdx.graphics.getHeight());
+        Gdx.app.log(HegeLog.HEGEMONICA, "Width of app: " + Gdx.graphics.getWidth() + "\nHeight of app: " + Gdx.graphics.getHeight());
     }
 
     @Override

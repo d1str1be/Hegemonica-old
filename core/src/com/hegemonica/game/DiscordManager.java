@@ -32,7 +32,7 @@ public class DiscordManager {
         DiscordEventHandlers handlers = new DiscordEventHandlers.Builder().setReadyEventHandler(new ReadyCallback() {
             @Override
             public void apply(DiscordUser user) {
-                Gdx.app.log(LogManager.Tags.HEGEMONICA, "Welcome " + user.username + "#" + user.discriminator + "!");
+                Gdx.app.log(HegeLog.HEGEMONICA, "Welcome " + user.username + "#" + user.discriminator + "!");
             }
         }).build();
 

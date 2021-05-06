@@ -3,26 +3,23 @@ package com.hegemonica.game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.hegemonica.game.Core;
 
 public class PlayScreen implements Screen {
     Core game;
-    Stage stage;
     PlayScreenMap map;
     Skin GlassyUI;
-
 
     public PlayScreen(Core game, int provCountWidth, int provCountHeight) {
         this.game = game;
         map = new PlayScreenMap(game, provCountWidth, provCountHeight);
+
     }
+
 
     @Override
     public void show() {
-        stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
         GlassyUI = new Skin(Gdx.files.internal("ui/glassy/skin/glassy-ui.json"));
     }
 

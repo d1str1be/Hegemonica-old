@@ -13,6 +13,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.EarClippingTriangulator;
 import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.utils.FloatArray;
 import com.badlogic.gdx.utils.ShortArray;
 import com.hegemonica.game.logic.units.DefenseUnit;
@@ -21,6 +23,8 @@ import com.hegemonica.game.logic.units.RangedUnit;
 import com.hegemonica.game.logic.units.WarUnit;
 
 import java.util.ArrayList;
+import com.hegemonica.game.Core;
+
 
 public class Province {
     public int id;
@@ -64,11 +68,14 @@ public class Province {
     public Country owner;
     public boolean[] neighbourProvinces;
 
-    public FloatArray provCoords;
+
     public float x;
     public float y;
     public float width;
     public float height;
+    public Rectangle rectangle;
+
+    public FloatArray provCoords;
     private Polygon polygon;
     private final EarClippingTriangulator triangulator = new EarClippingTriangulator();
 
@@ -93,6 +100,7 @@ public class Province {
     public Building mine;
     public Building city;
 
+    public Button btn;
 
     public Province(int id, String name, Country owner, boolean[] neighbours, boolean isCity, FloatArray provCoords) {
         this.id = id;
@@ -152,10 +160,14 @@ public class Province {
         unitCounter = 0;
         units = new ArrayList<WarUnit>();
 
+        rectangle = new Rectangle(x, y, width, height);
+
+        btn = new Button();
         this.setMathRender();
     }
 
     public void update() {
+        onTurn();
 
         switch (climate) {
 
@@ -268,7 +280,7 @@ public class Province {
         gainedSciencePoints = population + numberOfLibraries * owner.libraryProduction + numberOfUniversities * owner.universityProduction;
     }
 
-    public boolean isBuildingAvailiable(Building building) {
+    public boolean isBuildingAvailable(Building building) {
         if (owner.checkRequiredTechnologiesForBuilding(building)) {
             return !building.isNeedCity || building.isNeedCity == isCity;
         } else {
@@ -278,14 +290,9 @@ public class Province {
 
     //переписать
     public boolean chooseBuilding(Building building) {
-        if (isBuildingAvailiable(building)) {
-            buildingInProcess = building;
-            return true;
-        } else {
-            buildingInProcess = null;
-            return false;
-        }
-    }
+        //if (isBuildingAvailiable(building)) {
+			return false;
+		}
 
     public Province(Country owner, boolean isCity) {
         this.owner = owner;
@@ -302,30 +309,28 @@ public class Province {
 
     //math and graphics
     public void render(OrthographicCamera camera) {
-        //DEBUG setting
-        boolean drawFilledPolygons = false;
-        if (drawFilledPolygons) {
-//            polyBatch.setProjectionMatrix(camera.combined);
-//            polyBatch.begin();
-//            polySprite.draw(polyBatch);
-//            polyBatch.end();
-        } else {
-            shapeRenderer.setProjectionMatrix(camera.combined);
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-            shapeRenderer.setColor(Color.WHITE);
-            if (provCoords != null)
-                shapeRenderer.polygon(provCoords.toArray());
-            else
-                shapeRenderer.rect(x, y, width, height);
+
+        shapeRenderer.setProjectionMatrix(camera.combined);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(Color.WHITE);
+        if (provCoords != null)
+            shapeRenderer.polygon(provCoords.toArray());
+        else
+            shapeRenderer.rect(x, y, width, height);
 //                shapeRenderer.rect(polygon.getBoundingRectangle().getX(),polygon.getBoundingRectangle().getY(),polygon.getBoundingRectangle().getWidth(), polygon.getBoundingRectangle().getHeight());
-            shapeRenderer.end();
-        }
+        shapeRenderer.end();
+
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        if (provCoords != null) // если отрисовка полигоном, то центрируем по полигону
+        if (provCoords != null) { // если отрисовка полигоном, то центрируем по полигону
             font.draw(batch, name, polygon.getBoundingRectangle().getX() + polygon.getBoundingRectangle().getWidth() / 2 - (polygon.getBoundingRectangle().getWidth() * 0.25f), polygon.getBoundingRectangle().getY() + polygon.getBoundingRectangle().getHeight() / 2 - font.getScaleY());
-        else //иначе у нас отрисовка прямоугольником, центрируем по координатам прямоугольника
+        } else { //иначе у нас отрисовка прямоугольником, центрируем по координатам прямоугольника
             font.draw(batch, name, x + (width / 2) - 18, y + (height / 2));
+            if (Core.DEV_MODE) {
+                font.draw(batch, "x: " + x, x + (width / 2) - 18, y + (height / 2) - Core.gameHeight * 0.015f);
+                font.draw(batch, "y: " + y, x + (width / 2) - 18, y + (height / 2) - Core.gameHeight * 0.030f);
+            }
+        }
         batch.end();
     }
 
@@ -351,10 +356,18 @@ public class Province {
     }
 
     public boolean contains(float x, float y) {
-        return polygon.contains(x, y);
+        if (provCoords != null) {
+//            HegeLog.log("Province Math", "using polygon for " + name + " prov.contains()");
+            return polygon.contains(x, y);
+        } else {
+//            HegeLog.log("Province Math", "using rectangle for " + name + " contains()");
+            return rectangle.contains(x, y);
+        }
     }
 
     public int[] getXcoords() {
+        if (provCoords == null)
+            return null;
         int[] Xcoords = new int[provCoords.size / 2];
         Xcoords[0] = (int) provCoords.items[0];
         for (int i = 2; i < provCoords.size; i += 2) {
@@ -364,6 +377,8 @@ public class Province {
     }
 
     public int[] getYcoords() {
+        if (provCoords == null)
+            return null;
         int[] Ycoords = new int[provCoords.size / 2];
         Ycoords[0] = (int) provCoords.items[1];
         for (int i = 1; i < provCoords.size; i += 2) {

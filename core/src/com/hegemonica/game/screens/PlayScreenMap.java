@@ -1,6 +1,7 @@
 package com.hegemonica.game.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -17,7 +18,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.EarClippingTriangulator;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Disposable;
@@ -27,8 +27,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.hegemonica.game.Core;
 import com.hegemonica.game.FPS;
-import com.hegemonica.game.LogManager;
-import com.hegemonica.game.localization.LocalizationKeys;
+import com.hegemonica.game.HegeLog;
 import com.hegemonica.game.logic.Gemelch;
 import com.hegemonica.game.logic.scenarios.gemelch.ProvCoords;
 
@@ -36,7 +35,10 @@ import java.util.Random;
 
 public class PlayScreenMap implements Disposable, GestureDetector.GestureListener {
     Core game;
+    InputMultiplexer inputMultiplexer;
     HUD hud;
+    private Gemelch gemelch;
+
 
     private ProvCoords provCoords;
     boolean coordsAreSame;
@@ -60,8 +62,7 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
     private Pixmap pix;
     private Skin UIskin;
     private TextButton textButton;
-    private Stage stage;
-    private Gemelch gemelch;
+
 
     FPS fps;
     BitmapFont font;
@@ -69,15 +70,26 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
     float zoomMin = 3f;
     float zoomMax = 0.25f;
 
+    float realX;
+    float realY;
+    float cameraMovementX;
+    float cameraMovementY;
+
     public PlayScreenMap(Core game, int provCountWidth, int provCountHeight) {
         this.game = game;
-        hud = new HUD(game);
-        Gdx.input.setInputProcessor(new GestureDetector(this));
+        hud = new HUD(game, this);
+        inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(hud.stage);
+        inputMultiplexer.addProcessor(new GestureDetector(this));
+        Gdx.input.setInputProcessor(inputMultiplexer);
         gemelch = new Gemelch(provCountWidth, provCountHeight);
 //        provCoords = new ProvCoords();
 
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        camera.translate(camera.viewportWidth / 2, camera.viewportHeight / 2);
+        camera.translate(0, 0);
+        cameraMovementX = camera.viewportWidth / 2;
+        cameraMovementY = -camera.viewportHeight / 2;
+        camera.zoom = 0.5f;
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
         shapeRenderer = new ShapeRenderer();
 
@@ -96,12 +108,6 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
         font = new BitmapFont();
         batch = new SpriteBatch();
 
-        textButton = new TextButton(game.loc.getString(LocalizationKeys.Keys.Turn), UIskin, "default");
-        textButton.setWidth(Gdx.graphics.getWidth() / 15f);
-        textButton.setHeight(Gdx.graphics.getHeight() / 6f);
-        textButton.setPosition(Gdx.graphics.getWidth() - textButton.getWidth(), Gdx.graphics.getHeight() - textButton.getHeight());
-        stage = new Stage();
-        stage.addActor(textButton);
     }
 
     private ShortArray triangulate(FloatArray polygonVertices) {
@@ -111,26 +117,19 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-//        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-//        shapeRenderer.setColor(Color.WHITE);
-//        shapeRenderer.polygon(testVertices);
-//        shapeRenderer.end();
+
         camera.update();
-//        polyBatch.setProjectionMatrix(camera.combined);
         fps.update();
+
         fps.render();
-//        polyBatch.begin();
-//        polySprite.draw(polyBatch);
-//        polyBatch.end();
-        stage.act(delta);
-        stage.draw();
-
         hud.render(delta);
-
         gemelch.render(camera);
-        batch.begin();
-        font.draw(batch, "zoom = " + camera.zoom, Gdx.graphics.getWidth() - 250f, Gdx.graphics.getHeight() - 250f);
-        batch.end();
+
+        if (Core.DEV_MODE) {
+            batch.begin();
+            font.draw(batch, "zoom = " + camera.zoom, Gdx.graphics.getWidth() - 250f, Gdx.graphics.getHeight() - 250f);
+            batch.end();
+        }
     }
 
 
@@ -155,6 +154,11 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
+        realX = (x - cameraMovementX) / 2;
+        realY = (Core.gameHeight - y + cameraMovementY) / 2;
+        HegeLog.log("Input", "Tapped on X: " + realX);
+        HegeLog.log("Input", "Tapped on Y: " + realY);
+        hud.setSelectedProvince(gemelch.whichPolygonContainsPoint(realX, realY));
         return true;
     }
 
@@ -170,14 +174,15 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
 
     @Override
     public boolean pan(float x, float y, float deltaX, float deltaY) {
+        cameraMovementX += deltaX;
+        cameraMovementY += deltaY;
         camera.translate(-deltaX * camera.zoom, deltaY * camera.zoom);
-        LogManager.log(LogManager.Tags.INPUT, "Moving camera");
         return true;
     }
 
     @Override
     public boolean panStop(float x, float y, int pointer, int button) {
-        return false;
+        return true;
     }
 
     @Override
@@ -193,11 +198,9 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
         while (zoomMax <= camera.zoom && camera.zoom <= zoomMin) {
             if (initialDistance >= distance) {
                 camera.zoom += (initialDistance - distance) * 0.00005f * camera.zoom;
-                LogManager.log(LogManager.Tags.INPUT, "Zooming camera");
                 return true;
             } else {
                 camera.zoom -= (distance - initialDistance) * 0.00005f * camera.zoom;
-                LogManager.log(LogManager.Tags.INPUT, "Zooming camera");
                 return true;
             }
         }
@@ -214,57 +217,8 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
 
     }
 
-//всё что ниже - одна из попыток найти способ отрисовки заполненного цветом полигона - Богд
-
-//    public void polygon(float[] vertices, int offset, int count) {
-//        if (shapeType != ShapeRenderer.ShapeType.Filled && shapeType != ShapeType.Line)
-//            throw new GdxRuntimeException("Must call begin(ShapeType.Filled) or begin(ShapeType.Line)");
-//        if (count < 6)
-//            throw new IllegalArgumentException("Polygons must contain at least 3 points.");
-//        if (count % 2 != 0)
-//            throw new IllegalArgumentException("Polygons must have an even number of vertices.");
-//
-//        check(shapeType, null, count);
-//
-//        final float firstX = vertices[0];
-//        final float firstY = vertices[1];
-//        if (shapeType == ShapeRenderer.ShapeType.Line) {
-//            for (int i = offset, n = offset + count; i < n; i += 2) {
-//                final float x1 = vertices[i];
-//                final float y1 = vertices[i + 1];
-//
-//                final float x2;
-//                final float y2;
-//
-//                if (i + 2 >= count) {
-//                    x2 = firstX;
-//                    y2 = firstY;
-//                } else {
-//                    x2 = vertices[i + 2];
-//                    y2 = vertices[i + 3];
-//                }
-//
-//                renderer.color(color);
-//                renderer.vertex(x1, y1, 0);
-//                renderer.color(color);
-//                renderer.vertex(x2, y2, 0);
-//
-//            }
-//        } else {
-//            ShortArray arrRes = ear.computeTriangles(vertices);
-//
-//            for (int i = 0; i < arrRes.size - 2; i = i + 3) {
-//                float x1 = vertices[arrRes.get(i) * 2];
-//                float y1 = vertices[(arrRes.get(i) * 2) + 1];
-//
-//                float x2 = vertices[(arrRes.get(i + 1)) * 2];
-//                float y2 = vertices[(arrRes.get(i + 1) * 2) + 1];
-//
-//                float x3 = vertices[arrRes.get(i + 2) * 2];
-//                float y3 = vertices[(arrRes.get(i + 2) * 2) + 1];
-//
-//                this.triangle(x1, y1, x2, y2, x3, y3);
-//            }
-//        }
-//    }
+    public void onTurn(int turnNumber) {
+        gemelch.setTurnNumber(turnNumber);
+        gemelch.onTurn();
+    }
 }
