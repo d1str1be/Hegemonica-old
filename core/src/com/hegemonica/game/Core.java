@@ -21,10 +21,12 @@ public class Core extends Game {
      * Логическая переменная, отвечающая за доступ к интеграции Discord. Значение задаётся в классе лаунчера платформы через конструктор класса.
      */
     public final boolean enableDiscord;
+    public static final boolean IS_SERVER = false;
+
     public LocalizationManager loc;
     public AudioManager audio;
-
     public DiscordManager discord;
+    public NetConnManager internet;
 
     public Core(boolean enableDiscord) {
         this.enableDiscord = enableDiscord;
@@ -40,12 +42,11 @@ public class Core extends Game {
         Gdx.input.setCatchKey(Input.Keys.BACK, true); // перехват сист.кнопки "назад" на андроиде
         audio = new AudioManager();
         loc = new LocalizationManager();
+        internet = new NetConnManager();
+
         if (enableDiscord)
             discord = new DiscordManager(DEV_MODE);
-
         this.setScreen(new MainMenuScreen(this));
-
-
     }
 
     @Override
