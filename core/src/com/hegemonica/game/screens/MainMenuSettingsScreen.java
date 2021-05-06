@@ -88,7 +88,7 @@ class MainMenuSettingsScreen implements Screen {
         });
 
         musicSliderLabel = new Label(game.loc.getString(Keys.Music_Volume), GlassyUI);
-        musicSlider = new Slider(0, 1, 0.05f, false, GlassyUI);
+        musicSlider = new Slider(0, 1, 0.001f, false, GlassyUI);
         musicSlider.setValue(game.audio.getMusicVolume());
         musicSlider.setWidth(Gdx.graphics.getWidth());
         musicSlider.addListener(new InputListener() {
@@ -109,7 +109,7 @@ class MainMenuSettingsScreen implements Screen {
         });
 
         soundSliderLabel = new Label(game.loc.getString(Keys.Sound_Volume), GlassyUI);
-        soundSlider = new Slider(0, 1, 0.05f, false, GlassyUI);
+        soundSlider = new Slider(0, 1, 0.001f, false, GlassyUI);
         soundSlider.setValue(game.audio.getSoundVolume());
         soundSlider.setWidth(Gdx.graphics.getWidth());
         soundSlider.addListener(new InputListener() {

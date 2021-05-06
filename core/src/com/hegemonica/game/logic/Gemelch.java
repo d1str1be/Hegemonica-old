@@ -6,6 +6,8 @@ import com.hegemonica.game.HegeLog;
 // ЭТО СЦЕНАРИЙ. ЗДЕСЬ ЗАДАЕМ ВСЕ СТРАНЫ ЭТОГО СЦЕНАРИЯ, КАРТУ "ПАНГЕЯ" И ВСЕ ОСТАЛЬНОЕ
 public class Gemelch {
     public static final int COUNT_OF_RESOURCES = 26;
+
+
     public int turnNumber;
     public int mapHeight;
     public int mapWidth;
@@ -25,11 +27,13 @@ public class Gemelch {
 
     public int provCountWidth;
     public int provCountHeight;
+    public int provincesCount;
     public Province[] provinces;
 
     public Gemelch(int provCountWidth, int provCountHeight) {
         this.provCountWidth = provCountWidth;
         this.provCountHeight = provCountHeight;
+        provincesCount = provCountWidth * provCountHeight;
         HegeLog.log(HegeLog.MAP, "prov in width = " + provCountWidth);
         HegeLog.log(HegeLog.MAP, "prov in height = " + provCountHeight);
 
@@ -41,7 +45,6 @@ public class Gemelch {
         for (int i = 0; i < provCountHeight; i++) {
             for (int j = 0; j < provCountWidth; j++) {
                 int iterator = i * provCountWidth + j;
-                System.out.println(iterator);
                 provinces[iterator] = new Province(iterator, "Province " + iterator, test, new boolean[]{true}, false, 50 * j, 50 * i, 50, 50);
             }
         }
@@ -53,19 +56,35 @@ public class Gemelch {
         turnNumber++;
     }
 
-    //    public class Provinces {
-//        public Province levian;
-//        public Province valinia;
-//
-//    }
+    public void setTurnNumber(int turnNumber) {
+        this.turnNumber = turnNumber;
+    }
+
+
     public void render(OrthographicCamera camera) {
         for (Province x : provinces) {
             x.render(camera);
         }
     }
 
+    public float[] getProvX() {
+        float[] provX = new float[provincesCount];
+        for (int i = 0; i < provincesCount; i++) {
+            provX[i] = provinces[i].x;
+        }
+        return provX;
+    }
+
+    public float[] getProvY() {
+        float[] provY = new float[provincesCount];
+        for (int i = 0; i < provincesCount; i++) {
+            provY[i] = provinces[i].y;
+        }
+        return provY;
+    }
+
     /**
-     * Returns selected point. Should be used in tap() method of GestureListener
+     * Returns polygon which contains tap point. Returns null if no province contains tap point
      *
      * @return Selected province
      */
@@ -180,4 +199,6 @@ public class Gemelch {
         }
         return neighborsBooleanList;
     }
+
+
 }

@@ -47,7 +47,7 @@ public class PreparationScreen implements Screen {
         defaultSkin = new Skin(Gdx.files.internal("ui/default/skin/uiskin.json"));
         table = new Table(defaultSkin);
         window = new Window("Set Up Map", defaultSkin);
-        window.setBounds(gameWidth * 0.4f, gameHeight * 0.3f, gameWidth * 0.2f, gameHeight * 0.35f);
+        window.setBounds(gameWidth * 0.2f, gameHeight * 0.2f, gameWidth * 0.6f, gameHeight * 0.5f);
 
         lProvCount1 = new Label("Prov Count in width", defaultSkin);
         sProvCount1 = new Slider(provCountWidth, 10, 1, false, defaultSkin);
@@ -59,6 +59,9 @@ public class PreparationScreen implements Screen {
         bBack = new TextButton("Back", defaultSkin, "toggle");
         this.setListeners();
 
+        window.setMovable(false);
+        window.setScale(1.5f);
+        window.setPosition(gameWidth * 0.2f / (window.getScaleX() * 2), gameHeight * 0.2f / (window.getScaleX() * 2));
         window.align(Align.top);
         window.add(bPlay);
         window.row();
@@ -111,9 +114,9 @@ public class PreparationScreen implements Screen {
         stage.dispose();
     }
 
-    public void setListeners(){
+    public void setListeners() {
         Gdx.input.setInputProcessor(stage);
-        bPlay.addListener(new InputListener(){
+        bPlay.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 return true;
@@ -125,7 +128,7 @@ public class PreparationScreen implements Screen {
                 game.setScreen(new PlayScreen(game, provCountWidth, provCountHeight));
             }
         });
-        bBack.addListener(new InputListener(){
+        bBack.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 return true;
@@ -137,7 +140,7 @@ public class PreparationScreen implements Screen {
                 game.setScreen(new MainMenuScreen(game));
             }
         });
-        sProvCount1.addListener(new InputListener(){
+        sProvCount1.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 return true;
@@ -149,7 +152,7 @@ public class PreparationScreen implements Screen {
                 lIntProvCount1.setText(Integer.toString(provCountWidth));
             }
         });
-        sProvCount2.addListener(new InputListener(){
+        sProvCount2.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 return true;
