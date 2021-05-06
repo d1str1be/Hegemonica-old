@@ -7,7 +7,6 @@ import com.hegemonica.game.localization.LocalizationManager;
 import com.hegemonica.game.screens.MainMenuScreen;
 
 
-
 public class Core extends Game {
     private static final float VERSION = 0.40f;
     public static float gameWidth;

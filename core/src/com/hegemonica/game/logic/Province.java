@@ -340,7 +340,7 @@ public class Province {
     }
 
     public int[] getXcoords() {
-        if(provCoords == null)
+        if (provCoords == null)
             return null;
         int[] Xcoords = new int[provCoords.size / 2];
         Xcoords[0] = (int) provCoords.items[0];
@@ -351,7 +351,7 @@ public class Province {
     }
 
     public int[] getYcoords() {
-        if(provCoords == null)
+        if (provCoords == null)
             return null;
         int[] Ycoords = new int[provCoords.size / 2];
         Ycoords[0] = (int) provCoords.items[1];

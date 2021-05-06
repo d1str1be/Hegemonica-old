@@ -18,7 +18,6 @@ public class PlayScreen implements Screen {
     }
 
 
-
     @Override
     public void show() {
         GlassyUI = new Skin(Gdx.files.internal("ui/glassy/skin/glassy-ui.json"));

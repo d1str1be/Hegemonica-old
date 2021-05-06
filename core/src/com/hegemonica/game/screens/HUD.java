@@ -147,11 +147,12 @@ public class HUD {
         stage.dispose();
     }
 
-    public void onTurn(){
-         turnNumber++;
-         lTurnNumber.setText("Turn " + turnNumber);
-         map.onTurn(turnNumber);
+    public void onTurn() {
+        turnNumber++;
+        lTurnNumber.setText("Turn " + turnNumber);
+        map.onTurn(turnNumber);
     }
+
     public void setGeneralInfo() {
         lProvName.setText(selectedProvince.name);
         lProvCountry.setText(selectedProvince.owner.name);
