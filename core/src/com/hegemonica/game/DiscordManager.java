@@ -16,11 +16,12 @@ public class DiscordManager {
     DiscordRPC rpc;
     LocalizationManager discordRPCLoc;
     DiscordRichPresence discordPresence;
-    public DiscordManager(boolean isDevMode){
+
+    public DiscordManager(boolean isDevMode) {
         this.startup();
         discordRPCLoc = new LocalizationManager();
         DEV_MODE = isDevMode;
-        if(isDevMode)
+        if (isDevMode)
             this.devMode();
         else
             this.onMainMenu();
@@ -31,7 +32,7 @@ public class DiscordManager {
         DiscordEventHandlers handlers = new DiscordEventHandlers.Builder().setReadyEventHandler(new ReadyCallback() {
             @Override
             public void apply(DiscordUser user) {
-                Gdx.app.log(LogManager.Tags.HEGEMONICA, "Welcome " + user.username + "#" + user.discriminator + "!");
+                Gdx.app.log(HegeLog.HEGEMONICA, "Welcome " + user.username + "#" + user.discriminator + "!");
             }
         }).build();
 
@@ -41,7 +42,7 @@ public class DiscordManager {
         rpc.discordInitialize(appID, handlers, true);
     }
 
-    public void onMainMenu(){
+    public void onMainMenu() {
         rpc.discordClearPresence();
         discordPresence.state = discordRPCLoc.getString(LocalizationKeys.Keys.In_Main_Menu);
         discordPresence.startTimestamp = System.currentTimeMillis();
@@ -49,7 +50,7 @@ public class DiscordManager {
         rpc.discordUpdatePresence(discordPresence);
     }
 
-    public void onPlaying(){
+    public void onPlaying() {
         rpc.discordClearPresence();
         DiscordRichPresence discordPresence = new DiscordRichPresence();
         discordPresence.state = discordRPCLoc.getString(LocalizationKeys.Keys.Playing);
@@ -57,7 +58,8 @@ public class DiscordManager {
         discordPresence.largeImageKey = "hegemonicalogo";
         rpc.discordUpdatePresence(discordPresence);
     }
-    public void devMode(){
+
+    public void devMode() {
         rpc.discordClearPresence();
         DiscordRichPresence discordPresence = new DiscordRichPresence();
         discordPresence.state = "[DEV] Working on game";
@@ -66,7 +68,7 @@ public class DiscordManager {
         rpc.discordUpdatePresence(discordPresence);
     }
 
-    public void stopRPC(){
+    public void stopRPC() {
         rpc.discordShutdown();
         rpc.discordClearPresence();
     }

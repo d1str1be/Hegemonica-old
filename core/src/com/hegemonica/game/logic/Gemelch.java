@@ -1,7 +1,7 @@
 package com.hegemonica.game.logic;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.hegemonica.game.LogManager;
+import com.hegemonica.game.HegeLog;
 
 // ЭТО СЦЕНАРИЙ. ЗДЕСЬ ЗАДАЕМ ВСЕ СТРАНЫ ЭТОГО СЦЕНАРИЯ, КАРТУ "ПАНГЕЯ" И ВСЕ ОСТАЛЬНОЕ
 public class Gemelch {
@@ -30,8 +30,8 @@ public class Gemelch {
     public Gemelch(int provCountWidth, int provCountHeight) {
         this.provCountWidth = provCountWidth;
         this.provCountHeight = provCountHeight;
-        LogManager.log(LogManager.Tags.MAP,"prov in width = " + provCountWidth);
-        LogManager.log(LogManager.Tags.MAP,"prov in height = " + provCountHeight);
+        HegeLog.log(HegeLog.MAP, "prov in width = " + provCountWidth);
+        HegeLog.log(HegeLog.MAP, "prov in height = " + provCountHeight);
 
         turnNumber = 1;
         test = new Country("Test1", 0);
@@ -112,7 +112,7 @@ public class Gemelch {
             neighbors[3] = id - mapWidth - 1;
             return neighbors;
 
-        //крайние по сторонам
+            //крайние по сторонам
 
         } else if (id < mapWidth) {
             int[] neighbors = new int[6];
@@ -151,7 +151,7 @@ public class Gemelch {
             neighbors[5] = id + mapWidth - 1;
             return neighbors;
 
-        //все остальные
+            //все остальные
 
         } else {
             int[] neighbors = new int[9];
@@ -170,7 +170,7 @@ public class Gemelch {
 
     public boolean[] getBooleanNeighborsList(Province province) {
         int neighborsQuantity = getNeighborsIdList(province).length;
-        int[] neighborsIntList = new int[neighborsQuantity];
+        int[] neighborsIntList = getNeighborsIdList(province);
         boolean[] neighborsBooleanList = new boolean[mapWidth * mapHeight];
         for (int i = 0; i < mapWidth * mapHeight; i++) {
             neighborsBooleanList[i] = false;
