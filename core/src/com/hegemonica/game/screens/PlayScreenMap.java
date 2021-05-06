@@ -186,8 +186,7 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
         if (camera.zoom < zoomMax) {
             camera.zoom = zoomMax;
             return true;
-        }
-        else if(camera.zoom > zoomMin) {
+        } else if (camera.zoom > zoomMin) {
             camera.zoom = zoomMin;
             return true;
         }

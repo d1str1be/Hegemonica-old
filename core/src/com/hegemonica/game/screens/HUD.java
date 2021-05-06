@@ -19,18 +19,18 @@ public class HUD {
     Skin GlassyUI;
     TextButton bBack;
 
-    public HUD(final Core game){
+    public HUD(final Core game) {
         this.game = game;
         this.show();
     }
 
-    public void show(){
+    public void show() {
         stage = new Stage(new FitViewport(Core.gameWidth, Core.gameHeight));
         DefaultUI = new Skin(Gdx.files.internal("ui/default/skin/uiskin.json"));
         GlassyUI = new Skin(Gdx.files.internal("ui/glassy/skin/glassy-ui.json"));
         bBack = new TextButton("Back", GlassyUI);
-        bBack.setSize(bWidth,bHeight);
-        bBack.setPosition(Core.gameWidth-bWidth,Core.gameHeight-bHeight);
+        bBack.setSize(bWidth, bHeight);
+        bBack.setPosition(Core.gameWidth - bWidth, Core.gameHeight - bHeight);
         bBack.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -45,11 +45,12 @@ public class HUD {
         stage.addActor(bBack);
     }
 
-    public void render(float delta){
+    public void render(float delta) {
         stage.act(delta);
         stage.draw();
     }
-    public void dispose(){
+
+    public void dispose() {
         stage.dispose();
     }
 }

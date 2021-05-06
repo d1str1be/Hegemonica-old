@@ -85,7 +85,7 @@ public class MainMenuScreen implements Screen {
         bPlay.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                if(game.enableDiscord)
+                if (game.enableDiscord)
                     game.discord.onPlaying();
                 game.setScreen(new PreparationScreen(game));
                 game.audio.playSound(AudioManager.Sounds.UI_CLICK);

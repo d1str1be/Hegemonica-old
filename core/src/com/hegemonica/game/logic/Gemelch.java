@@ -30,8 +30,8 @@ public class Gemelch {
     public Gemelch(int provCountWidth, int provCountHeight) {
         this.provCountWidth = provCountWidth;
         this.provCountHeight = provCountHeight;
-        LogManager.log(LogManager.Tags.MAP,"prov in width = " + provCountWidth);
-        LogManager.log(LogManager.Tags.MAP,"prov in height = " + provCountHeight);
+        LogManager.log(LogManager.Tags.MAP, "prov in width = " + provCountWidth);
+        LogManager.log(LogManager.Tags.MAP, "prov in height = " + provCountHeight);
 
         turnNumber = 1;
         test = new Country("Test1", 0);
@@ -112,7 +112,7 @@ public class Gemelch {
             neighbors[3] = id - mapWidth - 1;
             return neighbors;
 
-        //крайние по сторонам
+            //крайние по сторонам
 
         } else if (id < mapWidth) {
             int[] neighbors = new int[6];
@@ -151,7 +151,7 @@ public class Gemelch {
             neighbors[5] = id + mapWidth - 1;
             return neighbors;
 
-        //все остальные
+            //все остальные
 
         } else {
             int[] neighbors = new int[9];
