@@ -49,17 +49,9 @@ public class Province {
     public int numberOfMines;
 
     //units
-    public boolean isUnitThere;
-    public int meleeCounter;
-    public int defenseCounter;
-    public int rangedCounter;
-    public ArrayList<MeleeUnit> meleeUnits;
-    public ArrayList<DefenseUnit> defenseUnits;
-    public ArrayList<RangedUnit> rangedUnits;
-
-    public MeleeUnit meleeUnitThere;
-    public DefenseUnit defenseUnitThere;
-    public RangedUnit rangedUnitThere;
+    public int unitCounter;
+    public ArrayList<WarUnit> units;
+    public WarUnit unitThere;
 
     public int climate;
     public int landscape;
@@ -125,9 +117,8 @@ public class Province {
         farm = new Building(Building.ID.FARM, this);
         mine = new Building(Building.ID.MINE, this);
 
-        meleeCounter = 1;
-        defenseCounter = 1;
-        rangedCounter = 1;
+        unitCounter = 0;
+        units = new ArrayList<WarUnit>();
 
         this.setMathRender();
     }
@@ -158,9 +149,8 @@ public class Province {
         farm = new Building(Building.ID.FARM, this);
         mine = new Building(Building.ID.MINE, this);
 
-        meleeCounter = 1;
-        defenseCounter = 1;
-        rangedCounter = 1;
+        unitCounter = 0;
+        units = new ArrayList<WarUnit>();
 
         this.setMathRender();
     }
@@ -246,20 +236,20 @@ public class Province {
     public void createUnit (int id) {
         switch (id) {
             case WarUnit.ID.WARRIOR:
-                meleeUnits.add(new MeleeUnit(WarUnit.ID.WARRIOR, owner, WarUnit.COST.WARRIOR, WarUnit.ATTACKSTRENGTH.WARRIOR, WarUnit.DEFENSESTRENGTH.WARRIOR, WarUnit.MOVEMENTPOINTS.WARRIOR, this, meleeCounter, MeleeUnit.UPGRADELEVEL.WARRIOR, "Warrior" ));
-                meleeCounter++;
+                units.add(new MeleeUnit(WarUnit.ID.WARRIOR, owner, WarUnit.COST.WARRIOR, WarUnit.ATTACKSTRENGTH.WARRIOR, WarUnit.DEFENSESTRENGTH.WARRIOR, WarUnit.MOVEMENTPOINTS.WARRIOR, this, unitCounter, MeleeUnit.UPGRADELEVEL.WARRIOR, "Warrior" ));
+                unitCounter++;
             case WarUnit.ID.ARCHER:
-                rangedUnits.add(new RangedUnit(WarUnit.ID.ARCHER, owner, WarUnit.COST.ARCHER, WarUnit.ATTACKSTRENGTH.ARCHER, WarUnit.DEFENSESTRENGTH.ARCHER, WarUnit.MOVEMENTPOINTS.ARCHER, this, rangedCounter, RangedUnit.UPGRADELEVEL.ARCHER, "Archer" ));
-                rangedCounter++;
+                units.add(new RangedUnit(WarUnit.ID.ARCHER, owner, WarUnit.COST.ARCHER, WarUnit.ATTACKSTRENGTH.ARCHER, WarUnit.DEFENSESTRENGTH.ARCHER, WarUnit.MOVEMENTPOINTS.ARCHER, this, unitCounter, RangedUnit.UPGRADELEVEL.ARCHER, "Archer" ));
+                unitCounter++;
             case WarUnit.ID.SHIELDER:
-                defenseUnits.add(new DefenseUnit(WarUnit.ID.SHIELDER, owner, WarUnit.COST.SHIELDER, WarUnit.ATTACKSTRENGTH.SHIELDER, WarUnit.DEFENSESTRENGTH.SHIELDER, WarUnit.MOVEMENTPOINTS.SHIELDER, this, defenseCounter, DefenseUnit.UPGRADELEVEL.SHIELDER, "Shielder" ));
-                defenseCounter++;
+                units.add(new DefenseUnit(WarUnit.ID.SHIELDER, owner, WarUnit.COST.SHIELDER, WarUnit.ATTACKSTRENGTH.SHIELDER, WarUnit.DEFENSESTRENGTH.SHIELDER, WarUnit.MOVEMENTPOINTS.SHIELDER, this, unitCounter, DefenseUnit.UPGRADELEVEL.SHIELDER, "Shielder" ));
+                unitCounter++;
             case WarUnit.ID.CROSSBOWS:
-                rangedUnits.add(new RangedUnit(WarUnit.ID.CROSSBOWS, owner, WarUnit.COST.CROSSBOWS, WarUnit.ATTACKSTRENGTH.CROSSBOWS, WarUnit.DEFENSESTRENGTH.CROSSBOWS, WarUnit.MOVEMENTPOINTS.CROSSBOWS, this, rangedCounter, RangedUnit.UPGRADELEVEL.CROSSBOWS, "Crossbows" ));
-                rangedCounter++;
+                units.add(new RangedUnit(WarUnit.ID.CROSSBOWS, owner, WarUnit.COST.CROSSBOWS, WarUnit.ATTACKSTRENGTH.CROSSBOWS, WarUnit.DEFENSESTRENGTH.CROSSBOWS, WarUnit.MOVEMENTPOINTS.CROSSBOWS, this, unitCounter, RangedUnit.UPGRADELEVEL.CROSSBOWS, "Crossbows" ));
+                unitCounter++;
             case WarUnit.ID.SWORDSMAN:
-                meleeUnits.add(new MeleeUnit(WarUnit.ID.SWORDSMAN, owner, WarUnit.COST.SWORDSMAN, WarUnit.ATTACKSTRENGTH.SWORDSMAN, WarUnit.DEFENSESTRENGTH.SWORDSMAN, WarUnit.MOVEMENTPOINTS.SWORDSMAN, this, meleeCounter, MeleeUnit.UPGRADELEVEL.SWORDSMAN, "Swordsman" ));
-                meleeCounter++;
+                units.add(new MeleeUnit(WarUnit.ID.SWORDSMAN, owner, WarUnit.COST.SWORDSMAN, WarUnit.ATTACKSTRENGTH.SWORDSMAN, WarUnit.DEFENSESTRENGTH.SWORDSMAN, WarUnit.MOVEMENTPOINTS.SWORDSMAN, this, unitCounter, MeleeUnit.UPGRADELEVEL.SWORDSMAN, "Swordsman" ));
+                unitCounter++;
         }
     }
 

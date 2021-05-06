@@ -6,8 +6,13 @@ import com.hegemonica.game.logic.Technology;
 
 public class RangedUnit extends WarUnit{
 
-    public RangedUnit(int id, Country owner, int cost, int attackStrength, int defenseStrength, int movementPoints, Province homeProvince, int number, int upgradeLevel, String name) {
-        super(id, owner, cost, attackStrength, defenseStrength, movementPoints, homeProvince, number, upgradeLevel, name);
+    public RangedUnit(int id, Country owner, int cost, int startAttackStrength, int startDefenseStrength, int movementPoints, Province homeProvince, int number, int upgradeLevel, String name) {
+        super(id, owner, cost, startAttackStrength, startDefenseStrength, movementPoints, homeProvince, number, upgradeLevel, name);
+    }
+
+    @Override
+    public void attack(WarUnit unit) {
+        unit.defense(this);
     }
 
     public class UPGRADELEVEL {

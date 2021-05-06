@@ -6,8 +6,8 @@ import com.hegemonica.game.logic.Technology;
 
 public class DefenseUnit extends WarUnit{
 
-    public DefenseUnit(int id, Country owner, int cost, int attackStrength, int defenseStrength, int movementPoints, Province homeProvince, int number, int upgradeLevel, String name) {
-        super(id, owner, cost, attackStrength, defenseStrength, movementPoints, homeProvince, number, upgradeLevel, name);
+    public DefenseUnit(int id, Country owner, int cost, int startAttackStrength, int startDefenseStrength, int movementPoints, Province homeProvince, int number, int upgradeLevel, String name) {
+        super(id, owner, cost, startAttackStrength, startDefenseStrength, movementPoints, homeProvince, number, upgradeLevel, name);
     }
 
     public class UPGRADELEVEL {
