@@ -1,6 +1,8 @@
 package com.hegemonica.game.logic;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,10 +16,15 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.EarClippingTriangulator;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.FloatArray;
 import com.badlogic.gdx.utils.ShortArray;
 import com.hegemonica.game.Core;
+import com.badlogic.gdx.utils.viewport.Viewport;
+
+import java.util.ArrayList;
 
 public class Province {
     public int id;
@@ -61,6 +68,8 @@ public class Province {
     public int sizeUsed;
 
     public Resource resource;
+
+
     public Country owner;
     public boolean[] neighbourProvinces;
 
@@ -70,6 +79,7 @@ public class Province {
     public float width;
     public float height;
     public Rectangle rectangle;
+    public Stage stage;
 
     public FloatArray provCoords;
     private Polygon polygon;
@@ -96,7 +106,8 @@ public class Province {
     public Building mine;
     public Building city;
 
-    public Button btn;
+    Skin defaultSkin;
+    Label lProvName;
 
     public Province(int id, String name, Country owner, boolean[] neighbours, boolean isCity, FloatArray provCoords) {
         this.id = id;
@@ -122,10 +133,12 @@ public class Province {
         mine = new Building(Building.ID.MINE, this);
 
 
+        defaultSkin = new Skin(Gdx.files.internal("ui/default/skin/uiskin.json"));
+
         this.setMathRender();
     }
 
-    public Province(int id, String name, Country owner, boolean[] neighbours, boolean isCity, float x, float y, float width, float height) {
+    public Province(int id, String name, Country owner, boolean[] neighbours, boolean isCity, float x, float y, float width, float height, Viewport viewport) {
         this.id = id;
         this.x = x;
         this.y = y;
@@ -152,9 +165,25 @@ public class Province {
         mine = new Building(Building.ID.MINE, this);
 
         rectangle = new Rectangle(x, y, width, height);
+        unitCounter = 0;
+        units = new ArrayList<WarUnit>();
 
-        btn = new Button();
+//        stage = new Stage(viewport);
+//        defaultSkin = new Skin(Gdx.files.internal("ui/default/skin/uiskin.json"));
+//        lProvName = new Label(name, defaultSkin);
+//        lProvName.setColor(owner.color);
+//        if (provCoords != null) {
+//            // код для установки позиции лейбла названия провинции в центре полигона
+//        } else {   //иначе у нас вместо полигона прямоугольник, тогда лейбл устанавливаем по нему
+//            lProvName.setPosition(x + (width / 2) - 18, y + (height / 2));
+//        }
+//        stage.addActor(lProvName);
+
         this.setMathRender();
+    }
+
+    public void setupBuildings() {
+
     }
 
     public void update() {
@@ -171,10 +200,30 @@ public class Province {
         }
     }
 
+    public void onTurn() {
+        foodPoints += numberOfFarms * owner.farmProduction - neededFood + owner.startFoodProduction + numberOfShipyards * owner.startFoodProduction;
+        if (foodPoints > neededFoodPoints) {
+            provinceGrow();
+        } else if (foodPoints < 0) {
+            provinceDecrease();
+        }
+        productionPoints += population + numberOfMines * owner.mineProduction + numberOfWorkshops * owner.workshopProduction + numberOfShipyards * owner.shipyardProduction;
+        if (productionPoints >= neededProductionPoints) {
+            build(buildingInProcess);
+            buildingInProcess = null;
+        }
+        gainedSciencePoints = population + numberOfLibraries * owner.libraryProduction + numberOfUniversities * owner.universityProduction;
+    }
+
+    public void setOwner(Country newOwner) {
+        this.owner = newOwner;
+        lProvName.setColor(owner.color);
+    }
+
     //статус провинции
-    public class Status {
+    public static class Status {
         //климат
-        public class Climate {
+        public static class Climate {
             public static final int ARCTIC = -3; // арктический
             public static final int COLD = -2; // холодный
             public static final int CHILL = -1;// прохладный
@@ -186,7 +235,7 @@ public class Province {
         }
 
         //рельеф
-        public class Landscape {
+        public static class Landscape {
         }
 
     }
@@ -229,9 +278,9 @@ public class Province {
                 numberOfShipyards = 1;
                 numberOfLimitedBuildings += 1;
                 productionPoints -= shipyard.productionCost;
-            case Building.ID.CITY:
-                isCity = true;
-                productionPoints -= city.productionCost;
+//            case Building.ID.CITY:
+//                isCity = true;
+//                productionPoints -= city.productionCost;
         }
 
     }
@@ -266,6 +315,10 @@ public class Province {
         } else {
             chooseBuilding(building);
         }
+
+    public boolean chooseBuilding(Building building) {
+        //if (isBuildingAvailiable(building)) {
+        return false;
     }
 
     public Province(Country owner, boolean isCity) {
@@ -283,7 +336,6 @@ public class Province {
 
     //math and graphics
     public void render(OrthographicCamera camera) {
-
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(Color.WHITE);
@@ -293,20 +345,13 @@ public class Province {
             shapeRenderer.rect(x, y, width, height);
 //                shapeRenderer.rect(polygon.getBoundingRectangle().getX(),polygon.getBoundingRectangle().getY(),polygon.getBoundingRectangle().getWidth(), polygon.getBoundingRectangle().getHeight());
         shapeRenderer.end();
-
-        batch.setProjectionMatrix(camera.combined);
-        batch.begin();
-        if (provCoords != null) { // если отрисовка полигоном, то центрируем по полигону
-            font.draw(batch, name, polygon.getBoundingRectangle().getX() + polygon.getBoundingRectangle().getWidth() / 2 - (polygon.getBoundingRectangle().getWidth() * 0.25f), polygon.getBoundingRectangle().getY() + polygon.getBoundingRectangle().getHeight() / 2 - font.getScaleY());
-        } else { //иначе у нас отрисовка прямоугольником, центрируем по координатам прямоугольника
-            font.draw(batch, name, x + (width / 2) - 18, y + (height / 2));
-            if (Core.DEV_MODE) {
-                font.draw(batch, "x: " + x, x + (width / 2) - 18, y + (height / 2) - Core.gameHeight * 0.015f);
-                font.draw(batch, "y: " + y, x + (width / 2) - 18, y + (height / 2) - Core.gameHeight * 0.030f);
-            }
-        }
-        batch.end();
+//        renderProvName();
     }
+
+//    public void renderProvName() {
+//        stage.act(Gdx.graphics.getDeltaTime());
+//        stage.draw();
+//    }
 
     public void setMathRender() {
         shapeRenderer = new ShapeRenderer();
@@ -320,9 +365,8 @@ public class Province {
 //        polyBatch = new PolygonSpriteBatch();
         if (provCoords != null)
             polygon = new Polygon(provCoords.toArray());
-        batch = new SpriteBatch();
-        font = new BitmapFont();
-        font.getData().setScale(0.5f);
+        else
+            rectangle = new Rectangle(x, y, width, height);
     }
 
     private ShortArray triangulate(FloatArray polygonVertices) {

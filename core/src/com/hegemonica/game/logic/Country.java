@@ -1,5 +1,10 @@
 package com.hegemonica.game.logic;
 
+
+import com.badlogic.gdx.graphics.Color;
+
+import java.util.ArrayList;
+
 public class Country {
     public String name;
     public int id;
@@ -11,6 +16,31 @@ public class Country {
     public float inflation;
     public boolean hasCrisis;
     public boolean inWar;
+
+    public Color color;
+
+    public int gainedSciencePoints;
+
+    public ArrayList<Province> provinces;
+
+    public Technology technologyInProcess;
+
+    //production
+    public int citizenProduction;
+    public int mineProduction;
+    public int workshopProduction;
+    public int shipyardProduction;
+
+    //food production
+
+    public int startFoodProduction;
+    public int farmProduction;
+    public int shipyardFoodProduction;
+
+    //science production
+    public int citizenScienceProduction;
+    public int libraryProduction;
+    public int universityProduction;
 
     public Technologies technologies;
 
@@ -26,9 +56,10 @@ public class Country {
     public Gemelch gemelch;
 
 
-    public Country(String name, int id) {
+    public Country(String name, int id, Color color) {
         this.name = name;
         this.id = id;
+        this.color = color;
         cash = 50;
         prestige = 1;
         stability = 1;
@@ -52,6 +83,32 @@ public class Country {
         public Resource Cows;
     }
 
+    public void technologyResearch(Technology technology) {
+        switch (technology.id) {
+            case Technology.ID.ENGINEERING:
+                technologies.engineering.isResearched = true;
+                mineProduction++;
+            case Technology.ID.PAPER:
+                technologies.paper.isResearched = true;
+            case Technology.ID.SIMPLYCHEMISTRY:
+                technologies.simplyChemistry.isResearched = true;
+                farmProduction++;
+            case Technology.ID.MACHINERY:
+                technologies.machinery.isResearched = true;
+            case Technology.ID.APPRIENTSHIP:
+                technologies.apprientship.isResearched = true;
+                mineProduction++;
+            case Technology.ID.EDUCATION:
+                technologies.education.isResearched = true;
+                libraryProduction++;
+            case Technology.ID.UPDATEDSHIPBUILDING:
+                technologies.updatedShipbuilding.isResearched = true;
+            case Technology.ID.OCEANEXPLORATION:
+                technologies.oceanExploration.isResearched = true;
+                shipyardProduction += 2;
+                shipyardFoodProduction += 2;
+        }
+    }
 
     public boolean checkRequiredTechnologiesForBuilding(Building building) {
         switch (building.id) {

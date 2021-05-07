@@ -58,14 +58,11 @@ public class HUD {
             this.selectedProvince = selectedProvince;
             setGeneralInfo();
             wGeneralInfo.setVisible(true);
-
-            lselectedProvince.setText("Selected PROV: " + selectedProvince.name);
-            HegeLog.log(HegeLog.HUD, "Selected " + selectedProvince.name + " PROV");
+            HegeLog.log(HegeLog.HUD, "Selected " + selectedProvince.name);
 
         } else {
+            HegeLog.log(HegeLog.HUD, "Selected null province");
             wGeneralInfo.setVisible(false);
-            lselectedProvince.setText("Selected PROV: null");
-            HegeLog.log(HegeLog.HUD, "Selected null PROV");
         }
     }
 
@@ -74,15 +71,12 @@ public class HUD {
         turnNumber = 1;
         DefaultUI = new Skin(Gdx.files.internal("ui/default/skin/uiskin.json"));
         GlassyUI = new Skin(Gdx.files.internal("ui/glassy/skin/glassy-ui.json"));
-        lselectedProvince = new Label("Null PROV", GlassyUI);
-        lselectedProvince.setPosition(0, 0);
-        lselectedProvince.setScale(1.5f);
 
         lTurnNumber = new Label("Turn " + turnNumber, DefaultUI);
 
         wGeneralInfo = new Window("General Information", DefaultUI);
         wGeneralInfo.setPosition(Core.gameWidth * 0.05f, Core.gameHeight * 0.7f, Align.bottom);
-        wGeneralInfo.setWidth(Core.gameWidth * 0.2f);
+        wGeneralInfo.setWidth(Core.gameWidth * 0.25f);
         wGeneralInfo.setVisible(false);
         l1 = new Label("Name:", GlassyUI);
         l2 = new Label("Controlled by:", GlassyUI);
@@ -130,7 +124,6 @@ public class HUD {
                 game.setScreen(new MainMenuScreen(game));
             }
         });
-        stage.addActor(lselectedProvince);
         stage.addActor(wGeneralInfo);
         stage.addActor(bTurn);
         stage.addActor(bBack);

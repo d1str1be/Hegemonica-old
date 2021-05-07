@@ -1,12 +1,14 @@
 package com.hegemonica.game.logic;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.hegemonica.game.HegeLog;
 
 // ЭТО СЦЕНАРИЙ. ЗДЕСЬ ЗАДАЕМ ВСЕ СТРАНЫ ЭТОГО СЦЕНАРИЯ, КАРТУ "ПАНГЕЯ" И ВСЕ ОСТАЛЬНОЕ
 public class Gemelch {
     public static final int COUNT_OF_RESOURCES = 26;
-
+    public GemelchGFX gfx;
 
     public int turnNumber;
     public int mapHeight;
@@ -30,7 +32,9 @@ public class Gemelch {
     public int provincesCount;
     public Province[] provinces;
 
-    public Gemelch(int provCountWidth, int provCountHeight) {
+
+
+    public Gemelch(int provCountWidth, int provCountHeight, Viewport viewport) {
         this.provCountWidth = provCountWidth;
         this.provCountHeight = provCountHeight;
         provincesCount = provCountWidth * provCountHeight;
@@ -38,21 +42,41 @@ public class Gemelch {
         HegeLog.log(HegeLog.MAP, "prov in height = " + provCountHeight);
 
         turnNumber = 1;
-        test = new Country("Test1", 0);
-        test1 = new Country("Test2", 1);
+        nothing = new Country("Nothing", 0, Color.WHITE);
+        red = new Country("Red", 1, Color.RED);
+        green = new Country("Green", 2, Color.GREEN);
+        blue = new Country("Blue", 3, Color.BLUE);
+        yellow = new Country("Yellow", 4, Color.YELLOW);
 
         provinces = new Province[provCountWidth * provCountHeight];
         for (int i = 0; i < provCountHeight; i++) {
             for (int j = 0; j < provCountWidth; j++) {
                 int iterator = i * provCountWidth + j;
-                provinces[iterator] = new Province(iterator, "Province " + iterator, test, new boolean[]{true}, false, 50 * j, 50 * i, 50, 50);
+                provinces[iterator] = new Province(iterator, "Province " + iterator, nothing, new boolean[]{true}, false, 50 * j, 50 * i, 50, 50, viewport);
+                provinces[iterator].buildingInProcess = provinces[iterator].farm;
             }
         }
+        provinces[0].owner = red;
+        HegeLog.log("Gemelch", "Owner of " + provinces[0].name + " is " + provinces[(provCountHeight - 1) * provCountWidth].owner.name);
+
+        provinces[(provCountHeight - 1) * provCountWidth].owner = blue;
+        HegeLog.log("Gemelch", "Owner of " + provinces[(provCountHeight - 1) * provCountWidth].name + " is " + provinces[(provCountHeight - 1) * provCountWidth].owner.name);
+
+        provinces[provCountHeight * provCountWidth - 1].owner = yellow;
+        HegeLog.log("Gemelch", "Owner of " + provinces[provCountHeight * provCountWidth - 1].name + " is " + provinces[(provCountHeight - 1) * provCountWidth].owner.name);
+
+        provinces[provCountWidth - 1].owner = green;
+        HegeLog.log("Gemelch", "Owner of " + provinces[provCountWidth - 1].name + " is " + provinces[(provCountHeight - 1) * provCountWidth].owner.name);
+
+        gfx = new GemelchGFX();
     }
 
     public void onTurn() {
         test.onTurn();
         test1.onTurn();
+        for (Province province : provinces) {
+            province.onTurn();
+        }
         turnNumber++;
     }
 
@@ -90,9 +114,9 @@ public class Gemelch {
      */
 
     public Province whichPolygonContainsPoint(float x, float y) {
-        for (int i = 0; i < provinces.length; i++) {
-            if (provinces[i].contains(x, y))
-                return provinces[i];
+        for (Province province : provinces) {
+            if (province.contains(x, y))
+                return province;
         }
         return null;
     }
@@ -101,7 +125,6 @@ public class Gemelch {
         int id = province.id;
 
         //угловые
-
         if (id == 0) {
             int[] neighbors = new int[4];
             neighbors[0] = 0;
@@ -199,6 +222,4 @@ public class Gemelch {
         }
         return neighborsBooleanList;
     }
-
-
 }
