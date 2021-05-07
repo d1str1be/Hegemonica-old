@@ -2,7 +2,6 @@ package com.hegemonica.game.logic;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,19 +15,15 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.EarClippingTriangulator;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.FloatArray;
 import com.badlogic.gdx.utils.ShortArray;
+import com.hegemonica.game.HegeLog;
 import com.hegemonica.game.logic.units.DefenseUnit;
 import com.hegemonica.game.logic.units.MeleeUnit;
 import com.hegemonica.game.logic.units.RangedUnit;
 import com.hegemonica.game.logic.units.WarUnit;
-
-import java.util.ArrayList;
-import com.hegemonica.game.Core;
-import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
 
@@ -83,7 +78,6 @@ public class Province {
     public float width;
     public float height;
     public Rectangle rectangle;
-    public Stage stage;
 
     public FloatArray provCoords;
     private Polygon polygon;
@@ -144,7 +138,7 @@ public class Province {
         this.setMathRender();
     }
 
-    public Province(int id, String name, Country owner, boolean[] neighbours, boolean isCity, float x, float y, float width, float height, Viewport viewport) {
+    public Province(int id, String name, Country owner, boolean[] neighbours, boolean isCity, float x, float y, float width, float height) {
         this.id = id;
         this.x = x;
         this.y = y;
@@ -177,17 +171,16 @@ public class Province {
         unitCounter = 0;
         units = new ArrayList<WarUnit>();
 
-//        stage = new Stage(viewport);
-//        defaultSkin = new Skin(Gdx.files.internal("ui/default/skin/uiskin.json"));
-//        lProvName = new Label(name, defaultSkin);
-//        lProvName.setColor(owner.color);
-//        if (provCoords != null) {
-//            // код для установки позиции лейбла названия провинции в центре полигона
-//        } else {   //иначе у нас вместо полигона прямоугольник, тогда лейбл устанавливаем по нему
-//            lProvName.setPosition(x + (width / 2) - 18, y + (height / 2));
-//        }
-//        stage.addActor(lProvName);
-
+        defaultSkin = new Skin(Gdx.files.internal("ui/default/skin/uiskin.json"));
+        lProvName = new Label(name, defaultSkin);
+        lProvName.setColor(owner.color);
+        HegeLog.log("Province", name + " has Color " + owner.color.toString());
+        lProvName.setFontScale(0.5f);
+        if (provCoords != null) {
+            // код для установки позиции лейбла названия провинции в центре полигона
+        } else {   //иначе у нас вместо полигона прямоугольник, тогда лейбл устанавливаем по нему
+            lProvName.setPosition(x + (width / 2) - 18, (y + (height / 2)) * 0.8f);
+        }
         this.setMathRender();
     }
 
@@ -314,21 +307,6 @@ public class Province {
         }
     }
 
-    public void onTurn() {
-        foodPoints += numberOfFarms * owner.farmProduction - neededFood + owner.startFoodProduction + numberOfShipyards * owner.startFoodProduction;
-        if (foodPoints > neededFoodPoints) {
-            provinceGrow();
-        } else if (foodPoints < 0) {
-            provinceDecrease();
-        }
-        productionPoints += population + numberOfMines * owner.mineProduction + numberOfWorkshops * owner.workshopProduction + numberOfShipyards * owner.shipyardProduction;
-        if (productionPoints >= neededProductionPoints) {
-            build(buildingInProcess);
-            buildingInProcess = null;
-        }
-        gainedSciencePoints = population + numberOfLibraries * owner.libraryProduction + numberOfUniversities * owner.universityProduction;
-    }
-
     public boolean isBuildingAvailable(Building building) {
         if (owner.checkRequiredTechnologiesForBuilding(building)) {
             return !building.isNeedCity || building.isNeedCity == isCity;
@@ -340,8 +318,8 @@ public class Province {
     //переписать
     public boolean chooseBuilding(Building building) {
         //if (isBuildingAvailiable(building)) {
-			return false;
-		}
+        return false;
+    }
 
     public Province(Country owner, boolean isCity) {
         this.owner = owner;
@@ -367,24 +345,11 @@ public class Province {
             shapeRenderer.rect(x, y, width, height);
 //                shapeRenderer.rect(polygon.getBoundingRectangle().getX(),polygon.getBoundingRectangle().getY(),polygon.getBoundingRectangle().getWidth(), polygon.getBoundingRectangle().getHeight());
         shapeRenderer.end();
-//        renderProvName();
     }
 
-//    public void renderProvName() {
-//        stage.act(Gdx.graphics.getDeltaTime());
-//        stage.draw();
-//    }
 
     public void setMathRender() {
         shapeRenderer = new ShapeRenderer();
-//        pix = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
-//        pix.setColor(Color.RED);
-//        pix.fill();
-//        texture = new Texture(pix);
-//        textureReg = new TextureRegion(texture);
-//        polyReg = new PolygonRegion(textureReg, ProvCoords.levianProv.toArray(), triangulate(ProvCoords.levianProv).toArray());
-//        polySprite = new PolygonSprite(polyReg);
-//        polyBatch = new PolygonSpriteBatch();
         if (provCoords != null)
             polygon = new Polygon(provCoords.toArray());
         else

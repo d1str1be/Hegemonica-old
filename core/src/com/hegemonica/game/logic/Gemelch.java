@@ -2,7 +2,7 @@ package com.hegemonica.game.logic;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.hegemonica.game.HegeLog;
 
 // ЭТО СЦЕНАРИЙ. ЗДЕСЬ ЗАДАЕМ ВСЕ СТРАНЫ ЭТОГО СЦЕНАРИЯ, КАРТУ "ПАНГЕЯ" И ВСЕ ОСТАЛЬНОЕ
@@ -36,14 +36,15 @@ public class Gemelch {
     public Province[] provinces;
 
 
-
-    public Gemelch(int provCountWidth, int provCountHeight, Viewport viewport) {
+    public Gemelch(int provCountWidth, int provCountHeight, Stage stage) {
         this.provCountWidth = provCountWidth;
         this.provCountHeight = provCountHeight;
-
         provincesCount = provCountWidth * provCountHeight;
         HegeLog.log(HegeLog.MAP, "prov in width = " + provCountWidth);
         HegeLog.log(HegeLog.MAP, "prov in height = " + provCountHeight);
+
+        gfx = new GemelchGFX(this);
+        gfx.setStage(stage);
 
         turnNumber = 1;
         nothing = new Country("Nothing", 0, Color.WHITE);
@@ -57,23 +58,23 @@ public class Gemelch {
         for (int i = 0; i < provCountHeight; i++) {
             for (int j = 0; j < provCountWidth; j++) {
                 int iterator = i * provCountWidth + j;
-                provinces[iterator] = new Province(iterator, "Province " + iterator, nothing, new boolean[]{true}, false, 50 * j, 50 * i, 50, 50, viewport);
+                provinces[iterator] = new Province(iterator, "Province " + iterator, nothing, new boolean[]{true}, false, 50 * j, 50 * i, 50, 50);
                 provinces[iterator].buildingInProcess = provinces[iterator].farm;
             }
         }
         provinces[0].owner = red;
-        HegeLog.log("Gemelch", "Owner of " + provinces[0].name + " is " + provinces[(provCountHeight - 1) * provCountWidth].owner.name);
+        HegeLog.log("Gemelch", "Owner of " + provinces[0].name + " is " + provinces[0].owner.name);
 
         provinces[(provCountHeight - 1) * provCountWidth].owner = blue;
         HegeLog.log("Gemelch", "Owner of " + provinces[(provCountHeight - 1) * provCountWidth].name + " is " + provinces[(provCountHeight - 1) * provCountWidth].owner.name);
 
         provinces[provCountHeight * provCountWidth - 1].owner = yellow;
-        HegeLog.log("Gemelch", "Owner of " + provinces[provCountHeight * provCountWidth - 1].name + " is " + provinces[(provCountHeight - 1) * provCountWidth].owner.name);
+        HegeLog.log("Gemelch", "Owner of " + provinces[provCountHeight * provCountWidth - 1].name + " is " + provinces[provCountHeight * provCountWidth - 1].owner.name);
 
         provinces[provCountWidth - 1].owner = green;
-        HegeLog.log("Gemelch", "Owner of " + provinces[provCountWidth - 1].name + " is " + provinces[(provCountHeight - 1) * provCountWidth].owner.name);
+        HegeLog.log("Gemelch", "Owner of " + provinces[provCountWidth - 1].name + " is " + provinces[provCountWidth - 1].owner.name);
 
-        gfx = new GemelchGFX();
+        gfx.addProvincesToStage();
     }
 
     public void onTurn() {
@@ -89,6 +90,7 @@ public class Gemelch {
 
 
     public void render(OrthographicCamera camera) {
+        gfx.render();
         for (Province x : provinces) {
             x.render(camera);
         }

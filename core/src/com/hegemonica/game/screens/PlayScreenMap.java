@@ -24,6 +24,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.hegemonica.game.Core;
 import com.hegemonica.game.FPS;
+import com.hegemonica.game.HegeLog;
 import com.hegemonica.game.logic.Gemelch;
 import com.hegemonica.game.logic.scenarios.gemelch.ProvCoords;
 
@@ -86,12 +87,12 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
         cameraMovementX = camera.viewportWidth / 2;
         cameraMovementY = -camera.viewportHeight / 2;
         camera.zoom = 0.5f;
+
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
-
         stage = new Stage(viewport);
-        gemelch = new Gemelch(provCountWidth, provCountHeight, viewport);
-        gemelch.gfx.setStage(stage);
+        stage.getCamera().translate(-Core.gameWidth / 2, -Core.gameHeight / 2, 0);
 
+        gemelch = new Gemelch(provCountWidth, provCountHeight, stage);
         shapeRenderer = new ShapeRenderer();
 
 
@@ -118,6 +119,7 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        stage.getBatch().setProjectionMatrix(stage.getCamera().combined);
         camera.update();
         fps.update();
 
@@ -128,6 +130,7 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
 
 
     public void resize(int width, int height) {
+        stage.getBatch().setProjectionMatrix(stage.getCamera().combined);
         fps.resize(width, height);
     }
 
@@ -150,6 +153,8 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
     public boolean tap(float x, float y, int count, int button) {
         realX = (x - cameraMovementX) / 2;
         realY = (Core.gameHeight - y + cameraMovementY) / 2;
+        HegeLog.log("Input", "Tapped on X: " + realX);
+        HegeLog.log("Input", "Tapped on Y: " + realY);
         hud.setSelectedProvince(gemelch.whichPolygonContainsPoint(realX, realY));
         return true;
     }

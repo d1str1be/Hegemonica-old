@@ -42,9 +42,9 @@ public class HUD {
     Label lProvName;
     Label lProvCountry;
     Label lProvPopulation;
-	Window wBuildings;
+    Window wBuildings;
     Window wUnits;
-    
+
     public HUD(Core game, PlayScreenMap map) {
         this.game = game;
         this.map = map;

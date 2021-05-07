@@ -8,7 +8,7 @@ import com.hegemonica.game.screens.MainMenuScreen;
 
 
 public class Core extends Game {
-    private static final float VERSION = 0.40f;
+    private static final float VERSION = 0.50f;
     public static float gameWidth;
     public static float gameHeight;
     public static float uiFactor;
@@ -42,7 +42,7 @@ public class Core extends Game {
         Gdx.input.setCatchKey(Input.Keys.BACK, true); // перехват сист.кнопки "назад" на андроиде
         audio = new AudioManager();
         loc = new LocalizationManager();
-        internet = new NetConnManager();
+//        internet = new NetConnManager();
 
         if (enableDiscord)
             discord = new DiscordManager(DEV_MODE);

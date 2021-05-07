@@ -1,6 +1,8 @@
 package com.hegemonica.game.logic;
 
 import com.badlogic.gdx.graphics.Color;
+import com.hegemonica.game.HegeLog;
+
 import java.util.ArrayList;
 
 public class Country {
@@ -57,6 +59,7 @@ public class Country {
         this.name = name;
         this.id = id;
         this.color = color;
+        HegeLog.log("Country", name + " has Color " + color.toString());
         cash = 50;
         prestige = 1;
         stability = 1;
