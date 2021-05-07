@@ -33,7 +33,7 @@ import java.util.Random;
 public class PlayScreenMap implements Disposable, GestureDetector.GestureListener {
     Core game;
     InputMultiplexer inputMultiplexer;
-    HUD hud;
+    public HUD hud;
     private Gemelch gemelch;
 
 
@@ -215,6 +215,7 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
     }
 
     public void onTurn(int turnNumber) {
+        game.discord.onPlaying(turnNumber);
         gemelch.setTurnNumber(turnNumber);
         gemelch.onTurn();
     }

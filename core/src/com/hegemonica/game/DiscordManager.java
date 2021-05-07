@@ -15,7 +15,9 @@ public class DiscordManager {
     final boolean DEV_MODE;
     DiscordRPC rpc;
     LocalizationManager discordRPCLoc;
-    DiscordRichPresence discordPresence;
+    public DiscordRichPresence discordPresence;
+
+    long timeOfGameStart;
 
     public DiscordManager(boolean isDevMode) {
         this.startup();
@@ -43,27 +45,35 @@ public class DiscordManager {
     }
 
     public void onMainMenu() {
-        rpc.discordClearPresence();
         discordPresence.state = discordRPCLoc.getString(LocalizationKeys.Keys.In_Main_Menu);
-        discordPresence.startTimestamp = System.currentTimeMillis();
+        discordPresence.startTimestamp = setStartTimeStamp();
         discordPresence.largeImageKey = "hegemonicalogo";
         rpc.discordUpdatePresence(discordPresence);
     }
 
     public void onPlaying() {
-        rpc.discordClearPresence();
         DiscordRichPresence discordPresence = new DiscordRichPresence();
         discordPresence.state = discordRPCLoc.getString(LocalizationKeys.Keys.Playing);
-        discordPresence.startTimestamp = System.currentTimeMillis();
+        timeOfGameStart = setStartTimeStamp();
+        discordPresence.startTimestamp = setStartTimeStamp();
         discordPresence.largeImageKey = "hegemonicalogo";
         rpc.discordUpdatePresence(discordPresence);
     }
 
+    public void onPlaying(int turnNumber){
+        discordPresence.state = "Turn " + turnNumber;
+        discordPresence.startTimestamp = timeOfGameStart;
+        discordPresence.largeImageKey = "hegemonicalogo";
+        rpc.discordUpdatePresence(discordPresence);
+    }
+
+    public long setStartTimeStamp(){
+        return System.currentTimeMillis();
+    }
     public void devMode() {
-        rpc.discordClearPresence();
         DiscordRichPresence discordPresence = new DiscordRichPresence();
         discordPresence.state = "[DEV] Working on game";
-        discordPresence.startTimestamp = System.currentTimeMillis();
+        discordPresence.startTimestamp = setStartTimeStamp();
         discordPresence.largeImageKey = "hegemonicalogo";
         rpc.discordUpdatePresence(discordPresence);
     }

@@ -23,23 +23,35 @@ public class HegeProgressBar extends ProgressBar {
         super(0f, 1f, 0.01f, false, new ProgressBarStyle());
         switch (id) {
             case ID.FOOD:
-                getStyle().background = getColoredDrawable((int) width, (int) height, Color.RED);
+                HegeLog.log("HUD", "case FOOD");
+                getStyle().background = getColoredDrawable((int) width, (int) height, Color.GRAY);
                 getStyle().knob = getColoredDrawable(0, (int) height, Color.GREEN);
                 getStyle().knobBefore = getColoredDrawable((int) width, (int) height, Color.GREEN);
+                break;
             case ID.PRODUCTION:
+                HegeLog.log("HUD", "case PRODUCTION");
                 getStyle().background = getColoredDrawable((int) width, (int) height, Color.GRAY);
                 getStyle().knob = getColoredDrawable(0, (int) height, Color.BROWN);
                 getStyle().knobBefore = getColoredDrawable((int) width, (int) height, Color.BROWN);
+                break;
             case ID.SCIENCE:
+                HegeLog.log("HUD", "case SCIENCE");
                 getStyle().background = getColoredDrawable((int) width, (int) height, Color.GRAY);
                 getStyle().knob = getColoredDrawable(0, (int) height, Color.BLUE);
                 getStyle().knobBefore = getColoredDrawable((int) width, (int) height, Color.BLUE);
+                break;
+            default:
+                HegeLog.log("HUD", "case default");
+                getStyle().background = getColoredDrawable((int) width, (int) height, Color.RED);
+                getStyle().knob = getColoredDrawable(0, (int) height, Color.GREEN);
+                getStyle().knobBefore = getColoredDrawable((int) width, (int) height, Color.GREEN);
+                break;
         }
         setWidth(width);
         setHeight(height);
 
         setAnimateDuration(0.0f);
-        setValue(1f);
+        setValue(0.5f);
 
         setAnimateDuration(0.25f);
     }
@@ -55,9 +67,10 @@ public class HegeProgressBar extends ProgressBar {
 
         return drawable;
     }
-    public static class ID{
-        public final static int FOOD = 1;
-        public final static int PRODUCTION = 2;
-        public final static int SCIENCE = 3;
+
+    public static class ID {
+        public final static int FOOD = 0;
+        public final static int PRODUCTION = 1;
+        public final static int SCIENCE = 2;
     }
 }

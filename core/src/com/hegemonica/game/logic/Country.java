@@ -114,14 +114,17 @@ public class Country {
     }
 
 
+    public class Technologies {
+
+    }
     public class Resources {
-        public Resource Wood;
-        public Resource Iron;
-        public Resource Gold;
-        public Resource Gem;
-        public Resource Grain;
-        public Resource Horses;
-        public Resource Cows;
+        public Resource wood;
+        public Resource iron;
+        public Resource gold;
+        public Resource gem;
+        public Resource grain;
+        public Resource horses;
+        public Resource cows;
     }
 
 
@@ -151,7 +154,7 @@ public class Country {
                 shipyardFoodProduction += 2;
         }
         HegeLog.log("Country", "Researched " + technologyInProcess.id);
-        technologyInProcess = null;
+        technologyInProcess = oceanExploration;
     }
 
     public boolean checkRequiredTechnologiesForBuilding(Building building) {
