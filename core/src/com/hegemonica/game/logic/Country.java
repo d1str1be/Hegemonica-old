@@ -82,6 +82,12 @@ public class Country {
     }
 
     public void onTurn() {
+        for (Province province : gemelch.provinces) {
+            if (province.owner == this) {
+                province.onTurn();
+            }
+        }
+
         //подсчет науки
         if (sciencePoints >= neededSciencePoints) {
             research(technologyInProcess);
@@ -156,6 +162,14 @@ public class Country {
             }
         }
         return true;
+    }
+
+    public class ID {
+        public final static int NOTHING = 0;
+        public final static int RED = 1;
+        public final static int GREEN = 2;
+        public final static int BLUE = 3;
+        public final static int YELLOW = 4;
     }
 
 

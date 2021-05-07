@@ -47,11 +47,11 @@ public class Gemelch {
         gfx.setStage(stage);
 
         turnNumber = 1;
-        nothing = new Country("Nothing", 0, Color.WHITE);
-        red = new Country("Red", 1, Color.RED);
-        green = new Country("Green", 2, Color.GREEN);
-        blue = new Country("Blue", 3, Color.BLUE);
-        yellow = new Country("Yellow", 4, Color.YELLOW);
+        nothing = new Country("Nothing", Country.ID.NOTHING, Color.WHITE);
+        red = new Country("Red", Country.ID.RED, Color.RED);
+        green = new Country("Green", Country.ID.GREEN, Color.GREEN);
+        blue = new Country("Blue", Country.ID.BLUE, Color.BLUE);
+        yellow = new Country("Yellow", Country.ID.YELLOW, Color.YELLOW);
         turnCountry = red;
 
 
@@ -104,10 +104,21 @@ public class Gemelch {
     }
 
     public void onTurn() {
-        for (Province province : provinces) {
-            province.onTurn();
+        switch (turnCountry.id) {
+            case Country.ID.RED:
+                red.onTurn();
+                turnCountry = green;
+            case Country.ID.GREEN:
+                green.onTurn();
+                turnCountry = blue;
+            case Country.ID.BLUE:
+                blue.onTurn();
+                turnCountry = yellow;
+            case Country.ID.YELLOW:
+                yellow.onTurn();
+                turnCountry = red;
+                turnNumber++;
         }
-        turnNumber++;
     }
 
     public void setTurnNumber(int turnNumber) {
