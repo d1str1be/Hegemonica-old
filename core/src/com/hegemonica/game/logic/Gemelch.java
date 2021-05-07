@@ -77,29 +77,33 @@ public class Gemelch {
 
         leftBottomProv.owner = red;
         leftBottomProv.lProvName = new Label(leftBottomProv.name, leftBottomProv.defaultSkin, "red");
+        leftBottomProv.lProvName.setSize(leftBottomProv.width*0.2f,leftBottomProv.height*0.2f);
         leftBottomProv.lProvName.setFontScale(0.5f);
-        leftBottomProv.lProvName.setPosition(leftBottomProv.x + (leftBottomProv.width / 2) - 18, (leftBottomProv.y + (leftBottomProv.height / 2)) * 0.8f);
+        leftBottomProv.lProvName.setPosition(leftBottomProv.x + (leftBottomProv.width * 0.05f), leftBottomProv.y);
         HegeLog.log("Province", provinces[0].name + " now has Color " + provinces[0].owner.color.toString());
         HegeLog.log("Gemelch", "Owner of " + provinces[0].name + " is " + provinces[0].owner.name);
 
         leftTopProv.owner = blue;
         leftTopProv.lProvName = new Label(leftTopProv.name, leftTopProv.defaultSkin, "blue");
         leftTopProv.lProvName.setFontScale(0.5f);
-        leftTopProv.lProvName.setPosition(leftTopProv.x + (leftTopProv.width / 2) - 18, (leftTopProv.y + (leftTopProv.height / 2)) * 0.8f);
+        leftTopProv.lProvName.setSize(leftTopProv.width*0.2f,leftTopProv.height*0.2f);
+        leftTopProv.lProvName.setPosition(leftTopProv.x + (leftTopProv.width * 0.05f), leftTopProv.y);
         HegeLog.log("Province", leftTopProv.name + " now has Color " + leftTopProv.owner.color.toString());
         HegeLog.log("Gemelch", "Owner of " + leftTopProv.name + " is " + leftTopProv.owner.name);
 
         rightTopProv.owner = yellow;
         rightTopProv.lProvName = new Label(rightTopProv.name, rightTopProv.defaultSkin, "yellow");
         rightTopProv.lProvName.setFontScale(0.5f);
-        rightTopProv.lProvName.setPosition(rightTopProv.x + (rightTopProv.width / 2) - 18, (rightTopProv.y + (rightTopProv.height / 2)) * 0.8f);
+        rightTopProv.lProvName.setSize(rightTopProv.width*0.2f,rightTopProv.height*0.2f);
+        rightTopProv.lProvName.setPosition(rightTopProv.x + (leftBottomProv.width * 0.05f), rightTopProv.y);
         HegeLog.log("Province", rightTopProv.name + " now has Color " + rightTopProv.owner.color.toString());
         HegeLog.log("Gemelch", "Owner of " + rightTopProv.name + " is " + rightTopProv.owner.name);
 
         rightBottomProv.owner = green;
         rightBottomProv.lProvName = new Label(rightBottomProv.name, rightBottomProv.defaultSkin, "green");
         rightBottomProv.lProvName.setFontScale(0.5f);
-        rightBottomProv.lProvName.setPosition(rightBottomProv.x + (rightBottomProv.width / 2) - 18, (rightBottomProv.y + (rightBottomProv.height / 2)) * 0.8f);
+        rightBottomProv.lProvName.setSize(rightBottomProv.width*0.2f,rightBottomProv.height*0.2f);
+        rightBottomProv.lProvName.setPosition(rightBottomProv.x + (rightBottomProv.width * 0.05f), rightBottomProv.y);
         HegeLog.log("Province", rightBottomProv.name + " now has Color " + rightBottomProv.owner.color.toString());
         HegeLog.log("Gemelch", "Owner of " + rightBottomProv.name + " is " + rightBottomProv.owner.name);
 

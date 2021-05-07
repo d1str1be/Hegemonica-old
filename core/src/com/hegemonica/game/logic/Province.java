@@ -173,13 +173,14 @@ public class Province {
 
         defaultSkin = new Skin(Gdx.files.internal("ui/default/skin/uiskin.json"));
         lProvName = new Label(name, defaultSkin);
+        lProvName.setSize(width*0.2f,height*0.2f);
         lProvName.setColor(owner.color);
         HegeLog.log("Province", name + " has Color " + owner.color.toString());
         lProvName.setFontScale(0.5f);
         if (provCoords != null) {
             // код для установки позиции лейбла названия провинции в центре полигона
         } else {   //иначе у нас вместо полигона прямоугольник, тогда лейбл устанавливаем по нему
-            lProvName.setPosition(x + (width / 2) - 18, (y + (height / 2)) * 0.8f);
+            lProvName.setPosition(x + (width * 0.05f), y);
         }
         this.setMathRender();
     }
