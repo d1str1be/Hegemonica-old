@@ -47,11 +47,11 @@ public class Gemelch {
         gfx.setStage(stage);
 
         turnNumber = 1;
-        nothing = new Country("Nothing", Country.ID.NOTHING, Color.WHITE);
-        red = new Country("Red", Country.ID.RED, Color.RED);
-        green = new Country("Green", Country.ID.GREEN, Color.GREEN);
-        blue = new Country("Blue", Country.ID.BLUE, Color.BLUE);
-        yellow = new Country("Yellow", Country.ID.YELLOW, Color.YELLOW);
+        nothing = new Country(this, "Nothing", Country.ID.NOTHING, Color.WHITE);
+        red = new Country(this, "Red", Country.ID.RED, Color.RED);
+        green = new Country(this, "Green", Country.ID.GREEN, Color.GREEN);
+        blue = new Country(this, "Blue", Country.ID.BLUE, Color.BLUE);
+        yellow = new Country(this, "Yellow", Country.ID.YELLOW, Color.YELLOW);
         turnCountry = red;
 
 
@@ -73,32 +73,24 @@ public class Gemelch {
         leftBottomProv.lProvName.setSize(leftBottomProv.width * 0.2f, leftBottomProv.height * 0.2f);
         leftBottomProv.lProvName.setFontScale(0.5f);
         leftBottomProv.lProvName.setPosition(leftBottomProv.x + (leftBottomProv.width * 0.05f), leftBottomProv.y);
-        HegeLog.log("Province", provinces[0].name + " now has Color " + provinces[0].owner.color.toString());
-        HegeLog.log("Gemelch", "Owner of " + provinces[0].name + " is " + provinces[0].owner.name);
 
         leftTopProv.owner = blue;
         leftTopProv.lProvName = new Label(leftTopProv.name, leftTopProv.defaultSkin, "blue");
         leftTopProv.lProvName.setFontScale(0.5f);
         leftTopProv.lProvName.setSize(leftTopProv.width * 0.2f, leftTopProv.height * 0.2f);
         leftTopProv.lProvName.setPosition(leftTopProv.x + (leftTopProv.width * 0.05f), leftTopProv.y);
-        HegeLog.log("Province", leftTopProv.name + " now has Color " + leftTopProv.owner.color.toString());
-        HegeLog.log("Gemelch", "Owner of " + leftTopProv.name + " is " + leftTopProv.owner.name);
 
         rightTopProv.owner = yellow;
         rightTopProv.lProvName = new Label(rightTopProv.name, rightTopProv.defaultSkin, "yellow");
         rightTopProv.lProvName.setFontScale(0.5f);
         rightTopProv.lProvName.setSize(rightTopProv.width * 0.2f, rightTopProv.height * 0.2f);
         rightTopProv.lProvName.setPosition(rightTopProv.x + (leftBottomProv.width * 0.05f), rightTopProv.y);
-        HegeLog.log("Province", rightTopProv.name + " now has Color " + rightTopProv.owner.color.toString());
-        HegeLog.log("Gemelch", "Owner of " + rightTopProv.name + " is " + rightTopProv.owner.name);
 
         rightBottomProv.owner = green;
         rightBottomProv.lProvName = new Label(rightBottomProv.name, rightBottomProv.defaultSkin, "green");
         rightBottomProv.lProvName.setFontScale(0.5f);
         rightBottomProv.lProvName.setSize(rightBottomProv.width * 0.2f, rightBottomProv.height * 0.2f);
         rightBottomProv.lProvName.setPosition(rightBottomProv.x + (rightBottomProv.width * 0.05f), rightBottomProv.y);
-        HegeLog.log("Province", rightBottomProv.name + " now has Color " + rightBottomProv.owner.color.toString());
-        HegeLog.log("Gemelch", "Owner of " + rightBottomProv.name + " is " + rightBottomProv.owner.name);
 
         gfx.addProvincesToStage();
     }

@@ -8,11 +8,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.hegemonica.game.AudioManager;
 import com.hegemonica.game.Core;
 import com.hegemonica.game.HegeLog;
+import com.hegemonica.game.HegeProgressBar;
 import com.hegemonica.game.logic.Province;
 
 
@@ -42,6 +42,16 @@ public class HUD {
     Label lProvName;
     Label lProvCountry;
     Label lProvPopulation;
+    Label l4;
+    Label lPopulationProgress;
+    HegeProgressBar populationProgress;
+    Label l5;
+    Label lProductionProgress;
+    HegeProgressBar productionProgress;
+    Label l6;
+    Label lScienceProgress;
+    HegeProgressBar scienceProgress;
+
     Window wBuildings;
     Window wUnits;
 
@@ -75,8 +85,9 @@ public class HUD {
         lTurnNumber = new Label("Turn " + turnNumber, DefaultUI);
 
         wGeneralInfo = new Window("General Information", DefaultUI);
-        wGeneralInfo.setPosition(Core.gameWidth * 0.05f, Core.gameHeight * 0.7f, Align.bottom);
-        wGeneralInfo.setWidth(Core.gameWidth * 0.25f);
+        wGeneralInfo.setPosition(Core.gameWidth * 0.05f, Core.gameHeight * 0.4f);
+        wGeneralInfo.setSize(Core.gameWidth * 0.15f, Core.gameWidth * 0.125f);
+        wGeneralInfo.setScale(2f);
         wGeneralInfo.setVisible(false);
         l1 = new Label("Name:", GlassyUI);
         l2 = new Label("Controlled by:", GlassyUI);
@@ -84,6 +95,16 @@ public class HUD {
         lProvName = new Label("Null", DefaultUI);
         lProvCountry = new Label("Null", DefaultUI);
         lProvPopulation = new Label("Null", DefaultUI);
+        l4 =  new Label("Food points", GlassyUI);
+        lPopulationProgress = new Label("Null", DefaultUI);
+        l5 = new Label("Production points", GlassyUI);
+        lProductionProgress = new Label("Null", DefaultUI);
+        l6 = new Label("Science points", GlassyUI);
+        lScienceProgress = new Label("Null", DefaultUI);
+
+        populationProgress = new HegeProgressBar(wGeneralInfo.getWidth() * 0.15f, wGeneralInfo.getWidth() * 0.02f, HegeProgressBar.ID.FOOD);
+        productionProgress = new HegeProgressBar(wGeneralInfo.getWidth() * 0.15f, wGeneralInfo.getWidth() * 0.02f, HegeProgressBar.ID.PRODUCTION);
+        scienceProgress = new HegeProgressBar(wGeneralInfo.getWidth() * 0.15f, wGeneralInfo.getWidth() * 0.02f, HegeProgressBar.ID.SCIENCE);
 
         wGeneralInfo.add(l1);
         wGeneralInfo.add(lProvName);
@@ -93,6 +114,22 @@ public class HUD {
         wGeneralInfo.row();
         wGeneralInfo.add(l3);
         wGeneralInfo.add(lProvPopulation);
+        wGeneralInfo.row();
+        wGeneralInfo.add(l4);
+        wGeneralInfo.row();
+        wGeneralInfo.add(populationProgress);
+        wGeneralInfo.add(lPopulationProgress);
+        wGeneralInfo.row();
+        wGeneralInfo.add(l5);
+        wGeneralInfo.row();
+        wGeneralInfo.add(populationProgress);
+        wGeneralInfo.add(lProductionProgress);
+        wGeneralInfo.row();
+        wGeneralInfo.add(l6);
+        wGeneralInfo.row();
+        wGeneralInfo.add(scienceProgress);
+        wGeneralInfo.add(lScienceProgress);
+
 
         bTurn = new TextButton("Turn", GlassyUI);
         bTurn.setSize(bWidth, bHeight);
@@ -144,13 +181,29 @@ public class HUD {
         turnNumber++;
         lTurnNumber.setText("Turn " + turnNumber);
         map.onTurn(turnNumber);
-        setGeneralInfo();
+        if (selectedProvince != null)
+            setGeneralInfo();
     }
 
     public void setGeneralInfo() {
         lProvName.setText(selectedProvince.name);
         lProvCountry.setText(selectedProvince.owner.name);
         lProvPopulation.setText(selectedProvince.population);
+        lPopulationProgress.setText(selectedProvince.foodPoints + " / " + selectedProvince.neededFoodPoints);
+        lProductionProgress.setText(selectedProvince.productionPoints + " / " + selectedProvince.neededProductionPoints);
+        lScienceProgress.setText(selectedProvince.owner.sciencePoints + " / " + selectedProvince.owner.neededSciencePoints);
+
+        populationProgress.setRange(0, selectedProvince.neededFoodPoints);
+        populationProgress.setValue(selectedProvince.foodPoints);
+        populationProgress.updateVisualValue();
+
+        productionProgress.setRange(0, selectedProvince.neededProductionPoints);
+        productionProgress.setValue(selectedProvince.productionPoints);
+        productionProgress.updateVisualValue();
+
+        scienceProgress.setRange(0, selectedProvince.owner.neededSciencePoints);
+        scienceProgress.setValue(selectedProvince.owner.sciencePoints);
+        scienceProgress.updateVisualValue();
     }
 
     public void setDebug(boolean debug) {

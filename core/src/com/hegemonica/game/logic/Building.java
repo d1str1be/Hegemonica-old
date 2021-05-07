@@ -1,6 +1,7 @@
 package com.hegemonica.game.logic;
 
 public class Building {
+    public String name;
     public int id;
     public int productionCost;
     public Technology requiredTechnology;
@@ -14,36 +15,43 @@ public class Building {
         countOfBuildingInProvince = 0;
         switch (id) {
             case ID.FARM:
+                name = "Farm";
                 productionCost = PRODUCTIONCOST.FARM;
                 isLimited = false;
                 isNeedCity = false;
                 requiredTechnology = null;
             case ID.MINE:
+                name = "Mine";
                 productionCost = PRODUCTIONCOST.MINE;
                 isNeedCity = false;
                 isLimited = false;
                 requiredTechnology = null;
             case ID.LIBRARY:
+                name = "Library";
                 productionCost = PRODUCTIONCOST.LIBRARY;
                 isNeedCity = true;
                 isLimited = true;
-                requiredTechnology = province.owner.technologies.paper;
+                requiredTechnology = province.owner.paper;
             case ID.UNIVERSITY:
+                name = "University";
                 productionCost = PRODUCTIONCOST.UNIVERSITY;
                 isNeedCity = true;
                 isLimited = true;
-                requiredTechnology = province.owner.technologies.education;
+                requiredTechnology = province.owner.education;
             case ID.WORKSHOP:
+                name = "Workshop";
                 productionCost = PRODUCTIONCOST.WORKSHOP;
                 isNeedCity = true;
                 isLimited = true;
-                requiredTechnology = province.owner.technologies.engineering;
+                requiredTechnology = province.owner.engineering;
             case ID.SHIPYARD:
+                name = "zsdrfg";
                 productionCost = PRODUCTIONCOST.SHIPYARD;
                 isNeedCity = true;
                 isLimited = true;
-                requiredTechnology = province.owner.technologies.updatedShipbuilding;
-            case  ID.CITY:
+                requiredTechnology = province.owner.updatedShipbuilding;
+            case ID.CITY:
+                name = "City";
                 productionCost = PRODUCTIONCOST.CITY;
                 isNeedCity = false;
                 isLimited = true;

@@ -8,7 +8,7 @@ public class Technology {
     public boolean isResearched;
     public boolean canBeResearched;
 
-    public double cost;
+    public float cost;
     public int year;
 
     public Technology[] requiredTechnologies;
@@ -17,7 +17,7 @@ public class Technology {
 
     }
 
-    public Technology(int id, double cost, Technology[] requiredTechnologies) {
+    public Technology(int id, float cost, Technology[] requiredTechnologies) {
         this.cost = cost;
         this.requiredTechnologies = requiredTechnologies;
     }

@@ -150,6 +150,7 @@ public class Province {
         this.owner = owner;
         this.neighbourProvinces = neighbours;
         this.isCity = isCity;
+        foodPoints = 0;
         population = 1;
         numberOfShipyards = 0;
         numberOfWorkshops = 0;
@@ -166,19 +167,18 @@ public class Province {
         farm = new Building(Building.ID.FARM, this);
         mine = new Building(Building.ID.MINE, this);
         city = new Building(Building.ID.CITY, this);
-
+        productionPoints = 0;
+        buildingInProcess = city;
+        neededProductionPoints = buildingInProcess.productionCost;
         unitCounter = 0;
         units = new ArrayList<WarUnit>();
 
         rectangle = new Rectangle(x, y, width, height);
-        unitCounter = 0;
-        units = new ArrayList<WarUnit>();
 
         defaultSkin = new Skin(Gdx.files.internal("ui/default/skin/uiskin.json"));
         lProvName = new Label(name, defaultSkin);
         lProvName.setSize(width * 0.2f, height * 0.2f);
         lProvName.setColor(owner.color);
-        HegeLog.log("Province", name + " has Color " + owner.color.toString());
         lProvName.setFontScale(0.5f);
         if (provCoords != null) {
             // код для установки позиции лейбла названия провинции в центре полигона
@@ -186,6 +186,8 @@ public class Province {
             lProvName.setPosition(x + (width * 0.05f), y);
         }
         this.setMathRender();
+
+        HegeLog.log("Province", "Needed Prod: " + neededProductionPoints);
     }
 
     public void setupBuildings() {
@@ -208,7 +210,6 @@ public class Province {
 
     public void onTurn() {
         foodPoints += numberOfFarms * owner.farmProduction - neededFood + owner.startFoodProduction + numberOfShipyards * owner.startFoodProduction;
-        HegeLog.log("Province", "foodPoints: " + foodPoints);
         if (foodPoints > neededFoodPoints) {
             HegeLog.log("Province", name + " grew");
             provinceGrow();
@@ -219,7 +220,6 @@ public class Province {
         productionPoints += population + numberOfMines * owner.mineProduction + numberOfWorkshops * owner.workshopProduction + numberOfShipyards * owner.shipyardProduction;
         if (productionPoints >= neededProductionPoints) {
             build(buildingInProcess);
-            buildingInProcess = null;
         }
         gainedSciencePoints = population + numberOfLibraries * owner.libraryProduction + numberOfUniversities * owner.universityProduction;
         owner.sciencePoints += gainedSciencePoints;
@@ -292,7 +292,8 @@ public class Province {
                 isCity = true;
                 productionPoints -= city.productionCost;
         }
-
+        HegeLog.log("Province", name + ": built " + buildingInProcess.name);
+        buildingInProcess = null;
     }
 
     public void createUnit(int id) {
