@@ -43,6 +43,11 @@ public class Building {
                 isNeedCity = true;
                 isLimited = true;
                 requiredTechnology = province.owner.technologies.updatedShipbuilding;
+            case  ID.CITY:
+                productionCost = PRODUCTIONCOST.CITY;
+                isNeedCity = false;
+                isLimited = true;
+                requiredTechnology = null;
         }
     }
 

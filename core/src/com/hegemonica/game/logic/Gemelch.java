@@ -15,21 +15,13 @@ public class Gemelch {
     public int mapHeight;
     public int mapWidth;
 
-    //production
-    public int citizenProduction = 1;
-    public int mineProduction = 3;
-    public int shipyardProduction = 3;
-
-    //food production
-    public int startFoodProduction = 2;
-    public int farmFoodProduction = 3;
-    public int shipyardFoodProduction = 2;
-
     public Country red;
     public Country green;
     public Country blue;
     public Country yellow;
     public Country nothing;
+
+    public Country turnCountry;
 
     public int provCountWidth;
     public int provCountHeight;
@@ -60,6 +52,7 @@ public class Gemelch {
         green = new Country("Green", 2, Color.GREEN);
         blue = new Country("Blue", 3, Color.BLUE);
         yellow = new Country("Yellow", 4, Color.YELLOW);
+        turnCountry = red;
 
 
         provinces = new Province[provCountWidth * provCountHeight];

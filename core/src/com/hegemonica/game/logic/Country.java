@@ -18,9 +18,7 @@ public class Country {
     public boolean inWar;
 
     public Color color;
-    public int gainedSciencePoints;
-
-    public ArrayList<Province> provinces;
+    public int sciencePoints;
 
     public Technology technologyInProcess;
 
@@ -42,6 +40,8 @@ public class Country {
     public int universityProduction;
 
     public Technologies technologies;
+
+    public int neededSciencePoints;
 
     //наличие персонажа в стране
     public boolean hasBohema;
@@ -83,9 +83,9 @@ public class Country {
 
     public void onTurn() {
         //подсчет науки
-        gainedSciencePoints = 0;
-        for (int i = 0; i < provinces.size(); i++) {
-            gainedSciencePoints += provinces.get(i).gainedSciencePoints;
+        if (sciencePoints >= neededSciencePoints) {
+            research(technologyInProcess);
+            sciencePoints -= neededSciencePoints;
         }
     }
 
@@ -101,7 +101,7 @@ public class Country {
     }
 
 
-    public void technologyResearch(Technology technology) {
+    public void research(Technology technology) {
 
         switch (technology.id) {
             case Technology.ID.ENGINEERING:

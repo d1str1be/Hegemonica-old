@@ -78,8 +78,6 @@ public class WarUnit {
 
     public void capture() {
         province.owner = this.owner;
-        province.owner.provinces.remove(province);
-        owner.provinces.add(province);
         movementPoints = 0;
     }
 

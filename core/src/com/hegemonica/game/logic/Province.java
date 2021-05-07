@@ -43,6 +43,7 @@ public class Province {
     public int numberOfLimitedBuildings;
 
     public Building buildingInProcess;
+    public WarUnit unitInProcess;
 
 
     public boolean isCity;
@@ -156,6 +157,7 @@ public class Province {
         numberOfMines = 0;
         numberOfFarms = 0;
         numberOfLimitedBuildings = 0;
+        neededFoodPoints = 10;
 
         library = new Building(Building.ID.LIBRARY, this);
         university = new Building(Building.ID.UNIVERSITY, this);
@@ -216,6 +218,7 @@ public class Province {
             buildingInProcess = null;
         }
         gainedSciencePoints = population + numberOfLibraries * owner.libraryProduction + numberOfUniversities * owner.universityProduction;
+        owner.sciencePoints += gainedSciencePoints;
     }
 
     public void setOwner(Country newOwner) {
@@ -247,14 +250,14 @@ public class Province {
         population += 1;
         neededFood += 1;
         foodPoints -= neededFoodPoints;
-        neededFoodPoints += 1;
+        neededFoodPoints += 2;
     }
 
     public void provinceDecrease() {
         population -= 1;
         neededFood -= 1;
         foodPoints += neededFoodPoints - 1;
-        neededFoodPoints -= 1;
+        neededFoodPoints -= 2;
     }
 
     public void build(Building building) {
@@ -281,9 +284,9 @@ public class Province {
                 numberOfShipyards = 1;
                 numberOfLimitedBuildings += 1;
                 productionPoints -= shipyard.productionCost;
-//            case Building.ID.CITY:
-//                isCity = true;
-//                productionPoints -= city.productionCost;
+            case Building.ID.CITY:
+                isCity = true;
+                productionPoints -= city.productionCost;
         }
 
     }
@@ -293,18 +296,23 @@ public class Province {
             case WarUnit.ID.WARRIOR:
                 units.add(new MeleeUnit(WarUnit.ID.WARRIOR, owner, WarUnit.COST.WARRIOR, WarUnit.ATTACKSTRENGTH.WARRIOR, WarUnit.DEFENSESTRENGTH.WARRIOR, WarUnit.MOVEMENTPOINTS.WARRIOR, this, unitCounter, MeleeUnit.UPGRADELEVEL.WARRIOR, "Warrior"));
                 unitCounter++;
+                productionPoints -= WarUnit.COST.WARRIOR;
             case WarUnit.ID.ARCHER:
                 units.add(new RangedUnit(WarUnit.ID.ARCHER, owner, WarUnit.COST.ARCHER, WarUnit.ATTACKSTRENGTH.ARCHER, WarUnit.DEFENSESTRENGTH.ARCHER, WarUnit.MOVEMENTPOINTS.ARCHER, this, unitCounter, RangedUnit.UPGRADELEVEL.ARCHER, "Archer"));
                 unitCounter++;
+                productionPoints -= WarUnit.COST.ARCHER;
             case WarUnit.ID.SHIELDER:
                 units.add(new DefenseUnit(WarUnit.ID.SHIELDER, owner, WarUnit.COST.SHIELDER, WarUnit.ATTACKSTRENGTH.SHIELDER, WarUnit.DEFENSESTRENGTH.SHIELDER, WarUnit.MOVEMENTPOINTS.SHIELDER, this, unitCounter, DefenseUnit.UPGRADELEVEL.SHIELDER, "Shielder"));
                 unitCounter++;
+                productionPoints -= WarUnit.COST.SHIELDER;
             case WarUnit.ID.CROSSBOWS:
                 units.add(new RangedUnit(WarUnit.ID.CROSSBOWS, owner, WarUnit.COST.CROSSBOWS, WarUnit.ATTACKSTRENGTH.CROSSBOWS, WarUnit.DEFENSESTRENGTH.CROSSBOWS, WarUnit.MOVEMENTPOINTS.CROSSBOWS, this, unitCounter, RangedUnit.UPGRADELEVEL.CROSSBOWS, "Crossbows"));
                 unitCounter++;
+                productionPoints -= WarUnit.COST.CROSSBOWS;
             case WarUnit.ID.SWORDSMAN:
                 units.add(new MeleeUnit(WarUnit.ID.SWORDSMAN, owner, WarUnit.COST.SWORDSMAN, WarUnit.ATTACKSTRENGTH.SWORDSMAN, WarUnit.DEFENSESTRENGTH.SWORDSMAN, WarUnit.MOVEMENTPOINTS.SWORDSMAN, this, unitCounter, MeleeUnit.UPGRADELEVEL.SWORDSMAN, "Swordsman"));
                 unitCounter++;
+                productionPoints -= WarUnit.COST.SWORDSMAN;
         }
     }
 
@@ -392,5 +400,6 @@ public class Province {
         }
         return Ycoords;
     }
+
 
 }
