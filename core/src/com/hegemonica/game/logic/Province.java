@@ -130,6 +130,7 @@ public class Province {
         workshop = new Building(Building.ID.WORKSHOP, this);
         farm = new Building(Building.ID.FARM, this);
         mine = new Building(Building.ID.MINE, this);
+        city = new Building(Building.ID.CITY, this);
 
         unitCounter = 0;
         units = new ArrayList<WarUnit>();
@@ -158,13 +159,13 @@ public class Province {
         numberOfFarms = 0;
         numberOfLimitedBuildings = 0;
         neededFoodPoints = 10;
-
         library = new Building(Building.ID.LIBRARY, this);
         university = new Building(Building.ID.UNIVERSITY, this);
         shipyard = new Building(Building.ID.SHIPYARD, this);
         workshop = new Building(Building.ID.WORKSHOP, this);
         farm = new Building(Building.ID.FARM, this);
         mine = new Building(Building.ID.MINE, this);
+        city = new Building(Building.ID.CITY, this);
 
         unitCounter = 0;
         units = new ArrayList<WarUnit>();
@@ -175,7 +176,7 @@ public class Province {
 
         defaultSkin = new Skin(Gdx.files.internal("ui/default/skin/uiskin.json"));
         lProvName = new Label(name, defaultSkin);
-        lProvName.setSize(width*0.2f,height*0.2f);
+        lProvName.setSize(width * 0.2f, height * 0.2f);
         lProvName.setColor(owner.color);
         HegeLog.log("Province", name + " has Color " + owner.color.toString());
         lProvName.setFontScale(0.5f);
@@ -207,9 +208,12 @@ public class Province {
 
     public void onTurn() {
         foodPoints += numberOfFarms * owner.farmProduction - neededFood + owner.startFoodProduction + numberOfShipyards * owner.startFoodProduction;
+        HegeLog.log("Province", "foodPoints: " + foodPoints);
         if (foodPoints > neededFoodPoints) {
+            HegeLog.log("Province", name + " grew");
             provinceGrow();
         } else if (foodPoints < 0) {
+            HegeLog.log("Province", name + " decreased");
             provinceDecrease();
         }
         productionPoints += population + numberOfMines * owner.mineProduction + numberOfWorkshops * owner.workshopProduction + numberOfShipyards * owner.shipyardProduction;
