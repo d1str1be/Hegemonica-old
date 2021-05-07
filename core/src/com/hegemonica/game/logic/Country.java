@@ -1,8 +1,6 @@
 package com.hegemonica.game.logic;
 
-
 import com.badlogic.gdx.graphics.Color;
-
 import java.util.ArrayList;
 
 public class Country {
@@ -18,7 +16,6 @@ public class Country {
     public boolean inWar;
 
     public Color color;
-
     public int gainedSciencePoints;
 
     public ArrayList<Province> provinces;
@@ -66,10 +63,27 @@ public class Country {
         inflation = 0f;
         technologies = new Technologies();
 
+        citizenProduction = 1;
+        mineProduction = 3;
+        workshopProduction = 5;
+        shipyardProduction = 3;
+
+        startFoodProduction = 2;
+        farmProduction = 3;
+        shipyardProduction = 2;
+
+        citizenScienceProduction = 1;
+        libraryProduction = 3;
+        universityProduction = 6;
+
     }
 
     public void onTurn() {
-
+        //подсчет науки
+        gainedSciencePoints = 0;
+        for (int i = 0; i < provinces.size(); i++) {
+            gainedSciencePoints += provinces.get(i).gainedSciencePoints;
+        }
     }
 
 
@@ -83,7 +97,9 @@ public class Country {
         public Resource Cows;
     }
 
+
     public void technologyResearch(Technology technology) {
+
         switch (technology.id) {
             case Technology.ID.ENGINEERING:
                 technologies.engineering.isResearched = true;
@@ -127,6 +143,15 @@ public class Country {
             default:
                 return true;
         }
+    }
+
+    public boolean checkRequiredTechnologiesForTechnology(Technology technology) {
+        for (int i = 0; i < technology.requiredTechnologies.length; i++) {
+            if (technology.requiredTechnologies[i].isResearched == false) {
+                return false;
+            }
+        }
+        return true;
     }
 
 

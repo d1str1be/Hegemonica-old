@@ -24,8 +24,11 @@ public class Gemelch {
     public int farmFoodProduction = 3;
     public int shipyardFoodProduction = 2;
 
-    public Country test;
-    public Country test1;
+    public Country red;
+    public Country green;
+    public Country blue;
+    public Country yellow;
+    public Country nothing;
 
     public int provCountWidth;
     public int provCountHeight;
@@ -37,6 +40,7 @@ public class Gemelch {
     public Gemelch(int provCountWidth, int provCountHeight, Viewport viewport) {
         this.provCountWidth = provCountWidth;
         this.provCountHeight = provCountHeight;
+
         provincesCount = provCountWidth * provCountHeight;
         HegeLog.log(HegeLog.MAP, "prov in width = " + provCountWidth);
         HegeLog.log(HegeLog.MAP, "prov in height = " + provCountHeight);
@@ -47,6 +51,7 @@ public class Gemelch {
         green = new Country("Green", 2, Color.GREEN);
         blue = new Country("Blue", 3, Color.BLUE);
         yellow = new Country("Yellow", 4, Color.YELLOW);
+
 
         provinces = new Province[provCountWidth * provCountHeight];
         for (int i = 0; i < provCountHeight; i++) {
@@ -72,8 +77,6 @@ public class Gemelch {
     }
 
     public void onTurn() {
-        test.onTurn();
-        test1.onTurn();
         for (Province province : provinces) {
             province.onTurn();
         }

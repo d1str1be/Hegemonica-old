@@ -21,16 +21,22 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.FloatArray;
 import com.badlogic.gdx.utils.ShortArray;
+import com.hegemonica.game.logic.units.DefenseUnit;
+import com.hegemonica.game.logic.units.MeleeUnit;
+import com.hegemonica.game.logic.units.RangedUnit;
+import com.hegemonica.game.logic.units.WarUnit;
+
+import java.util.ArrayList;
 import com.hegemonica.game.Core;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
 
+
 public class Province {
     public int id;
     public String name;
 
-    public int startFoodProduction;
     public int foodPoints;
     public int neededFoodPoints;
     public int population;
@@ -38,13 +44,6 @@ public class Province {
     public int productionPoints;
     public int neededProductionPoints;
     public int gainedSciencePoints;
-
-    public int mineProduction;
-    public int farmProduction;
-    public int workshopProduction;
-    public int shipyardProduction;
-    public int libraryProduction;
-    public int universityProduction;
 
     public int numberOfLimitedBuildings;
 
@@ -59,6 +58,11 @@ public class Province {
     public int numberOfShipyards;
     public int numberOfFarms;
     public int numberOfMines;
+
+    //units
+    public int unitCounter;
+    public ArrayList<WarUnit> units;
+    public WarUnit unitThere;
 
     public int climate;
     public int landscape;
@@ -132,6 +136,8 @@ public class Province {
         farm = new Building(Building.ID.FARM, this);
         mine = new Building(Building.ID.MINE, this);
 
+        unitCounter = 0;
+        units = new ArrayList<WarUnit>();
 
         defaultSkin = new Skin(Gdx.files.internal("ui/default/skin/uiskin.json"));
 
@@ -163,6 +169,9 @@ public class Province {
         workshop = new Building(Building.ID.WORKSHOP, this);
         farm = new Building(Building.ID.FARM, this);
         mine = new Building(Building.ID.MINE, this);
+
+        unitCounter = 0;
+        units = new ArrayList<WarUnit>();
 
         rectangle = new Rectangle(x, y, width, height);
         unitCounter = 0;
@@ -285,19 +294,39 @@ public class Province {
 
     }
 
+    public void createUnit(int id) {
+        switch (id) {
+            case WarUnit.ID.WARRIOR:
+                units.add(new MeleeUnit(WarUnit.ID.WARRIOR, owner, WarUnit.COST.WARRIOR, WarUnit.ATTACKSTRENGTH.WARRIOR, WarUnit.DEFENSESTRENGTH.WARRIOR, WarUnit.MOVEMENTPOINTS.WARRIOR, this, unitCounter, MeleeUnit.UPGRADELEVEL.WARRIOR, "Warrior"));
+                unitCounter++;
+            case WarUnit.ID.ARCHER:
+                units.add(new RangedUnit(WarUnit.ID.ARCHER, owner, WarUnit.COST.ARCHER, WarUnit.ATTACKSTRENGTH.ARCHER, WarUnit.DEFENSESTRENGTH.ARCHER, WarUnit.MOVEMENTPOINTS.ARCHER, this, unitCounter, RangedUnit.UPGRADELEVEL.ARCHER, "Archer"));
+                unitCounter++;
+            case WarUnit.ID.SHIELDER:
+                units.add(new DefenseUnit(WarUnit.ID.SHIELDER, owner, WarUnit.COST.SHIELDER, WarUnit.ATTACKSTRENGTH.SHIELDER, WarUnit.DEFENSESTRENGTH.SHIELDER, WarUnit.MOVEMENTPOINTS.SHIELDER, this, unitCounter, DefenseUnit.UPGRADELEVEL.SHIELDER, "Shielder"));
+                unitCounter++;
+            case WarUnit.ID.CROSSBOWS:
+                units.add(new RangedUnit(WarUnit.ID.CROSSBOWS, owner, WarUnit.COST.CROSSBOWS, WarUnit.ATTACKSTRENGTH.CROSSBOWS, WarUnit.DEFENSESTRENGTH.CROSSBOWS, WarUnit.MOVEMENTPOINTS.CROSSBOWS, this, unitCounter, RangedUnit.UPGRADELEVEL.CROSSBOWS, "Crossbows"));
+                unitCounter++;
+            case WarUnit.ID.SWORDSMAN:
+                units.add(new MeleeUnit(WarUnit.ID.SWORDSMAN, owner, WarUnit.COST.SWORDSMAN, WarUnit.ATTACKSTRENGTH.SWORDSMAN, WarUnit.DEFENSESTRENGTH.SWORDSMAN, WarUnit.MOVEMENTPOINTS.SWORDSMAN, this, unitCounter, MeleeUnit.UPGRADELEVEL.SWORDSMAN, "Swordsman"));
+                unitCounter++;
+        }
+    }
+
     public void onTurn() {
-        foodPoints += numberOfFarms * farmProduction - neededFood + startFoodProduction;
+        foodPoints += numberOfFarms * owner.farmProduction - neededFood + owner.startFoodProduction + numberOfShipyards * owner.startFoodProduction;
         if (foodPoints > neededFoodPoints) {
             provinceGrow();
         } else if (foodPoints < 0) {
             provinceDecrease();
         }
-        productionPoints += population + numberOfMines * mineProduction + numberOfWorkshops * workshopProduction + numberOfShipyards * shipyardProduction;
+        productionPoints += population + numberOfMines * owner.mineProduction + numberOfWorkshops * owner.workshopProduction + numberOfShipyards * owner.shipyardProduction;
         if (productionPoints >= neededProductionPoints) {
             build(buildingInProcess);
             buildingInProcess = null;
         }
-        gainedSciencePoints = population + numberOfLibraries * libraryProduction + numberOfUniversities * universityProduction;
+        gainedSciencePoints = population + numberOfLibraries * owner.libraryProduction + numberOfUniversities * owner.universityProduction;
     }
 
     public boolean isBuildingAvailable(Building building) {
@@ -309,17 +338,10 @@ public class Province {
     }
 
     //переписать
-    public void chooseBuilding(Building building) {
-        if (isBuildingAvailable(building)) {
-            buildingInProcess = building;
-        } else {
-            chooseBuilding(building);
-        }
-
     public boolean chooseBuilding(Building building) {
         //if (isBuildingAvailiable(building)) {
-        return false;
-    }
+			return false;
+		}
 
     public Province(Country owner, boolean isCity) {
         this.owner = owner;

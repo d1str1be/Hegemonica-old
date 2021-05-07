@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.hegemonica.game.AudioManager;
 import com.hegemonica.game.Core;
 import com.hegemonica.game.HegeLog;
 import com.hegemonica.game.logic.Province;
@@ -41,11 +42,9 @@ public class HUD {
     Label lProvName;
     Label lProvCountry;
     Label lProvPopulation;
-
-    Window wBuildings;
+	Window wBuildings;
     Window wUnits;
-
-
+    
     public HUD(Core game, PlayScreenMap map) {
         this.game = game;
         this.map = map;
@@ -57,6 +56,7 @@ public class HUD {
         if (selectedProvince != null) {
             this.selectedProvince = selectedProvince;
             setGeneralInfo();
+            game.audio.playSound(AudioManager.Sounds.UI_CLICK);
             wGeneralInfo.setVisible(true);
             HegeLog.log(HegeLog.HUD, "Selected " + selectedProvince.name);
 
@@ -144,13 +144,13 @@ public class HUD {
         turnNumber++;
         lTurnNumber.setText("Turn " + turnNumber);
         map.onTurn(turnNumber);
+        setGeneralInfo();
     }
 
     public void setGeneralInfo() {
         lProvName.setText(selectedProvince.name);
         lProvCountry.setText(selectedProvince.owner.name);
         lProvPopulation.setText(selectedProvince.population);
-
     }
 
     public void setDebug(boolean debug) {
