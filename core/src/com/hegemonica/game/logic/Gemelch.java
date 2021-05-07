@@ -3,6 +3,7 @@ package com.hegemonica.game.logic;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.hegemonica.game.HegeLog;
 
 // ЭТО СЦЕНАРИЙ. ЗДЕСЬ ЗАДАЕМ ВСЕ СТРАНЫ ЭТОГО СЦЕНАРИЯ, КАРТУ "ПАНГЕЯ" И ВСЕ ОСТАЛЬНОЕ
@@ -35,11 +36,18 @@ public class Gemelch {
     public int provincesCount;
     public Province[] provinces;
 
+    public Province leftBottomProv;
+    public Province rightBottomProv;
+    public Province leftTopProv;
+    public Province rightTopProv;
+
 
     public Gemelch(int provCountWidth, int provCountHeight, Stage stage) {
         this.provCountWidth = provCountWidth;
         this.provCountHeight = provCountHeight;
         provincesCount = provCountWidth * provCountHeight;
+
+
         HegeLog.log(HegeLog.MAP, "prov in width = " + provCountWidth);
         HegeLog.log(HegeLog.MAP, "prov in height = " + provCountHeight);
 
@@ -62,17 +70,38 @@ public class Gemelch {
                 provinces[iterator].buildingInProcess = provinces[iterator].farm;
             }
         }
-        provinces[0].owner = red;
+        leftBottomProv = provinces[0];
+        rightBottomProv = provinces[provCountWidth - 1];
+        leftTopProv = provinces[(provCountHeight - 1) * provCountWidth];
+        rightTopProv = provinces[provCountWidth * provCountHeight - 1];
+
+        leftBottomProv.owner = red;
+        leftBottomProv.lProvName = new Label(leftBottomProv.name, leftBottomProv.defaultSkin, "red");
+        leftBottomProv.lProvName.setFontScale(0.5f);
+        leftBottomProv.lProvName.setPosition(leftBottomProv.x + (leftBottomProv.width / 2) - 18, (leftBottomProv.y + (leftBottomProv.height / 2)) * 0.8f);
+        HegeLog.log("Province", provinces[0].name + " now has Color " + provinces[0].owner.color.toString());
         HegeLog.log("Gemelch", "Owner of " + provinces[0].name + " is " + provinces[0].owner.name);
 
-        provinces[(provCountHeight - 1) * provCountWidth].owner = blue;
-        HegeLog.log("Gemelch", "Owner of " + provinces[(provCountHeight - 1) * provCountWidth].name + " is " + provinces[(provCountHeight - 1) * provCountWidth].owner.name);
+        leftTopProv.owner = blue;
+        leftTopProv.lProvName = new Label(leftTopProv.name, leftTopProv.defaultSkin, "blue");
+        leftTopProv.lProvName.setFontScale(0.5f);
+        leftTopProv.lProvName.setPosition(leftTopProv.x + (leftTopProv.width / 2) - 18, (leftTopProv.y + (leftTopProv.height / 2)) * 0.8f);
+        HegeLog.log("Province", leftTopProv.name + " now has Color " + leftTopProv.owner.color.toString());
+        HegeLog.log("Gemelch", "Owner of " + leftTopProv.name + " is " + leftTopProv.owner.name);
 
-        provinces[provCountHeight * provCountWidth - 1].owner = yellow;
-        HegeLog.log("Gemelch", "Owner of " + provinces[provCountHeight * provCountWidth - 1].name + " is " + provinces[provCountHeight * provCountWidth - 1].owner.name);
+        rightTopProv.owner = yellow;
+        rightTopProv.lProvName = new Label(rightTopProv.name, rightTopProv.defaultSkin, "yellow");
+        rightTopProv.lProvName.setFontScale(0.5f);
+        rightTopProv.lProvName.setPosition(rightTopProv.x + (rightTopProv.width / 2) - 18, (rightTopProv.y + (rightTopProv.height / 2)) * 0.8f);
+        HegeLog.log("Province", rightTopProv.name + " now has Color " + rightTopProv.owner.color.toString());
+        HegeLog.log("Gemelch", "Owner of " + rightTopProv.name + " is " + rightTopProv.owner.name);
 
-        provinces[provCountWidth - 1].owner = green;
-        HegeLog.log("Gemelch", "Owner of " + provinces[provCountWidth - 1].name + " is " + provinces[provCountWidth - 1].owner.name);
+        rightBottomProv.owner = green;
+        rightBottomProv.lProvName = new Label(rightBottomProv.name, rightBottomProv.defaultSkin, "green");
+        rightBottomProv.lProvName.setFontScale(0.5f);
+        rightBottomProv.lProvName.setPosition(rightBottomProv.x + (rightBottomProv.width / 2) - 18, (rightBottomProv.y + (rightBottomProv.height / 2)) * 0.8f);
+        HegeLog.log("Province", rightBottomProv.name + " now has Color " + rightBottomProv.owner.color.toString());
+        HegeLog.log("Gemelch", "Owner of " + rightBottomProv.name + " is " + rightBottomProv.owner.name);
 
         gfx.addProvincesToStage();
     }

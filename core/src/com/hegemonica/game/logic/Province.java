@@ -104,8 +104,8 @@ public class Province {
     public Building mine;
     public Building city;
 
-    Skin defaultSkin;
-    Label lProvName;
+    public Skin defaultSkin;
+    public Label lProvName;
 
     public Province(int id, String name, Country owner, boolean[] neighbours, boolean isCity, FloatArray provCoords) {
         this.id = id;
