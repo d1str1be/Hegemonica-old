@@ -86,6 +86,7 @@ public class Country {
         if (sciencePoints >= neededSciencePoints) {
             research(technologyInProcess);
             sciencePoints -= neededSciencePoints;
+            technologyInProcess = null;
         }
     }
 
