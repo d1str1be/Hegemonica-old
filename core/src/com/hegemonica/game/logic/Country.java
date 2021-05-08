@@ -233,6 +233,11 @@ public class Country {
 
     public boolean isTurnAvailable() {
         if (isSomethingResearching) {
+            for (Province province : gemelch.provinces) {
+                if (province.owner == this && !province.isTurnAvailable()) {
+                    return false;
+                }
+            }
             return true;
         } else {
             return false;

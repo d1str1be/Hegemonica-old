@@ -105,28 +105,27 @@ public class WarUnit {
     public void attack(WarUnit unit) {
         unit.defense(this);
         if (unit.health <= 0) {
-            unit.destroy();
             this.move(unit.province);
             setAttackStrength();
             setDefenseStrength();
-        } else if (health <= 0) {
-            unit.defense(this);
-            destroy();
-            unit.setAttackStrength();
-            unit.setDefenseStrength();
         } else {
             health -= Math.round(30 * Math.pow(2.72, (unit.defenseStrength - attackStrength) / 25));
-            unit.defense(this);
             setAttackStrength();
             setDefenseStrength();
-            unit.setAttackStrength();
-            unit.setDefenseStrength();
             movementPoints = 0;
+        }
+        if (health <= 0) {
+            destroy();
         }
     }
 
     public void defense(WarUnit unit) {
         health -= Math.round(30 * Math.pow(2.72, (unit.attackStrength - defenseStrength) / 25));
+        setAttackStrength();
+        setDefenseStrength();
+        if (health <= 0) {
+            destroy();
+        }
     }
 
     public void upgrade() {
