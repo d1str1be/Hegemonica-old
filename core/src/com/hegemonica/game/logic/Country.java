@@ -228,6 +228,11 @@ public class Country {
         return true;
     }
 
+    public void choseTechnology(Technology technology) {
+        technologyInProcess = technology;
+        neededSciencePoints = technology.cost;
+    }
+
     public class ID {
         public final static int NOTHING = 0;
         public final static int RED = 1;
