@@ -4,14 +4,18 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.hegemonica.game.Core;
 import com.hegemonica.game.HegeLog;
+import com.hegemonica.game.screens.HUD;
 
 // ЭТО СЦЕНАРИЙ. ЗДЕСЬ ЗАДАЕМ ВСЕ СТРАНЫ ЭТОГО СЦЕНАРИЯ, КАРТУ "ПАНГЕЯ" И ВСЕ ОСТАЛЬНОЕ
 public class Gemelch {
     public static final int COUNT_OF_RESOURCES = 26;
+    public HUD hud;
+    
     public GemelchGFX gfx;
 
-    public int turnNumber;
+    public static int turnNumber;
     public int mapHeight;
     public int mapWidth;
 
@@ -34,12 +38,12 @@ public class Gemelch {
     public Province rightTopProv;
 
 
-    public Gemelch(int provCountWidth, int provCountHeight, Stage stage) {
+    public Gemelch(Core game, int provCountWidth, int provCountHeight, Stage stage) {
         this.provCountWidth = provCountWidth;
         this.provCountHeight = provCountHeight;
+        hud = new HUD(game,this);
         provincesCount = provCountWidth * provCountHeight;
-
-
+        
         HegeLog.log(HegeLog.MAP, "prov in width = " + provCountWidth);
         HegeLog.log(HegeLog.MAP, "prov in height = " + provCountHeight);
 
@@ -98,31 +102,37 @@ public class Gemelch {
     public void onTurn() {
         switch (turnCountry.id) {
             case Country.ID.RED:
+                HegeLog.log("Gemelch", "Red turns");
                 red.onTurn();
                 turnCountry = green;
+                break;
             case Country.ID.GREEN:
+                HegeLog.log("Gemelch", "Green turns");
                 green.onTurn();
                 turnCountry = blue;
+                break;
             case Country.ID.BLUE:
+                HegeLog.log("Gemelch", "Blue turns");
                 blue.onTurn();
                 turnCountry = yellow;
+                break;
             case Country.ID.YELLOW:
+                HegeLog.log("Gemelch", "Yellow turns");
                 yellow.onTurn();
                 turnCountry = red;
                 turnNumber++;
+                break;
         }
     }
-
-    public void setTurnNumber(int turnNumber) {
-        this.turnNumber = turnNumber;
-    }
+    
 
 
-    public void render(OrthographicCamera camera) {
+    public void render(OrthographicCamera camera, float delta) {
         gfx.render();
         for (Province x : provinces) {
             x.render(camera);
         }
+        hud.render(delta);
     }
 
     public float[] getProvX() {
@@ -131,6 +141,7 @@ public class Gemelch {
             provX[i] = provinces[i].x;
         }
         return provX;
+        
     }
 
     public float[] getProvY() {

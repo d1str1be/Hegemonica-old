@@ -14,16 +14,16 @@ import com.hegemonica.game.Core;
 import com.hegemonica.game.HegeLog;
 import com.hegemonica.game.HegeProgressBar;
 import com.hegemonica.game.logic.Country;
+import com.hegemonica.game.logic.Gemelch;
 import com.hegemonica.game.logic.Province;
 
 
 public class HUD {
     Core game;
-    PlayScreenMap map;
+    public Gemelch gemelch;
     final float bWidth = Gdx.graphics.getWidth() / 5f;
     final float bHeight = Gdx.graphics.getHeight() / 8f;
-
-    public int turnNumber;
+    
 
     Stage stage;
     Skin DefaultUI;
@@ -60,9 +60,9 @@ public class HUD {
     Window wBuildings;
     Window wUnits;
 
-    public HUD(Core game, PlayScreenMap map) {
+    public HUD(Core game, Gemelch gemelch) {
         this.game = game;
-        this.map = map;
+        this.gemelch = gemelch;
         this.show();
         //setDebug(Core.DEV_MODE);
     }
@@ -86,11 +86,10 @@ public class HUD {
 
     public void show() {
         stage = new Stage(new FitViewport(Core.gameWidth, Core.gameHeight));
-        turnNumber = 1;
         DefaultUI = new Skin(Gdx.files.internal("ui/default/skin/uiskin.json"));
         GlassyUI = new Skin(Gdx.files.internal("ui/glassy/skin/glassy-ui.json"));
 
-        lTurnNumber = new Label("Turn " + turnNumber, DefaultUI);
+        
 
         wProvinceInfo = new Window("Province Info", DefaultUI);
         wProvinceInfo.setPosition(Core.gameWidth * 0.05f, Core.gameHeight * 0.4f);
@@ -156,7 +155,7 @@ public class HUD {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 onTurn();
-                HegeLog.log("HegeLogic", "Button Turn pressed. Now it`s turn " + turnNumber);
+                HegeLog.log("HegeLogic", "Button Turn pressed. Now it`s turn " + Gemelch.turnNumber);
             }
         });
 
@@ -188,6 +187,13 @@ public class HUD {
                 wCountryInfo.setVisible(true);
             }
         });
+    
+        lTurnNumber = new Label("Turn " + Gemelch.turnNumber, DefaultUI);
+        lTurnNumber.setDebug(true);
+        lTurnNumber.setScale(1.5f);
+        lTurnNumber.setFontScale(1.5f);
+        lTurnNumber.setPosition(Core.gameWidth-lTurnNumber.getWidth()*2f, bTurn.getHeight());
+        stage.addActor(lTurnNumber);
 
         stage.addActor(wProvinceInfo);
         stage.addActor(bTurn);
@@ -207,9 +213,8 @@ public class HUD {
     }
 
     public void onTurn() {
-        turnNumber++;
-        lTurnNumber.setText("Turn " + turnNumber);
-        map.onTurn(turnNumber);
+        lTurnNumber.setText("Turn " + Gemelch.turnNumber);
+        gemelch.onTurn();
         if (selectedProvince != null)
             setProvinceInfo();
     }

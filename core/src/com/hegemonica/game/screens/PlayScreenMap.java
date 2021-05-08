@@ -4,14 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.PolygonRegion;
-import com.badlogic.gdx.graphics.g2d.PolygonSprite;
-import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.EarClippingTriangulator;
@@ -26,40 +18,37 @@ import com.hegemonica.game.Core;
 import com.hegemonica.game.FPS;
 import com.hegemonica.game.HegeLog;
 import com.hegemonica.game.logic.Gemelch;
-import com.hegemonica.game.logic.scenarios.gemelch.ProvCoords;
 
 import java.util.Random;
 
 public class PlayScreenMap implements Disposable, GestureDetector.GestureListener {
-    Core game;
+    public Core game;
     InputMultiplexer inputMultiplexer;
-    public HUD hud;
+   
     private Gemelch gemelch;
 
 
-    private ProvCoords provCoords;
-    boolean coordsAreSame;
+//    private ProvCoords provCoords;
+//    boolean coordsAreSame;
     public OrthographicCamera camera;
     public Viewport viewport;
     //    private Viewport UIviewport;
     private ShapeRenderer shapeRenderer;
-    private FloatArray testVertices;
-    //719, 431, 736, 427, 744, 428, 753, 432,
-    //760, 433,
-    private ShortArray testTriangleVertices;
+//    private FloatArray testVertices;
+//    //719, 431, 736, 427, 744, 428, 753, 432,
+//    //760, 433,
+//    private ShortArray testTriangleVertices;
     private final EarClippingTriangulator triangulator = new EarClippingTriangulator();
     private Random random = new Random(System.currentTimeMillis());
-    private Texture texture;
-    private TextureRegion textureReg;
-    private PolygonRegion polyReg;
-    private PolygonSprite polySprite;
-    private PolygonSpriteBatch polyBatch;
-    private Pixmap pix;
+//    private Texture texture;
+//    private TextureRegion textureReg;
+//    private PolygonRegion polyReg;
+//    private PolygonSprite polySprite;
+//    private PolygonSpriteBatch polyBatch;
+//    private Pixmap pix;
 
 
     FPS fps;
-    BitmapFont font;
-    SpriteBatch batch;
     Stage stage;
     float zoomMin = 3f;
     float zoomMax = 0.25f;
@@ -69,15 +58,11 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
     float cameraMovementX;
     float cameraMovementY;
 
-    public PlayScreenMap(Core game, int provCountWidth, int provCountHeight) {
+    public PlayScreenMap(Core game,  int provCountWidth, int provCountHeight) {
         this.game = game;
-        hud = new HUD(game, this);
-
-        inputMultiplexer = new InputMultiplexer();
-        inputMultiplexer.addProcessor(hud.stage);
-        inputMultiplexer.addProcessor(new GestureDetector(this));
-        Gdx.input.setInputProcessor(inputMultiplexer);
-
+        
+        
+        
         fps = new FPS();
 
 //        provCoords = new ProvCoords();
@@ -92,7 +77,7 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
         stage = new Stage(viewport);
         stage.getCamera().translate(-Core.gameWidth / 2, -Core.gameHeight / 2, 0);
 
-        gemelch = new Gemelch(provCountWidth, provCountHeight, stage);
+        gemelch = new Gemelch(game, provCountWidth, provCountHeight, stage);
         shapeRenderer = new ShapeRenderer();
 
 
@@ -108,7 +93,11 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
 
 //        font = new BitmapFont();
 //        batch = new SpriteBatch();
-
+    
+        inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(gemelch.hud.stage);
+        inputMultiplexer.addProcessor(new GestureDetector(this));
+        Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
     private ShortArray triangulate(FloatArray polygonVertices) {
@@ -123,9 +112,9 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
         camera.update();
         fps.update();
 
-        gemelch.render(camera);
+        gemelch.render(camera, delta);
         fps.render();
-        hud.render(delta);
+        
     }
 
 
@@ -137,11 +126,10 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
     @Override
     public void dispose() {
         fps.dispose();
-        texture.dispose();
-        pix.dispose();
-        batch.dispose();
+//        texture.dispose();
+//        pix.dispose();
         shapeRenderer.dispose();
-        polyBatch.dispose();
+//        polyBatch.dispose();
     }
 
     @Override
@@ -155,7 +143,7 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
         realY = (Core.gameHeight - y + cameraMovementY) / 2;
         HegeLog.log("Input", "Tapped on X: " + realX);
         HegeLog.log("Input", "Tapped on Y: " + realY);
-        hud.setSelectedProvince(gemelch.whichPolygonContainsPoint(realX, realY));
+        gemelch.hud.setSelectedProvince(gemelch.whichPolygonContainsPoint(realX, realY));
         return true;
     }
 
@@ -216,7 +204,6 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
 
     public void onTurn(int turnNumber) {
         game.discord.onPlaying(turnNumber);
-        gemelch.setTurnNumber(turnNumber);
         gemelch.onTurn();
     }
 }
