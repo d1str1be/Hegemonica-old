@@ -44,12 +44,12 @@ public class Building {
                 isNeedCity = true;
                 isLimited = true;
                 requiredTechnology = province.owner.engineering;
-            case ID.SHIPYARD:
-                name = "zsdrfg";
-                productionCost = PRODUCTIONCOST.SHIPYARD;
-                isNeedCity = true;
-                isLimited = true;
-                requiredTechnology = province.owner.updatedShipbuilding;
+            //case ID.SHIPYARD:
+            //    name = "zsdrfg";
+            //    productionCost = PRODUCTIONCOST.SHIPYARD;
+            //    isNeedCity = true;
+            //    isLimited = true;
+            //    requiredTechnology = province.owner.updatedShipbuilding;
             case ID.CITY:
                 name = "City";
                 productionCost = PRODUCTIONCOST.CITY;
