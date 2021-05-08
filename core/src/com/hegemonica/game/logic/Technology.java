@@ -22,7 +22,7 @@ public class Technology {
         this.requiredTechnologies = requiredTechnologies;
     }
 
-    class ID {
+    public class ID {
         public final static int ENGINEERING = 0;
         public final static int PAPER = 1;
         public final static int SIMPLYCHEMISTRY = 2;

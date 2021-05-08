@@ -2,6 +2,7 @@ package com.hegemonica.game.logic.units;
 
 import com.hegemonica.game.logic.Country;
 import com.hegemonica.game.logic.Province;
+import com.hegemonica.game.logic.Technology;
 
 public class WarUnit {
     public int id;
@@ -14,6 +15,7 @@ public class WarUnit {
     public int upgradeLevel;
     public int health;
     public boolean isHealing;
+    public Technology requiredTechnology;
 
     public String name;
 
@@ -37,6 +39,22 @@ public class WarUnit {
         this.number = number;
         this.upgradeLevel = upgradeLevel;
         this.name = name;
+    }
+
+    public WarUnit(int id) {
+        this.id = id;
+        switch (id) {
+            case ID.WARRIOR:
+                requiredTechnology = null;
+            case ID.ARCHER:
+                requiredTechnology = owner.technologies[Technology.ID.ENGINEERING];
+            case ID.SHIELDER:
+                requiredTechnology = owner.technologies[Technology.ID.ENGINEERING];
+            case ID.CROSSBOWS:
+                requiredTechnology = owner.technologies[Technology.ID.MACHINERY];
+            case ID.SWORDSMAN:
+                requiredTechnology = owner.technologies[Technology.ID.APPRIENTICESHIP];
+        }
     }
 
     public void onTurn() {
@@ -77,7 +95,7 @@ public class WarUnit {
     }
 
     public void capture() {
-        province.owner = this.owner;
+        province.setOwner(this.owner);
         movementPoints = 0;
     }
 
@@ -114,7 +132,7 @@ public class WarUnit {
 
     public void destroy() {
         province.unitThere = null;
-        province.units.set(number, null);
+        province.createdUnits.set(number, null);
     }
 
 

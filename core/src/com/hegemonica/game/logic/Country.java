@@ -2,6 +2,7 @@ package com.hegemonica.game.logic;
 
 import com.badlogic.gdx.graphics.Color;
 import com.hegemonica.game.HegeLog;
+import com.hegemonica.game.logic.units.WarUnit;
 
 import java.util.ArrayList;
 
@@ -76,12 +77,12 @@ public class Country {
         inflation = 0f;
 
         citizenProduction = 1;
-        mineProduction = 3;
+        mineProduction = 2;
         workshopProduction = 5;
         shipyardProduction = 3;
 
         startFoodProduction = 2;
-        farmProduction = 3;
+        farmProduction = 2;
         shipyardProduction = 2;
 
         citizenScienceProduction = 1;
@@ -125,8 +126,8 @@ public class Country {
         if (sciencePoints >= neededSciencePoints) {
             research(technologyInProcess);
             sciencePoints -= neededSciencePoints;
-
         }
+        setPossibleTechnologies();
     }
 
 
@@ -171,7 +172,6 @@ public class Country {
         }
         HegeLog.log("Country", "Researched " + technologyInProcess.id);
         technologyInProcess = engineering;
-        setPossibleTechnologies();
     }
 
     public void setPossibleTechnologies() {
@@ -195,6 +195,23 @@ public class Country {
                 return education.isResearched;
             case Building.ID.WORKSHOP:
                 return engineering.isResearched;
+            default:
+                return true;
+        }
+    }
+
+    public boolean checkRequiredTechnologiesForUnit (WarUnit unit) {
+        switch (unit.id) {
+            case WarUnit.ID.WARRIOR:
+                return true;
+            case WarUnit.ID.ARCHER:
+                return engineering.isResearched;
+            case WarUnit.ID.SHIELDER:
+                return engineering.isResearched;
+            case WarUnit.ID.CROSSBOWS:
+                return machinery.isResearched;
+            case WarUnit.ID.SWORDSMAN:
+                return apprienticeship.isResearched;
             default:
                 return true;
         }

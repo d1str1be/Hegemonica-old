@@ -65,8 +65,8 @@ public class Building {
         public final static int LIBRARY = 2;
         public final static int UNIVERSITY = 3;
         public final static int WORKSHOP = 4;
-        public final static int SHIPYARD = 5;
-        public final static int CITY = 6;
+        //public final static int SHIPYARD = 5;
+        public final static int CITY = 5;
     }
 
     public class PRODUCTIONCOST {
