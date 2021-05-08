@@ -65,7 +65,6 @@ public class Gemelch {
             for (int j = 0; j < provCountWidth; j++) {
                 int iterator = i * provCountWidth + j;
                 provinces[iterator] = new Province(iterator, "Province " + iterator, nothingCountry, new boolean[]{true}, false, 50 * j, 50 * i, 50, 50);
-                provinces[iterator].buildingInProcess = provinces[iterator].farm;
             }
         }
         leftBottomProv = provinces[0];
@@ -104,23 +103,40 @@ public class Gemelch {
         switch (turnCountry.id) {
             case Country.ID.RED:
                 HegeLog.log("Gemelch", "Red turns");
-                redCountry.onTurn();
+                if(redCountry.onTurn())
                 turnCountry = greenCountry;
+                else{
+                    HegeLog.log("Gemelch", "NO FUCKING TURN RED COUNTRY BAD");
+                    return;
+                }
+                
                 break;
             case Country.ID.GREEN:
                 HegeLog.log("Gemelch", "Green turns");
-                greenCountry.onTurn();
-                turnCountry = blueCountry;
+                if(greenCountry.onTurn())
+                    turnCountry = blueCountry;
+                else{
+                    HegeLog.log("Gemelch", "NO FUCKING TURN GREEN COUNTRY BAD");
+                    return;
+                }
                 break;
             case Country.ID.BLUE:
                 HegeLog.log("Gemelch", "Blue turns");
-                blueCountry.onTurn();
-                turnCountry = yellowCountry;
+                if(blueCountry.onTurn())
+                    turnCountry = yellowCountry;
+                else{
+                    HegeLog.log("Gemelch", "NO FUCKING TURN BLUE COUNTRY BAD");
+                    return;
+                }
                 break;
             case Country.ID.YELLOW:
                 HegeLog.log("Gemelch", "Yellow turns");
-                yellowCountry.onTurn();
-                turnCountry = redCountry;
+                if(yellowCountry.onTurn())
+                    turnCountry = redCountry;
+                else{
+                    HegeLog.log("Gemelch", "NO FUCKING TURN YELLOW COUNTRY BAD");
+                    return;
+                }
                 turnNumber++;
                 hud.newTurn();
                 break;

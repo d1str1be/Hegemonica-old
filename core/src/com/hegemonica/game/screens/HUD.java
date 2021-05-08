@@ -5,17 +5,23 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.hegemonica.game.AudioManager;
 import com.hegemonica.game.Core;
 import com.hegemonica.game.HegeLog;
 import com.hegemonica.game.HegeProgressBar;
+import com.hegemonica.game.logic.Building;
 import com.hegemonica.game.logic.Country;
 import com.hegemonica.game.logic.Gemelch;
 import com.hegemonica.game.logic.Province;
+
+import java.util.ArrayList;
 
 
 public class HUD {
@@ -39,28 +45,40 @@ public class HUD {
     Label lCountryTurn;
     Label lNewTurn;
     
+    ScrollPane scrollPane;
+    Table scrollTable1;
     Window wProvinceInfo;
-    Label l1;
-    Label l2;
-    Label l3;
+    Label lP1;
+    Label lP2;
+    Label lP3;
     Label lProvName;
     Label lProvCountry;
     Label lProvPopulation;
-    Label l4;
+    Label lP4;
     Label lPopulationProgress;
     HegeProgressBar populationProgress;
-    TextButton bBuild;
-    Label l5;
+    Label lP5;
     Label lProductionProgress;
     HegeProgressBar productionProgress;
-    Label l6;
+    Label lP6;
     Label lScienceProgress;
     HegeProgressBar scienceProgress;
     
-    Window wCountryInfo;
-    Label lCountryName;
     
-    Window wBuildings;
+    Label lProjectName;
+    Label lProductionCost;
+    ArrayList<Label> lProjects;
+    ArrayList<TextButton> bBuild;
+    
+    Window wChooseProject;
+    
+    Window wCountryInfo;
+    Label lC1;
+    Label lCountryName;
+    Label lC2;
+    Label lCountryPopulation;
+    Label lC3;
+    
     Window wUnits;
     
     public HUD(Core game, Gemelch gemelch) {
@@ -82,6 +100,7 @@ public class HUD {
         } else {
             HegeLog.log(HegeLog.HUD, "Selected null province");
             wProvinceInfo.setVisible(false);
+            wChooseProject.setVisible(false);
         }
     }
     
@@ -99,58 +118,90 @@ public class HUD {
         wProvinceInfo = new Window("Province Info", DefaultUI);
         wProvinceInfo.setPosition(Core.gameWidth * 0.05f, Core.gameHeight * 0.4f);
         wProvinceInfo.setSize(Core.gameWidth * 0.15f, Core.gameWidth * 0.125f);
-        wProvinceInfo.setScale(2f);
         wProvinceInfo.setVisible(false);
-        l1 = new Label("Name:", GlassyUI);
-        l2 = new Label("Controlled by:", GlassyUI);
-        l3 = new Label("Population:", GlassyUI);
+        wProvinceInfo.setResizable(true);
+        lP1 = new Label("Name:", GlassyUI);
+        lP2 = new Label("Controlled by:", GlassyUI);
+        lP3 = new Label("Population:", GlassyUI);
         lProvName = new Label("Null", DefaultUI);
         lProvCountry = new Label("Null", DefaultUI);
         lProvPopulation = new Label("Null", DefaultUI);
-        l4 = new Label("Food points", GlassyUI);
+        lP4 = new Label("Food points", GlassyUI);
         lPopulationProgress = new Label("Null", DefaultUI);
-        
-        l5 = new Label("Production points", GlassyUI);
+        lP5 = new Label("Production points", GlassyUI);
         lProductionProgress = new Label("Null", DefaultUI);
-        bBuild = new TextButton("Build", DefaultUI);
-        bBuild.setRound(true);
-        bBuild.setSize(wProvinceInfo.getWidth() * 0.15f, wProvinceInfo.getHeight() * 0.1f);
-        l6 = new Label("Science points", GlassyUI);
-        lScienceProgress = new Label("Null", DefaultUI);
+        
         
         populationProgress = new HegeProgressBar(wProvinceInfo.getWidth() * 0.15f, wProvinceInfo.getWidth() * 0.02f, HegeProgressBar.ID.FOOD);
         productionProgress = new HegeProgressBar(wProvinceInfo.getWidth() * 0.15f, wProvinceInfo.getWidth() * 0.02f, HegeProgressBar.ID.PRODUCTION);
-        scienceProgress = new HegeProgressBar(wProvinceInfo.getWidth() * 0.15f, wProvinceInfo.getWidth() * 0.02f, HegeProgressBar.ID.SCIENCE);
         
-        wProvinceInfo.add(l1);
+        
+        wProvinceInfo.add(lP1);
         wProvinceInfo.add(lProvName);
         wProvinceInfo.row();
-        wProvinceInfo.add(l2);
+        wProvinceInfo.add(lP2);
         wProvinceInfo.add(lProvCountry);
         wProvinceInfo.row();
-        wProvinceInfo.add(l3);
+        wProvinceInfo.add(lP3);
         wProvinceInfo.add(lProvPopulation);
         wProvinceInfo.row();
-        wProvinceInfo.add(l4);
+        wProvinceInfo.add(lP4);
         wProvinceInfo.row();
         wProvinceInfo.add(populationProgress);
         wProvinceInfo.add(lPopulationProgress);
         wProvinceInfo.row();
-        wProvinceInfo.add(l5);
+        wProvinceInfo.add(lP5);
         wProvinceInfo.row();
         wProvinceInfo.add(productionProgress);
         wProvinceInfo.add(lProductionProgress);
         wProvinceInfo.row();
-        wProvinceInfo.add(l6);
-        wProvinceInfo.row();
-        wProvinceInfo.add(scienceProgress);
-        wProvinceInfo.add(lScienceProgress);
+        wProvinceInfo.add(scrollPane);
         
         wCountryInfo = new Window("Country Info", DefaultUI);
-        wCountryInfo.setPosition(Core.gameWidth * 0.05f, Core.gameHeight * 0.4f);
+        wCountryInfo.setMovable(true);
+        wCountryInfo.setPosition(Core.gameWidth * 0.3f, Core.gameHeight * 0.6f);
         wCountryInfo.setSize(Core.gameWidth * 0.15f, Core.gameWidth * 0.125f);
-        wCountryInfo.setScale(2f);
         wCountryInfo.setVisible(false);
+        wCountryInfo.align(Align.top);
+        
+        lC1 = new Label("Country Name", GlassyUI);
+        lCountryName = new Label("Null", GlassyUI);
+        lC2 = new Label("Population", GlassyUI);
+        lCountryPopulation = new Label("Null", GlassyUI);
+        lC3 = new Label("Science points", GlassyUI);
+        lScienceProgress = new Label("Null", DefaultUI);
+        scienceProgress = new HegeProgressBar(wCountryInfo.getWidth() * 0.15f, wCountryInfo.getWidth() * 0.02f, HegeProgressBar.ID.SCIENCE);
+        
+        wCountryInfo.add(lC1);
+        wCountryInfo.add(lCountryName);
+        wCountryInfo.row();
+        wCountryInfo.add(lC2);
+        wCountryInfo.add(lCountryPopulation);
+        wCountryInfo.row();
+        wCountryInfo.add(lC3);
+        wCountryInfo.row();
+        wCountryInfo.add(scienceProgress);
+        wCountryInfo.add(lScienceProgress);
+        
+        
+        wChooseProject = new Window("Choose project", DefaultUI);
+        wChooseProject.setMovable(true);
+        wChooseProject.setSize(Core.gameWidth * 0.15f, Core.gameWidth * 0.125f);
+        wChooseProject.setPosition(wProvinceInfo.getX(), wProvinceInfo.getY() - wChooseProject.getHeight());
+        wChooseProject.align(Align.top);
+        
+        lProductionCost = new Label("Cost", GlassyUI);
+        lProjectName = new Label("Project Name", GlassyUI);
+        
+        
+        Label l = new Label(" ", GlassyUI);
+        wChooseProject.add(lProjectName).padRight(wChooseProject.getWidth() * 0.15f);
+        wChooseProject.add(lProductionCost).padRight(wChooseProject.getWidth() * 0.15f);
+        wChooseProject.add(l);
+        wChooseProject.setVisible(false);
+        lProjects = new ArrayList<>();
+        bBuild = new ArrayList<>();
+        
         
         bTurn = new TextButton("Turn", DefaultUI);
         bTurn.setSize(bWidth, bHeight);
@@ -165,7 +216,6 @@ public class HUD {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 onTurn();
-                HegeLog.log("HegeLogic", "Button Turn pressed. Now it`s turn " + Gemelch.turnNumber);
             }
         });
         
@@ -196,6 +246,7 @@ public class HUD {
             
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                setCountryInfo();
                 wCountryInfo.setVisible(true);
             }
         });
@@ -215,6 +266,8 @@ public class HUD {
         stage.addActor(lNewTurn);
         stage.addActor(lCountryTurn);
         stage.addActor(wProvinceInfo);
+        stage.addActor(wCountryInfo);
+        stage.addActor(wChooseProject);
         stage.addActor(bTurn);
         stage.addActor(bBack);
         stage.addActor(bCountry);
@@ -240,16 +293,18 @@ public class HUD {
     public void newTurn() {
         lTurnNumber.setText("Turn " + Gemelch.turnNumber);
         lNewTurn.setVisible(true);
+        HegeLog.log("HegeLogic", "Button Turn pressed. Now it`s turn " + Gemelch.turnNumber);
     }
     
     public void setProvinceInfo() {
+        
         lProvName.setText(selectedProvince.name);
         lProvCountry.setText(selectedProvince.owner.name);
         lProvPopulation.setText(selectedProvince.population);
         
         lPopulationProgress.setText(selectedProvince.foodPoints + " / " + selectedProvince.neededFoodPoints);
         lProductionProgress.setText(selectedProvince.productionPoints + " / " + selectedProvince.neededProductionPoints);
-        lScienceProgress.setText(selectedProvince.owner.sciencePoints + " / " + selectedProvince.owner.neededSciencePoints);
+        
         
         populationProgress.setRange(0, (float) selectedProvince.neededFoodPoints);
         populationProgress.setValue(selectedProvince.foodPoints);
@@ -257,12 +312,72 @@ public class HUD {
         productionProgress.setRange(0, (float) selectedProvince.neededProductionPoints);
         productionProgress.setValue((float) selectedProvince.productionPoints);
         
+        
+        if (selectedProvince.productionPoints >= selectedProvince.neededProductionPoints) {
+            setBuildingsInfo();
+        }
+    }
+    
+    public void setCountryInfo() {
+        
+        lCountryName.setText(selectedProvince.owner.name);
+        lCountryPopulation.setText(selectedProvince.owner.population);
+        lScienceProgress = new Label("Null", DefaultUI);
+        lScienceProgress.setText(selectedProvince.owner.sciencePoints + " / " + selectedProvince.owner.neededSciencePoints);
         scienceProgress.setRange(0, selectedProvince.owner.neededSciencePoints);
         scienceProgress.setValue((float) selectedProvince.owner.sciencePoints);
     }
     
-    public void setCountryInfo() {
-    
+    public void setBuildingsInfo() {
+        wChooseProject.clear();
+        wChooseProject.add(lProjectName).padRight(wChooseProject.getWidth() * 0.15f);
+        wChooseProject.add(lProductionCost).padRight(wChooseProject.getWidth() * 0.15f);
+        Label l = new Label(" ", GlassyUI);
+        wChooseProject.add(l);
+        lProjects = new ArrayList<>();
+        bBuild = new ArrayList<>();
+        //обработка доступных построек
+        for (int i = 0; i < selectedProvince.possibleBuildings.size(); i++) {
+            String buildingName = selectedProvince.possibleBuildings.get(i).name;
+            final Building building = selectedProvince.possibleBuildings.get(i);
+            Label tmpLabel = new Label(buildingName, DefaultUI);
+            lProjects.add(tmpLabel);
+            wChooseProject.row();
+            wChooseProject.add(lProjects.get(i));
+            TextButton tmpButton = new TextButton("Build", DefaultUI);
+            tmpButton.setRound(true);
+            tmpButton.setSize(wChooseProject.getWidth() * 0.15f, wChooseProject.getHeight() * 0.1f);
+            bBuild.add(tmpButton);
+            bBuild.get(i).addListener(new InputListener() {
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    return true;
+                }
+                
+                @Override
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                    selectedProvince.chooseBuilding(building);
+                    HegeLog.log("Province Project", "Chose building " + building.name);
+                    setProvinceInfo();
+                }
+            });
+            wChooseProject.add(bBuild.get(i));
+        }
+        //обработка доступных юнитов
+        for (int i = 0; i < selectedProvince.possibleUnits.size(); i++) {
+            String unitName = selectedProvince.possibleUnits.get(i).name;
+            Skin skin;
+            Label tmpLabel = new Label(unitName, DefaultUI);
+            lProjects.add(tmpLabel);
+            wChooseProject.row();
+            wChooseProject.add(lProjects.get(i));
+            TextButton tmpButton = new TextButton("Build", DefaultUI);
+            tmpButton.setRound(true);
+            tmpButton.setSize(wChooseProject.getWidth() * 0.15f, wChooseProject.getHeight() * 0.1f);
+            bBuild.add(tmpButton);
+            wChooseProject.add(bBuild.get(i));
+        }
+        wChooseProject.setVisible(true);
     }
     
     public void setDebug(boolean debug) {

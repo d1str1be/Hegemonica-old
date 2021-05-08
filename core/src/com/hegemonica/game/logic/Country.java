@@ -17,30 +17,32 @@ public class Country {
     public float inflation;
     public boolean hasCrisis;
     public boolean inWar;
-
+    
     public Color color;
+    
+    public int population;
     public int sciencePoints;
-
     public Technology technologyInProcess;
-
+    
+    
     //production
     public int citizenProduction;
     public int mineProduction;
     public int workshopProduction;
     public int shipyardProduction;
-
+    
     //food production
-
+    
     public int startFoodProduction;
     public int farmProduction;
     public int shipyardFoodProduction;
-
+    
     //science production
     public int citizenScienceProduction;
     public int libraryProduction;
     public int universityProduction;
-
-
+    
+    
     public Technology[] technologies;
     public ArrayList<Technology> possibleTechnologies;
     public Technology engineering;
@@ -52,9 +54,9 @@ public class Country {
     public boolean isSomethingResearching;
     //public Technology updatedShipbuilding;
     //public Technology oceanExploration;
-
+    
     public float neededSciencePoints;
-
+    
     //наличие персонажа в стране
     public boolean hasBohema;
     public boolean hasSeaman;
@@ -62,11 +64,11 @@ public class Country {
     public boolean hasBusinessman;
     public boolean hasRevoltman;
     public boolean hasGeneral;
-
+    
     //HashMap resuorces<Resource, double>;
     public Gemelch gemelch;
-
-
+    
+    
     public Country(Gemelch gemelch, String name, int id, Color color) {
         this.gemelch = gemelch;
         this.name = name;
@@ -76,29 +78,31 @@ public class Country {
         prestige = 1;
         stability = 1;
         inflation = 0f;
-
+        
+        population = 1;
+        sciencePoints = 0;
         citizenProduction = 1;
         mineProduction = 2;
         workshopProduction = 5;
         shipyardProduction = 3;
-
+        
         startFoodProduction = 2;
         farmProduction = 2;
         shipyardProduction = 2;
-
+        
         citizenScienceProduction = 1;
         libraryProduction = 3;
         universityProduction = 6;
-
+        
         technologies = new Technology[6];
-
+        
         engineering = new Technology(Technology.ID.ENGINEERING, 50, new Technology[]{});
         paper = new Technology(Technology.ID.PAPER, 50, new Technology[]{});
         simplyChemistry = new Technology(Technology.ID.SIMPLYCHEMISTRY, 50, new Technology[]{});
         machinery = new Technology(Technology.ID.MACHINERY, 50, new Technology[]{engineering});
         apprienticeship = new Technology(Technology.ID.APPRIENTICESHIP, 100, new Technology[]{engineering, paper});
         education = new Technology(Technology.ID.EDUCATION, 100, new Technology[]{paper, simplyChemistry});
-
+        
         technologies[0] = engineering;
         technologies[1] = paper;
         technologies[2] = simplyChemistry;
@@ -113,32 +117,40 @@ public class Country {
         possibleTechnologies.add(simplyChemistry);
         //updatedShipbuilding = new Technology(Technology.ID.UPDATEDSHIPBUILDING, 75, new Technology[]{});
         //oceanExploration = new Technology(Technology.ID.OCEANEXPLORATION, 150, new Technology[]{updatedShipbuilding, engineering, paper});
-
+        
         technologyInProcess = engineering;
         neededSciencePoints = technologyInProcess.cost;
-
+        
     }
-
-    public void onTurn() {
-        for (Province province : gemelch.provinces) {
-            if (province.owner == this) {
-                province.onTurn();
+    
+    public boolean onTurn() {
+        population = 1;
+        if (isTurnAvailable()) {
+            for (Province province : gemelch.provinces) {
+                if (province.owner == this) {
+                    province.onTurn();
+                    population += province.population;
+                }
             }
-        }
-
-        //подсчет науки
-        if (sciencePoints >= neededSciencePoints) {
-            research(technologyInProcess);
-            sciencePoints -= neededSciencePoints;
-            isSomethingResearching = false;
-        }
-        setPossibleTechnologies();
+            
+            //подсчет науки
+            if (sciencePoints >= neededSciencePoints) {
+                research(technologyInProcess);
+                sciencePoints -= neededSciencePoints;
+                isSomethingResearching = false;
+            }
+            setPossibleTechnologies();
+            return true;
+        } else
+            HegeLog.log("Country", "Turn is not avaliable");
+        return false;
     }
-
-
+    
+    
     public class Technologies {
-
+    
     }
+    
     public class Resources {
         public Resource wood;
         public Resource iron;
@@ -148,8 +160,8 @@ public class Country {
         public Resource horses;
         public Resource cows;
     }
-
-
+    
+    
     public void research(Technology technology) {
         switch (technology.id) {
             case Technology.ID.ENGINEERING:
@@ -168,17 +180,17 @@ public class Country {
             case Technology.ID.EDUCATION:
                 education.isResearched = true;
                 libraryProduction++;
-            //case Technology.ID.UPDATEDSHIPBUILDING:
-            //    updatedShipbuilding.isResearched = true;
-            //case Technology.ID.OCEANEXPLORATION:
-            //    oceanExploration.isResearched = true;
-            //    shipyardProduction += 2;
-            //    shipyardFoodProduction += 2;
+                //case Technology.ID.UPDATEDSHIPBUILDING:
+                //    updatedShipbuilding.isResearched = true;
+                //case Technology.ID.OCEANEXPLORATION:
+                //    oceanExploration.isResearched = true;
+                //    shipyardProduction += 2;
+                //    shipyardFoodProduction += 2;
         }
         HegeLog.log("Country", "Researched " + technologyInProcess.id);
         technologyInProcess = engineering;
     }
-
+    
     public void setPossibleTechnologies() {
         possibleTechnologies.clear();
         for (Technology technology : technologies) {
@@ -187,7 +199,7 @@ public class Country {
             }
         }
     }
-
+    
     public boolean checkRequiredTechnologiesForBuilding(Building building) {
         switch (building.id) {
             case Building.ID.FARM:
@@ -204,8 +216,8 @@ public class Country {
                 return true;
         }
     }
-
-    public boolean checkRequiredTechnologiesForUnit (WarUnit unit) {
+    
+    public boolean checkRequiredTechnologiesForUnit(WarUnit unit) {
         switch (unit.id) {
             case WarUnit.ID.WARRIOR:
                 return true;
@@ -221,7 +233,7 @@ public class Country {
                 return true;
         }
     }
-
+    
     public boolean checkRequiredTechnologiesForTechnology(Technology technology) {
         for (int i = 0; i < technology.requiredTechnologies.length; i++) {
             if (!technology.requiredTechnologies[i].isResearched) {
@@ -230,7 +242,7 @@ public class Country {
         }
         return true;
     }
-
+    
     public boolean isTurnAvailable() {
         if (isSomethingResearching) {
             return true;
@@ -238,13 +250,13 @@ public class Country {
             return false;
         }
     }
-
+    
     public void chooseTechnology(Technology technology) {
         technologyInProcess = technology;
         neededSciencePoints = technology.cost;
         isSomethingResearching = true;
     }
-
+    
     public class ID {
         public final static int NOTHING = 0;
         public final static int RED = 1;

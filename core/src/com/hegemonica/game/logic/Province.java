@@ -31,20 +31,23 @@ import java.util.ArrayList;
 public class Province {
     public int id;
     public String name;
-
+    
     public int foodPoints;
     public int neededFoodPoints;
     public int population;
     public int neededFood;
     public int productionPoints;
+    
+    
+    
     public int neededProductionPoints;
     public int gainedSciencePoints;
     public int projectId;
     public boolean isSomethingBuilding;
     public boolean isProjectReadyNotificacion;
-
+    
     public int numberOfBuildings;
-
+    
     public Building buildingInProcess;
     public WarUnit unitInProcess;
     public Building[] buildings;
@@ -56,47 +59,47 @@ public class Province {
     public WarUnit shielder;
     public WarUnit crossbows;
     public WarUnit swordsman;
-
-
+    
+    
     public boolean isCity;
-
+    
     public int numberOfLibraries;
     public int numberOfUniversities;
     public int numberOfWorkshops;
     public int numberOfShipyards;
     public int numberOfFarms;
     public int numberOfMines;
-
+    
     //units
     public int unitCounter;
     public ArrayList<WarUnit> createdUnits;
     public WarUnit unitThere;
-
+    
     public int climate;
     public int landscape;
     public int status;
-
+    
     public int sizeLimit;
     public int sizeUsed;
-
+    
     public Resource resource;
-
-
+    
+    
     public Country owner;
     public boolean[] neighbourProvinces;
-
-
+    
+    
     public float x;
     public float y;
     public float width;
     public float height;
     public Rectangle rectangle;
-
+    
     public FloatArray provCoords;
     private Polygon polygon;
     private final EarClippingTriangulator triangulator = new EarClippingTriangulator();
-
-
+    
+    
     private ShapeRenderer shapeRenderer;
     private Texture texture;
     private TextureRegion textureReg;
@@ -106,8 +109,8 @@ public class Province {
     private Pixmap pix;
     private BitmapFont font;
     private SpriteBatch batch;
-
-
+    
+    
     //постройки
     public Building library;
     public Building university;
@@ -116,10 +119,10 @@ public class Province {
     public Building farm;
     public Building mine;
     public Building city;
-
+    
     public Skin defaultSkin;
     public Label lProvName;
-
+    
     public Province(int id, String name, Country owner, boolean[] neighbours, boolean isCity, FloatArray provCoords) {
         this.id = id;
         this.provCoords = provCoords;
@@ -135,7 +138,7 @@ public class Province {
         numberOfMines = 0;
         numberOfFarms = 0;
         numberOfBuildings = 0;
-
+        
         library = new Building(Building.ID.LIBRARY, this);
         university = new Building(Building.ID.UNIVERSITY, this);
         //shipyard = new Building(Building.ID.SHIPYARD, this);
@@ -143,15 +146,15 @@ public class Province {
         farm = new Building(Building.ID.FARM, this);
         mine = new Building(Building.ID.MINE, this);
         city = new Building(Building.ID.CITY, this);
-
+        
         unitCounter = 0;
         createdUnits = new ArrayList<WarUnit>();
-
+        
         defaultSkin = new Skin(Gdx.files.internal("ui/default/skin/uiskin.json"));
-
+        
         this.setMathRender();
     }
-
+    
     public Province(int id, String name, Country owner, boolean[] neighbours, boolean isCity, float x, float y, float width, float height) {
         this.id = id;
         this.x = x;
@@ -172,7 +175,7 @@ public class Province {
         numberOfFarms = 0;
         numberOfBuildings = 0;
         neededFoodPoints = 10;
-
+        
         library = new Building(Building.ID.LIBRARY, this);
         university = new Building(Building.ID.UNIVERSITY, this);
         //shipyard = new Building(Building.ID.SHIPYARD, this);
@@ -193,7 +196,7 @@ public class Province {
         possibleBuildings.add(city);
         productionPoints = 0;
         isSomethingBuilding = false;
-
+        
         warrior = new WarUnit(WarUnit.ID.WARRIOR, this);
         archer = new WarUnit(WarUnit.ID.ARCHER, this);
         shielder = new WarUnit(WarUnit.ID.SHIELDER, this);
@@ -209,11 +212,11 @@ public class Province {
         possibleUnits.add(warrior);
         unitCounter = 0;
         createdUnits = new ArrayList<WarUnit>();
-
+        
         isProjectReadyNotificacion = true;
-
+        
         rectangle = new Rectangle(x, y, width, height);
-
+        
         defaultSkin = new Skin(Gdx.files.internal("ui/default/skin/uiskin.json"));
         lProvName = new Label(name, defaultSkin);
         lProvName.setSize(width * 0.2f, height * 0.2f);
@@ -225,28 +228,28 @@ public class Province {
             lProvName.setPosition(x + (width * 0.05f), y);
         }
         this.setMathRender();
-
+        
         HegeLog.log("Province", "Needed Prod: " + neededProductionPoints);
     }
-
+    
     public void setupBuildings() {
-
+    
     }
-
+    
     public void update() {
         onTurn();
-
+        
         switch (climate) {
-
+        
         }
         switch (landscape) {
-
+        
         }
         switch (status) {
-
+        
         }
     }
-
+    
     public void setPossibleBuildings() {
         possibleBuildings.clear();
         for (Building building : buildings) {
@@ -255,7 +258,7 @@ public class Province {
             }
         }
     }
-
+    
     public void setPossibleUnits() {
         possibleUnits.clear();
         for (WarUnit unit : units) {
@@ -264,48 +267,52 @@ public class Province {
             }
         }
     }
-
+    
     public void onTurn() {
-        foodPoints += numberOfFarms * owner.farmProduction - neededFood + owner.startFoodProduction + numberOfShipyards * owner.startFoodProduction;
-        if (foodPoints > neededFoodPoints) {
-            HegeLog.log("Province", name + " grew");
-            provinceGrow();
-        } else if (foodPoints < 0) {
-            HegeLog.log("Province", name + " decreased");
-            provinceDecrease();
-        }
-        productionPoints += population + numberOfMines * owner.mineProduction + numberOfWorkshops * owner.workshopProduction + numberOfShipyards * owner.shipyardProduction;
-        if (productionPoints >= neededProductionPoints) {
-            switch (projectId) {
-                case PROJECTID.BUILDING:
-                    build(buildingInProcess);
-                    buildingInProcess = null;
-                    isSomethingBuilding = false;
-                    break;
-                case PROJECTID.UNIT:
-                    if (unitThere == null) {
-                        createUnit(unitInProcess);
-                        unitInProcess = null;
-                    }
-                    break;
-                case PROJECTID.UNITUPGRADE:
-                    upgradeUnit();
-                    isSomethingBuilding = false;
-                    break;
+        if(isTurnAvailable()) {
+            foodPoints += numberOfFarms * owner.farmProduction - neededFood + owner.startFoodProduction + numberOfShipyards * owner.startFoodProduction;
+            if (foodPoints > neededFoodPoints) {
+                HegeLog.log("Province", name + " grew");
+                provinceGrow();
+            } else if (foodPoints < 0) {
+                HegeLog.log("Province", name + " decreased");
+                provinceDecrease();
             }
-            isProjectReadyNotificacion = true;
+            productionPoints += population + numberOfMines * owner.mineProduction + numberOfWorkshops * owner.workshopProduction + numberOfShipyards * owner.shipyardProduction;
+            if (productionPoints >= neededProductionPoints) {
+                switch (projectId) {
+                    case PROJECTID.BUILDING:
+                        build(buildingInProcess);
+                        buildingInProcess = null;
+                        isSomethingBuilding = false;
+                        break;
+                    case PROJECTID.UNIT:
+                        if (unitThere == null) {
+                            createUnit(unitInProcess);
+                            unitInProcess = null;
+                        }
+                        break;
+                    case PROJECTID.UNITUPGRADE:
+                        upgradeUnit();
+                        isSomethingBuilding = false;
+                        break;
+                }
+                isProjectReadyNotificacion = true;
+            }
+            gainedSciencePoints = population + numberOfLibraries * owner.libraryProduction + numberOfUniversities * owner.universityProduction;
+            owner.sciencePoints += gainedSciencePoints;
+            setPossibleBuildings();
+            setPossibleUnits();
         }
-        gainedSciencePoints = population + numberOfLibraries * owner.libraryProduction + numberOfUniversities * owner.universityProduction;
-        owner.sciencePoints += gainedSciencePoints;
-        setPossibleBuildings();
-        setPossibleUnits();
+        else
+            HegeLog.log("Province","Turn is not avaliable");
     }
-
+    
     public void setOwner(Country newOwner) {
         this.owner = newOwner;
         lProvName.setColor(owner.color);
     }
-
+    
     //статус провинции
     public static class Status {
         //климат
@@ -319,68 +326,69 @@ public class Province {
             public static final int SCORCHING = 3; //знойный
             public static final int EQUATORIAL = 4; //экваториальный
         }
-
+        
         //рельеф
         public static class Landscape {
         }
-
+        
     }
-
+    
     public void provinceGrow() {
         population += 1;
         neededFood += 1;
         foodPoints -= neededFoodPoints;
         neededFoodPoints += 2;
     }
-
+    
     public void provinceDecrease() {
         population -= 1;
         neededFood -= 1;
         foodPoints += neededFoodPoints - 1;
         neededFoodPoints -= 2;
     }
-
+    
     public void build(Building building) {
-        switch (building.id) {
-            case Building.ID.FARM:
-                numberOfFarms += 1;
-                numberOfBuildings += 1;
-                productionPoints -= farm.productionCost;
-                break;
-            case Building.ID.MINE:
-                numberOfMines += 1;
-                numberOfBuildings += 1;
-                productionPoints -= mine.productionCost;
-                break;
-            case Building.ID.LIBRARY:
-                numberOfLibraries = 1;
-                numberOfBuildings += 1;
-                productionPoints -= library.productionCost;
-                break;
-            case Building.ID.UNIVERSITY:
-                numberOfUniversities = 1;
-                numberOfBuildings += 1;
-                productionPoints -= university.productionCost;
-                break;
-            case Building.ID.WORKSHOP:
-                numberOfWorkshops = 1;
-                numberOfBuildings += 1;
-                productionPoints -= workshop.productionCost;
-                break;
-            //case Building.ID.SHIPYARD:
-            //    numberOfShipyards = 1;
-            //    numberOfLimitedBuildings += 1;
-            //    productionPoints -= shipyard.productionCost;
-            case Building.ID.CITY:
-                isCity = true;
-                productionPoints -= city.productionCost;
-                break;
+        if (buildingInProcess != null) {
+            switch (building.id) {
+                case Building.ID.FARM:
+                    numberOfFarms += 1;
+                    numberOfBuildings += 1;
+                    productionPoints -= farm.productionCost;
+                    break;
+                case Building.ID.MINE:
+                    numberOfMines += 1;
+                    numberOfBuildings += 1;
+                    productionPoints -= mine.productionCost;
+                    break;
+                case Building.ID.LIBRARY:
+                    numberOfLibraries = 1;
+                    numberOfBuildings += 1;
+                    productionPoints -= library.productionCost;
+                    break;
+                case Building.ID.UNIVERSITY:
+                    numberOfUniversities = 1;
+                    numberOfBuildings += 1;
+                    productionPoints -= university.productionCost;
+                    break;
+                case Building.ID.WORKSHOP:
+                    numberOfWorkshops = 1;
+                    numberOfBuildings += 1;
+                    productionPoints -= workshop.productionCost;
+                    break;
+                //case Building.ID.SHIPYARD:
+                //    numberOfShipyards = 1;
+                //    numberOfLimitedBuildings += 1;
+                //    productionPoints -= shipyard.productionCost;
+                case Building.ID.CITY:
+                    isCity = true;
+                    productionPoints -= city.productionCost;
+                    break;
+            }
         }
-        productionPoints -= neededProductionPoints;
         HegeLog.log("Province", name + ": built " + buildingInProcess.name);
-        buildingInProcess = farm;
+        
     }
-
+    
     public void createUnit(WarUnit unit) {
         switch (unit.id) {
             case WarUnit.ID.WARRIOR:
@@ -415,12 +423,12 @@ public class Province {
                 break;
         }
     }
-
+    
     public void upgradeUnit() {
         unitThere.upgrade();
         productionPoints -= neededProductionPoints;
     }
-
+    
     public boolean isBuildingAvailable(Building building) {
         if (owner.checkRequiredTechnologiesForBuilding(building) && numberOfBuildings < population) {
             return !building.isNeedCity || building.isNeedCity == isCity;
@@ -428,7 +436,7 @@ public class Province {
             return false;
         }
     }
-
+    
     public boolean isUnitAvailable(WarUnit unit) {
         if (owner.checkRequiredTechnologiesForUnit(unit) && isCity && unitThere != null) {
             return true;
@@ -436,7 +444,7 @@ public class Province {
             return false;
         }
     }
-
+    
     public boolean isUpgradeAvailable() {
         switch (unitThere.id) {
             case WarUnit.ID.WARRIOR:
@@ -461,7 +469,7 @@ public class Province {
                 return false;
         }
     }
-
+    
     public boolean isTurnAvailable() {
         if (isSomethingBuilding) {
             return true;
@@ -469,21 +477,22 @@ public class Province {
             return false;
         }
     }
-
+    
+    
     public void chooseBuilding(Building building) {
         buildingInProcess = building;
         neededProductionPoints = building.productionCost;
         projectId = PROJECTID.BUILDING;
         isSomethingBuilding = true;
     }
-
+    
     public void chooseUnit(WarUnit unit) {
         unitInProcess = unit;
         neededProductionPoints = unit.cost;
         projectId = PROJECTID.UNIT;
         isSomethingBuilding = true;
     }
-
+    
     public void chooseUpgradeUnit() {
         switch (unitThere.id) {
             case WarUnit.ID.WARRIOR:
@@ -496,7 +505,7 @@ public class Province {
         projectId = PROJECTID.UNITUPGRADE;
         isSomethingBuilding = true;
     }
-
+    
     public Province(Country owner, boolean isCity) {
         this.owner = owner;
         this.isCity = isCity;
@@ -509,7 +518,7 @@ public class Province {
         numberOfFarms = 0;
         numberOfBuildings = 0;
     }
-
+    
     //math and graphics
     public void render(OrthographicCamera camera) {
         shapeRenderer.setProjectionMatrix(camera.combined);
@@ -522,8 +531,8 @@ public class Province {
 //                shapeRenderer.rect(polygon.getBoundingRectangle().getX(),polygon.getBoundingRectangle().getY(),polygon.getBoundingRectangle().getWidth(), polygon.getBoundingRectangle().getHeight());
         shapeRenderer.end();
     }
-
-
+    
+    
     public void setMathRender() {
         shapeRenderer = new ShapeRenderer();
         if (provCoords != null)
@@ -531,11 +540,11 @@ public class Province {
         else
             rectangle = new Rectangle(x, y, width, height);
     }
-
+    
     private ShortArray triangulate(FloatArray polygonVertices) {
         return triangulator.computeTriangles(polygonVertices);
     }
-
+    
     public boolean contains(float x, float y) {
         if (provCoords != null) {
 //            HegeLog.log("Province Math", "using polygon for " + name + " prov.contains()");
@@ -545,7 +554,7 @@ public class Province {
             return rectangle.contains(x, y);
         }
     }
-
+    
     public int[] getXcoords() {
         if (provCoords == null)
             return null;
@@ -556,7 +565,7 @@ public class Province {
         }
         return Xcoords;
     }
-
+    
     public int[] getYcoords() {
         if (provCoords == null)
             return null;
@@ -567,12 +576,12 @@ public class Province {
         }
         return Ycoords;
     }
-
+    
     public class PROJECTID {
         public final static int BUILDING = 0;
         public final static int UNIT = 1;
         public final static int UNITUPGRADE = 2;
     }
-
-
+    
+    
 }

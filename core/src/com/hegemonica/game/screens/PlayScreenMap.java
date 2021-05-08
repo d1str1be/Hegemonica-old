@@ -16,7 +16,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.hegemonica.game.Core;
 import com.hegemonica.game.FPS;
-import com.hegemonica.game.HegeLog;
 import com.hegemonica.game.logic.Gemelch;
 
 import java.util.Random;
@@ -141,8 +140,8 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
     public boolean tap(float x, float y, int count, int button) {
         realX = (x - cameraMovementX) / 2;
         realY = (Core.gameHeight - y + cameraMovementY) / 2;
-        HegeLog.log("Input", "Tapped on X: " + realX);
-        HegeLog.log("Input", "Tapped on Y: " + realY);
+//        HegeLog.log("Input", "Tapped on X: " + realX);
+//        HegeLog.log("Input", "Tapped on Y: " + realY);
         gemelch.hud.setSelectedProvince(gemelch.whichPolygonContainsPoint(realX, realY));
         return true;
     }
