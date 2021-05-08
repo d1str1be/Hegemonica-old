@@ -40,6 +40,7 @@ public class Province {
     public int neededProductionPoints;
     public int gainedSciencePoints;
     public int projectId;
+    public boolean isSomethingBuilding;
 
     public int numberOfBuildings;
 
@@ -190,8 +191,7 @@ public class Province {
         possibleBuildings.add(mine);
         possibleBuildings.add(city);
         productionPoints = 0;
-        buildingInProcess = city;
-        neededProductionPoints = buildingInProcess.productionCost;
+        isSomethingBuilding = false;
 
         warrior = new WarUnit(WarUnit.ID.WARRIOR, this);
         archer = new WarUnit(WarUnit.ID.ARCHER, this);
@@ -277,10 +277,17 @@ public class Province {
                 case PROJECTID.BUILDING:
                     build(buildingInProcess);
                     buildingInProcess = null;
+                    isSomethingBuilding = false;
                     break;
                 case PROJECTID.UNIT:
-                    createUnit(unitInProcess);
-                    unitInProcess = null;
+                    if (unitThere == null) {
+                        createUnit(unitInProcess);
+                        unitInProcess = null;
+                    }
+                    break;
+                case PROJECTID.UNITUPGRADE:
+                    unitThere.upgrade();
+                    isSomethingBuilding = false;
                     break;
             }
             productionPoints -= neededProductionPoints;
@@ -369,26 +376,31 @@ public class Province {
         switch (unit.id) {
             case WarUnit.ID.WARRIOR:
                 createdUnits.add(new MeleeUnit(WarUnit.ID.WARRIOR, owner, WarUnit.COST.WARRIOR, WarUnit.ATTACKSTRENGTH.WARRIOR, WarUnit.DEFENSESTRENGTH.WARRIOR, WarUnit.MOVEMENTPOINTS.WARRIOR, this, unitCounter, MeleeUnit.UPGRADELEVEL.WARRIOR, "Warrior"));
+                unitThere = createdUnits.get(unitCounter);
                 unitCounter++;
                 productionPoints -= WarUnit.COST.WARRIOR;
                 break;
             case WarUnit.ID.ARCHER:
                 createdUnits.add(new RangedUnit(WarUnit.ID.ARCHER, owner, WarUnit.COST.ARCHER, WarUnit.ATTACKSTRENGTH.ARCHER, WarUnit.DEFENSESTRENGTH.ARCHER, WarUnit.MOVEMENTPOINTS.ARCHER, this, unitCounter, RangedUnit.UPGRADELEVEL.ARCHER, "Archer"));
+                unitThere = createdUnits.get(unitCounter);
                 unitCounter++;
                 productionPoints -= WarUnit.COST.ARCHER;
                 break;
             case WarUnit.ID.SHIELDER:
                 createdUnits.add(new DefenseUnit(WarUnit.ID.SHIELDER, owner, WarUnit.COST.SHIELDER, WarUnit.ATTACKSTRENGTH.SHIELDER, WarUnit.DEFENSESTRENGTH.SHIELDER, WarUnit.MOVEMENTPOINTS.SHIELDER, this, unitCounter, DefenseUnit.UPGRADELEVEL.SHIELDER, "Shielder"));
+                unitThere = createdUnits.get(unitCounter);
                 unitCounter++;
                 productionPoints -= WarUnit.COST.SHIELDER;
                 break;
             case WarUnit.ID.CROSSBOWS:
                 createdUnits.add(new RangedUnit(WarUnit.ID.CROSSBOWS, owner, WarUnit.COST.CROSSBOWS, WarUnit.ATTACKSTRENGTH.CROSSBOWS, WarUnit.DEFENSESTRENGTH.CROSSBOWS, WarUnit.MOVEMENTPOINTS.CROSSBOWS, this, unitCounter, RangedUnit.UPGRADELEVEL.CROSSBOWS, "Crossbows"));
+                unitThere = createdUnits.get(unitCounter);
                 unitCounter++;
                 productionPoints -= WarUnit.COST.CROSSBOWS;
                 break;
             case WarUnit.ID.SWORDSMAN:
                 createdUnits.add(new MeleeUnit(WarUnit.ID.SWORDSMAN, owner, WarUnit.COST.SWORDSMAN, WarUnit.ATTACKSTRENGTH.SWORDSMAN, WarUnit.DEFENSESTRENGTH.SWORDSMAN, WarUnit.MOVEMENTPOINTS.SWORDSMAN, this, unitCounter, MeleeUnit.UPGRADELEVEL.SWORDSMAN, "Swordsman"));
+                unitThere = createdUnits.get(unitCounter);
                 unitCounter++;
                 productionPoints -= WarUnit.COST.SWORDSMAN;
                 break;
@@ -411,16 +423,64 @@ public class Province {
         }
     }
 
+    public boolean isUpgradeAvailable() {
+        switch (unitThere.id) {
+            case WarUnit.ID.WARRIOR:
+                if (isUnitAvailable(swordsman)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            case WarUnit.ID.ARCHER:
+                if (isUnitAvailable(crossbows)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            case WarUnit.ID.SHIELDER:
+                return false;
+            case WarUnit.ID.CROSSBOWS:
+                return false;
+            case WarUnit.ID.SWORDSMAN:
+                return false;
+            default:
+                return false;
+        }
+    }
+
+    public boolean isTurnAvailable() {
+        if (isSomethingBuilding) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public void chooseBuilding(Building building) {
         buildingInProcess = building;
         neededProductionPoints = building.productionCost;
         projectId = PROJECTID.BUILDING;
+        isSomethingBuilding = true;
     }
 
     public void chooseUnit(WarUnit unit) {
         unitInProcess = unit;
         neededProductionPoints = unit.cost;
         projectId = PROJECTID.UNIT;
+        isSomethingBuilding = true;
+    }
+
+    public void upgradeUnit() {
+        switch (unitThere.id) {
+            case WarUnit.ID.WARRIOR:
+                neededProductionPoints = WarUnit.UPGRADECOST.SWORDSMAN;
+                break;
+            case WarUnit.ID.ARCHER:
+                neededProductionPoints = WarUnit.UPGRADECOST.SWORDSMAN;
+                break;
+        }
+        projectId = PROJECTID.UNITUPGRADE;
+        isSomethingBuilding = true;
     }
 
     public Province(Country owner, boolean isCity) {
@@ -497,6 +557,7 @@ public class Province {
     public class PROJECTID {
         public final static int BUILDING = 0;
         public final static int UNIT = 1;
+        public final static int UNITUPGRADE = 2;
     }
 
 

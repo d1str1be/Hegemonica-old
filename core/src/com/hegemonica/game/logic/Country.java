@@ -49,6 +49,7 @@ public class Country {
     public Technology machinery;
     public Technology apprienticeship;
     public Technology education;
+    public boolean isSomethingResearching;
     //public Technology updatedShipbuilding;
     //public Technology oceanExploration;
 
@@ -104,6 +105,7 @@ public class Country {
         technologies[3] = machinery;
         technologies[4] = apprienticeship;
         technologies[5] = education;
+        isSomethingResearching = false;
         
         possibleTechnologies = new ArrayList<>();
         possibleTechnologies.add(engineering);
@@ -128,6 +130,7 @@ public class Country {
         if (sciencePoints >= neededSciencePoints) {
             research(technologyInProcess);
             sciencePoints -= neededSciencePoints;
+            isSomethingResearching = false;
         }
         setPossibleTechnologies();
     }
@@ -228,9 +231,18 @@ public class Country {
         return true;
     }
 
+    public boolean isTurnAvailable() {
+        if (isSomethingResearching) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public void chooseTechnology(Technology technology) {
         technologyInProcess = technology;
         neededSciencePoints = technology.cost;
+        isSomethingResearching = true;
     }
 
     public class ID {

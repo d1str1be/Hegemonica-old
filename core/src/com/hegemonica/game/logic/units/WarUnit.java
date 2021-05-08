@@ -129,6 +129,18 @@ public class WarUnit {
 
     public void upgrade() {
         upgradeLevel++;
+        movementPoints = 0;
+        switch (id) {
+            case ID.WARRIOR:
+                id = ID.SWORDSMAN;
+                startAttackStrength = ATTACKSTRENGTH.SWORDSMAN;
+                startDefenseStrength = DEFENSESTRENGTH.SWORDSMAN;
+                break;
+            case ID.ARCHER:
+                id = ID.CROSSBOWS;
+                startAttackStrength = ATTACKSTRENGTH.CROSSBOWS;
+                startDefenseStrength = DEFENSESTRENGTH.CROSSBOWS;
+        }
     }
 
     public void destroy() {
@@ -151,6 +163,11 @@ public class WarUnit {
         public final static int SHIELDER = 10;
         public final static int CROSSBOWS = 10;
         public final static int SWORDSMAN = 10;
+    }
+
+    public class UPGRADECOST {
+        public final static int CROSSBOWS = 5;
+        public final static int SWORDSMAN = 5;
     }
 
     public class ATTACKSTRENGTH {
