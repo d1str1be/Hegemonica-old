@@ -417,7 +417,7 @@ public class Province {
         projectId = PROJECTID.BUILDING;
     }
 
-    public void choseUnit(WarUnit unit) {
+    public void chooseUnit(WarUnit unit) {
         unitInProcess = unit;
         neededProductionPoints = unit.cost;
         projectId = PROJECTID.UNIT;
