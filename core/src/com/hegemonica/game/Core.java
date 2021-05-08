@@ -26,7 +26,6 @@ public class Core extends Game {
     public LocalizationManager loc;
     public AudioManager audio;
     public DiscordManager discord;
-    public NetConnManager internet;
 
     public Core(boolean enableDiscord) {
         this.enableDiscord = enableDiscord;
@@ -42,7 +41,6 @@ public class Core extends Game {
         Gdx.input.setCatchKey(Input.Keys.BACK, true); // перехват сист.кнопки "назад" на андроиде
         audio = new AudioManager();
         loc = new LocalizationManager();
-//        internet = new NetConnManager();
 
         if (enableDiscord)
             discord = new DiscordManager(DEV_MODE);
