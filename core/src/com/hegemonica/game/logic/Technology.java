@@ -27,7 +27,7 @@ public class Technology {
         public final static int PAPER = 1;
         public final static int SIMPLYCHEMISTRY = 2;
         public final static int MACHINERY = 3;
-        public final static int APPRIENTSHIP = 4;
+        public final static int APPRIENTICESHIP = 4;
         public final static int EDUCATION = 5;
         public final static int UPDATEDSHIPBUILDING = 6;
         public final static int OCEANEXPLORATION = 7;

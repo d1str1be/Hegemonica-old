@@ -3,6 +3,8 @@ package com.hegemonica.game.logic;
 import com.badlogic.gdx.graphics.Color;
 import com.hegemonica.game.HegeLog;
 
+import java.util.ArrayList;
+
 public class Country {
     public String name;
     public int id;
@@ -38,14 +40,16 @@ public class Country {
     public int universityProduction;
 
 
+    public Technology[] technologies;
+    public ArrayList<Technology> possibleTechnologies;
     public Technology engineering;
     public Technology paper;
     public Technology simplyChemistry;
     public Technology machinery;
-    public Technology apprientship;
+    public Technology apprienticeship;
     public Technology education;
-    public Technology updatedShipbuilding;
-    public Technology oceanExploration;
+    //public Technology updatedShipbuilding;
+    //public Technology oceanExploration;
 
     public float neededSciencePoints;
 
@@ -84,14 +88,26 @@ public class Country {
         libraryProduction = 3;
         universityProduction = 6;
 
+        technologies = new Technology[6];
+
         engineering = new Technology(Technology.ID.ENGINEERING, 50, new Technology[]{});
         paper = new Technology(Technology.ID.PAPER, 50, new Technology[]{});
         simplyChemistry = new Technology(Technology.ID.SIMPLYCHEMISTRY, 50, new Technology[]{});
         machinery = new Technology(Technology.ID.MACHINERY, 50, new Technology[]{engineering});
-        apprientship = new Technology(Technology.ID.APPRIENTSHIP, 100, new Technology[]{engineering, paper});
+        apprienticeship = new Technology(Technology.ID.APPRIENTICESHIP, 100, new Technology[]{engineering, paper});
         education = new Technology(Technology.ID.EDUCATION, 100, new Technology[]{paper, simplyChemistry});
-        updatedShipbuilding = new Technology(Technology.ID.UPDATEDSHIPBUILDING, 75, new Technology[]{});
-        oceanExploration = new Technology(Technology.ID.OCEANEXPLORATION, 150, new Technology[]{updatedShipbuilding, engineering, paper});
+
+        technologies[0] = engineering;
+        technologies[1] = paper;
+        technologies[2] = simplyChemistry;
+        technologies[3] = machinery;
+        technologies[4] = apprienticeship;
+        technologies[5] = education;
+        possibleTechnologies.add(engineering);
+        possibleTechnologies.add(paper);
+        possibleTechnologies.add(simplyChemistry);
+        //updatedShipbuilding = new Technology(Technology.ID.UPDATEDSHIPBUILDING, 75, new Technology[]{});
+        //oceanExploration = new Technology(Technology.ID.OCEANEXPLORATION, 150, new Technology[]{updatedShipbuilding, engineering, paper});
 
         technologyInProcess = engineering;
         neededSciencePoints = technologyInProcess.cost;
@@ -140,21 +156,31 @@ public class Country {
                 farmProduction++;
             case Technology.ID.MACHINERY:
                 machinery.isResearched = true;
-            case Technology.ID.APPRIENTSHIP:
-                apprientship.isResearched = true;
+            case Technology.ID.APPRIENTICESHIP:
+                apprienticeship.isResearched = true;
                 mineProduction++;
             case Technology.ID.EDUCATION:
                 education.isResearched = true;
                 libraryProduction++;
-            case Technology.ID.UPDATEDSHIPBUILDING:
-                updatedShipbuilding.isResearched = true;
-            case Technology.ID.OCEANEXPLORATION:
-                oceanExploration.isResearched = true;
-                shipyardProduction += 2;
-                shipyardFoodProduction += 2;
+            //case Technology.ID.UPDATEDSHIPBUILDING:
+            //    updatedShipbuilding.isResearched = true;
+            //case Technology.ID.OCEANEXPLORATION:
+            //    oceanExploration.isResearched = true;
+            //    shipyardProduction += 2;
+            //    shipyardFoodProduction += 2;
         }
         HegeLog.log("Country", "Researched " + technologyInProcess.id);
-        technologyInProcess = oceanExploration;
+        technologyInProcess = engineering;
+        setPossibleTechnologies();
+    }
+
+    public void setPossibleTechnologies() {
+        possibleTechnologies.clear();
+        for (Technology technology : technologies) {
+            if (checkRequiredTechnologiesForTechnology(technology)) {
+                possibleTechnologies.add(technology);
+            }
+        }
     }
 
     public boolean checkRequiredTechnologiesForBuilding(Building building) {
@@ -167,8 +193,6 @@ public class Country {
                 return paper.isResearched;
             case Building.ID.UNIVERSITY:
                 return education.isResearched;
-            case Building.ID.SHIPYARD:
-                return updatedShipbuilding.isResearched;
             case Building.ID.WORKSHOP:
                 return engineering.isResearched;
             default:
@@ -178,7 +202,7 @@ public class Country {
 
     public boolean checkRequiredTechnologiesForTechnology(Technology technology) {
         for (int i = 0; i < technology.requiredTechnologies.length; i++) {
-            if (technology.requiredTechnologies[i].isResearched == false) {
+            if (!technology.requiredTechnologies[i].isResearched) {
                 return false;
             }
         }
