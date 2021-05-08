@@ -20,30 +20,35 @@ public class Building {
                 isLimited = false;
                 isNeedCity = false;
                 requiredTechnology = null;
+                break;
             case ID.MINE:
                 name = "Mine";
                 productionCost = PRODUCTIONCOST.MINE;
                 isNeedCity = false;
                 isLimited = false;
                 requiredTechnology = null;
+                break;
             case ID.LIBRARY:
                 name = "Library";
                 productionCost = PRODUCTIONCOST.LIBRARY;
                 isNeedCity = true;
                 isLimited = true;
                 requiredTechnology = province.owner.paper;
+                break;
             case ID.UNIVERSITY:
                 name = "University";
                 productionCost = PRODUCTIONCOST.UNIVERSITY;
                 isNeedCity = true;
                 isLimited = true;
                 requiredTechnology = province.owner.education;
+                break;
             case ID.WORKSHOP:
                 name = "Workshop";
                 productionCost = PRODUCTIONCOST.WORKSHOP;
                 isNeedCity = true;
                 isLimited = true;
                 requiredTechnology = province.owner.engineering;
+                break;
             //case ID.SHIPYARD:
             //    name = "zsdrfg";
             //    productionCost = PRODUCTIONCOST.SHIPYARD;
@@ -56,6 +61,7 @@ public class Building {
                 isNeedCity = false;
                 isLimited = true;
                 requiredTechnology = null;
+                break;
         }
     }
 
