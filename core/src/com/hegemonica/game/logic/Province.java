@@ -210,6 +210,7 @@ public class Province {
         units[WarUnit.ID.SWORDSMAN] = swordsman;
         possibleUnits = new ArrayList<WarUnit>();
         possibleUnits.add(warrior);
+        HegeLog.log("ProvGeneric", possibleUnits.toString());
         unitCounter = 0;
         createdUnits = new ArrayList<WarUnit>();
         
@@ -266,6 +267,7 @@ public class Province {
                 possibleUnits.add(unit);
             }
         }
+        HegeLog.log("ProvGeneric", possibleUnits.toString());
     }
     
     public void onTurn() {
@@ -491,6 +493,7 @@ public class Province {
         neededProductionPoints = unit.cost;
         projectId = PROJECTID.UNIT;
         isSomethingBuilding = true;
+        HegeLog.log("Province Project", "Chose unit " + unit.name);
     }
     
     public void chooseUpgradeUnit() {

@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.hegemonica.game.Core;
 import com.hegemonica.game.logic.Gemelch;
+import com.hegemonica.game.screens.hud.HUD;
 
 public class PlayScreen implements Screen {
     Core game;
