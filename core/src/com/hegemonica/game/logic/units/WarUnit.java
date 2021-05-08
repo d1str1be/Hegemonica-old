@@ -74,6 +74,8 @@ public class WarUnit {
             case ID.SWORDSMAN:
                 movementPoints = MOVEMENTPOINTS.SWORDSMAN;
         }
+        setAttackStrength();
+        setDefenseStrength();
     }
 
     public void setAttackStrength() {

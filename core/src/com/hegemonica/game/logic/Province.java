@@ -41,6 +41,7 @@ public class Province {
     public int gainedSciencePoints;
     public int projectId;
     public boolean isSomethingBuilding;
+    public boolean isProjectReadyNotificacion;
 
     public int numberOfBuildings;
 
@@ -209,6 +210,8 @@ public class Province {
         unitCounter = 0;
         createdUnits = new ArrayList<WarUnit>();
 
+        isProjectReadyNotificacion = true;
+
         rectangle = new Rectangle(x, y, width, height);
 
         defaultSkin = new Skin(Gdx.files.internal("ui/default/skin/uiskin.json"));
@@ -286,11 +289,11 @@ public class Province {
                     }
                     break;
                 case PROJECTID.UNITUPGRADE:
-                    unitThere.upgrade();
+                    upgradeUnit();
                     isSomethingBuilding = false;
                     break;
             }
-            productionPoints -= neededProductionPoints;
+            isProjectReadyNotificacion = true;
         }
         gainedSciencePoints = population + numberOfLibraries * owner.libraryProduction + numberOfUniversities * owner.universityProduction;
         owner.sciencePoints += gainedSciencePoints;
@@ -342,22 +345,27 @@ public class Province {
             case Building.ID.FARM:
                 numberOfFarms += 1;
                 numberOfBuildings += 1;
+                productionPoints -= farm.productionCost;
                 break;
             case Building.ID.MINE:
                 numberOfMines += 1;
                 numberOfBuildings += 1;
+                productionPoints -= mine.productionCost;
                 break;
             case Building.ID.LIBRARY:
                 numberOfLibraries = 1;
                 numberOfBuildings += 1;
+                productionPoints -= library.productionCost;
                 break;
             case Building.ID.UNIVERSITY:
                 numberOfUniversities = 1;
                 numberOfBuildings += 1;
+                productionPoints -= university.productionCost;
                 break;
             case Building.ID.WORKSHOP:
                 numberOfWorkshops = 1;
                 numberOfBuildings += 1;
+                productionPoints -= workshop.productionCost;
                 break;
             //case Building.ID.SHIPYARD:
             //    numberOfShipyards = 1;
@@ -368,6 +376,7 @@ public class Province {
                 productionPoints -= city.productionCost;
                 break;
         }
+        productionPoints -= neededProductionPoints;
         HegeLog.log("Province", name + ": built " + buildingInProcess.name);
         buildingInProcess = farm;
     }
@@ -405,6 +414,11 @@ public class Province {
                 productionPoints -= WarUnit.COST.SWORDSMAN;
                 break;
         }
+    }
+
+    public void upgradeUnit() {
+        unitThere.upgrade();
+        productionPoints -= neededProductionPoints;
     }
 
     public boolean isBuildingAvailable(Building building) {
@@ -470,7 +484,7 @@ public class Province {
         isSomethingBuilding = true;
     }
 
-    public void upgradeUnit() {
+    public void chooseUpgradeUnit() {
         switch (unitThere.id) {
             case WarUnit.ID.WARRIOR:
                 neededProductionPoints = WarUnit.UPGRADECOST.SWORDSMAN;
