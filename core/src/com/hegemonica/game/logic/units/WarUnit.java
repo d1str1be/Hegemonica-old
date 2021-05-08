@@ -22,7 +22,6 @@ public class WarUnit {
     public int number;
     public Province homeProvince;
     public Province province;
-
     public Country owner;
 
     public WarUnit(int id, Country owner, int cost, int startAttackStrength, int startDefenseStrength, int movementPoints, Province homeProvince, int number, int upgradeLevel, String name) {
@@ -41,8 +40,10 @@ public class WarUnit {
         this.name = name;
     }
 
-    public WarUnit(int id) {
+    public WarUnit(int id, Province homeProvince) {
         this.id = id;
+        this.homeProvince = homeProvince;
+        this.owner = homeProvince.owner;
         switch (id) {
             case ID.WARRIOR:
                 requiredTechnology = null;

@@ -193,11 +193,11 @@ public class Province {
         buildingInProcess = city;
         neededProductionPoints = buildingInProcess.productionCost;
 
-        warrior = new WarUnit(WarUnit.ID.WARRIOR);
-        archer = new WarUnit(WarUnit.ID.ARCHER);
-        shielder = new WarUnit(WarUnit.ID.SHIELDER);
-        crossbows = new WarUnit(WarUnit.ID.CROSSBOWS);
-        swordsman = new WarUnit(WarUnit.ID.SWORDSMAN);
+        warrior = new WarUnit(WarUnit.ID.WARRIOR, this);
+        archer = new WarUnit(WarUnit.ID.ARCHER, this);
+        shielder = new WarUnit(WarUnit.ID.SHIELDER, this);
+        crossbows = new WarUnit(WarUnit.ID.CROSSBOWS, this);
+        swordsman = new WarUnit(WarUnit.ID.SWORDSMAN, this);
         units = new WarUnit[5];
         units[WarUnit.ID.WARRIOR] = warrior;
         units[WarUnit.ID.ARCHER] = archer;
