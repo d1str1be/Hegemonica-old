@@ -104,6 +104,8 @@ public class Country {
         technologies[3] = machinery;
         technologies[4] = apprienticeship;
         technologies[5] = education;
+        
+        possibleTechnologies = new ArrayList<>();
         possibleTechnologies.add(engineering);
         possibleTechnologies.add(paper);
         possibleTechnologies.add(simplyChemistry);
