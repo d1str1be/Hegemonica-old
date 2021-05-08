@@ -228,7 +228,7 @@ public class Country {
         return true;
     }
 
-    public void choseTechnology(Technology technology) {
+    public void chooseTechnology(Technology technology) {
         technologyInProcess = technology;
         neededSciencePoints = technology.cost;
     }
