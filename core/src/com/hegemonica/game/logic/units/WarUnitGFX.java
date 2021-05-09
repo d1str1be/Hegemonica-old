@@ -4,11 +4,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.hegemonica.game.logic.Country;
 import com.hegemonica.game.logic.Province;
+import com.hegemonica.game.ui.HegeProgressBar;
 
 public class WarUnitGFX {
     public final int id;
     Sprite sprite;
     public Texture texture;
+    public HegeProgressBar healthBar;
     
     public WarUnitGFX(final int id, Province prov) {
         this.id = id;
@@ -16,8 +18,13 @@ public class WarUnitGFX {
         sprite = new Sprite(texture);
         sprite.setSize(prov.width * 0.5f, prov.height * 0.5f);
         sprite.setPosition(prov.x + prov.width * 0.25f, prov.y + prov.height * 0.25f);
+        healthBar = new HegeProgressBar(prov.width * 0.6f, prov.height * 0.125f);
+        healthBar.setPosition(prov.x + prov.width * 0.2f, prov.y * 0.8f);
+        healthBar.setRange(0, WarUnit.maxHealth);
     }
-    
+    public void setHealth(float health){
+        healthBar.setValue(health);
+    }
     public void setTexture(Country owner) {
         switch (id) {
             case WarUnit.ID.WARRIOR:
@@ -110,4 +117,14 @@ public class WarUnitGFX {
     public Texture getTexture() {
         return texture;
     }
+    
+    public void update(WarUnit unit) {
+        healthBar.setPosition(unit.homeProvince.x + unit.homeProvince.width * 0.2f, unit.homeProvince.y + unit.homeProvince.height * 0.8f);
+        this.setHealth(unit.health);
+        sprite.setPosition(unit.homeProvince.x + unit.homeProvince.width * 0.25f, unit.homeProvince.y + unit.homeProvince.height * 0.25f);
+    }
+    
+    public void dispose(){
+    }
+    
 }

@@ -1,4 +1,4 @@
-package com.hegemonica.game.screens.hud;
+package com.hegemonica.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -15,14 +15,15 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.hegemonica.game.AudioManager;
 import com.hegemonica.game.Core;
 import com.hegemonica.game.HegeLog;
-import com.hegemonica.game.HegeProgressBar;
 import com.hegemonica.game.logic.Building;
 import com.hegemonica.game.logic.Country;
 import com.hegemonica.game.logic.Gemelch;
 import com.hegemonica.game.logic.Province;
 import com.hegemonica.game.logic.Technology;
 import com.hegemonica.game.logic.units.WarUnit;
-import com.hegemonica.game.screens.MainMenuScreen;
+import com.hegemonica.game.ui.HegeBuildButton;
+import com.hegemonica.game.ui.HegeProgressBar;
+import com.hegemonica.game.ui.HegeTechButton;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,6 +53,7 @@ public class HUD {
     Label lTurnNumber;
     Label lCountryTurn;
     Label lNewTurn;
+    Label lStartHint;
     
     ScrollPane scrollPane;
     Table scrollTable1;
@@ -73,10 +75,10 @@ public class HUD {
     Label lCB1;
     Label lCB2;
     ArrayList<Label> lBuildingProjects;
-    ArrayList<BuildButton> bBuildingBuild;
+    ArrayList<HegeBuildButton> bBuildingBuild;
     ArrayList<Label> lUnitProjects;
     ArrayList<Label> lProdCost;
-    ArrayList<BuildButton> bUnitBuild;
+    ArrayList<HegeBuildButton> bUnitBuild;
     
     Window wChooseProject;
     
@@ -94,7 +96,7 @@ public class HUD {
     Label lT2;
     ArrayList<Label> lTechName;
     ArrayList<Label> lTechCost;
-    ArrayList<TechButton> bTech;
+    ArrayList<HegeTechButton> bTech;
     Map<Integer, Technology> buttonTechMap;
     
     Window wUnits;
@@ -108,11 +110,11 @@ public class HUD {
     }
     
     public void setSelectedProvince(Province selectedProvince) {
-        if (selectedProvince != null) {
+        if (selectedProvince != null && selectedProvince.owner == turnCountry) {
             this.selectedProvince = selectedProvince;
             game.audio.playSound(AudioManager.Sounds.UI_CLICK);
             HegeLog.log(HegeLog.HUD, "Selected " + selectedProvince.name);
-            if(selectedProvince.owner.id==Country.ID.NOTHING) {
+            if (selectedProvince.owner.id == Country.ID.NOTHING) {
                 wProvinceInfo.setVisible(false);
                 wChooseProject.setVisible(false);
                 return;
@@ -303,10 +305,13 @@ public class HUD {
         lCountryTurn = new Label("Turn: " + turnCountry.name, GlassyUI, "big");
         lCountryTurn.setPosition(Core.gameWidth * 0.925f - lCountryTurn.getWidth(), lTurnNumber.getY() + lTurnNumber.getHeight());
         
+        lStartHint = new Label("Choose new project in your start province \n and technology in \"Country Info\" ", GlassyUI, "big");
+        lStartHint.setPosition(Core.gameWidth/1.25f - lStartHint.getWidth(), Core.gameHeight * 0.1f);
         
         stage.addActor(lTurnNumber);
         stage.addActor(lNewTurn);
         stage.addActor(lCountryTurn);
+        stage.addActor(lStartHint);
         stage.addActor(wProvinceInfo);
         stage.addActor(wChooseProject);
         stage.addActor(wCountryInfo);
@@ -337,6 +342,7 @@ public class HUD {
         lTurnNumber.setText("Turn " + Gemelch.turnNumber);
         lNewTurn.setVisible(true);
         HegeLog.log("HegeLogic", "Button Turn pressed. Now it`s turn " + Gemelch.turnNumber);
+        lStartHint.setVisible(false);
     }
     
     public void setProvinceInfo() {
@@ -394,7 +400,7 @@ public class HUD {
                 wChooseProject.row();
                 wChooseProject.add(lBuildingProjects.get(i));
                 wChooseProject.add(tmpLabel1);
-                final BuildButton tmpButton = new BuildButton(i, "Make building", DefaultUI);
+                final HegeBuildButton tmpButton = new HegeBuildButton(i, "Make building", DefaultUI);
                 buttonBuildingMap.put(tmpButton.id, selectedProvince.possibleBuildings.get(i));
                 tmpButton.setRound(true);
                 tmpButton.setSize(wChooseProject.getWidth() * 0.15f, wChooseProject.getHeight() * 0.1f);
@@ -432,7 +438,7 @@ public class HUD {
                 wChooseProject.row();
                 wChooseProject.add(lUnitProjects.get(i));
                 wChooseProject.add(tmpLabel1);
-                final BuildButton tmpButton = new BuildButton(i + selectedProvince.possibleBuildings.size(), "Make unit", DefaultUI);
+                final HegeBuildButton tmpButton = new HegeBuildButton(i + selectedProvince.possibleBuildings.size(), "Make unit", DefaultUI);
                 buttonUnitMap.put(tmpButton.id, selectedProvince.possibleUnits.get(i));
                 tmpButton.setRound(true);
                 tmpButton.setSize(wChooseProject.getWidth() * 0.15f, wChooseProject.getHeight() * 0.1f);
@@ -469,42 +475,45 @@ public class HUD {
         wChooseTech.add(lT2);
         Label l = new Label(" ", GlassyUI);
         wChooseTech.add(l);
-        lTechName = new ArrayList<>();
-        lTechCost = new ArrayList<>();
-        
-        bTech = new ArrayList<>();
-        buttonTechMap = new HashMap<>();
-        for (int i = 0; i < turnCountry.possibleTechnologies.size(); i++) {
-            Label tmpLabel = new Label(turnCountry.possibleTechnologies.get(i).name, DefaultUI);
-            Label tmpLabel1 = new Label(Float.toString(turnCountry.possibleTechnologies.get(i).cost), DefaultUI);
+        if (turnCountry.possibleTechnologies != null || !turnCountry.possibleTechnologies.isEmpty()) {
+            HegeLog.log("Turn Country", turnCountry.possibleTechnologies.toString());
+            lTechName = new ArrayList<>();
+            lTechCost = new ArrayList<>();
             
-            lTechName.add(tmpLabel);
-            lTechCost.add(tmpLabel1);
-            wChooseTech.row();
-            wChooseTech.add(lTechName.get(i));
-            wChooseTech.add(tmpLabel1);
-            final TechButton tmpButton = new TechButton(i, "Research", DefaultUI);
-            buttonTechMap.put(i, turnCountry.possibleTechnologies.get(i));
-            tmpButton.setRound(true);
-            tmpButton.setSize(wChooseProject.getWidth() * 0.15f, wChooseProject.getHeight() * 0.1f);
-            tmpButton.addListener(new InputListener() {
-                @Override
-                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                    return true;
-                }
+            bTech = new ArrayList<>();
+            buttonTechMap = new HashMap<>();
+            for (int i = 0; i < turnCountry.possibleTechnologies.size(); i++) {
+                Label tmpLabel = new Label(turnCountry.possibleTechnologies.get(i).name, DefaultUI);
+                Label tmpLabel1 = new Label(Float.toString(turnCountry.possibleTechnologies.get(i).cost), DefaultUI);
                 
-                @Override
-                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                    HegeLog.log("Input", "TechButton: " + tmpButton.getId());
-                    HegeLog.log("Province choosing project", "Chose " + buttonTechMap.get(tmpButton.id).toString());
-                    turnCountry.chooseTechnology(buttonTechMap.get(tmpButton.id));
-                    HegeLog.log("Province Project", "Chose tech " + buttonTechMap.get(tmpButton.id).name);
-                    setCountryInfo();
-                    wChooseTech.setVisible(false);
-                }
-            });
-            bTech.add(tmpButton);
-            wChooseTech.add(bTech.get(i));
+                lTechName.add(tmpLabel);
+                lTechCost.add(tmpLabel1);
+                wChooseTech.row();
+                wChooseTech.add(lTechName.get(i));
+                wChooseTech.add(tmpLabel1);
+                final HegeTechButton tmpButton = new HegeTechButton(i, "Research", DefaultUI);
+                buttonTechMap.put(i, turnCountry.possibleTechnologies.get(i));
+                tmpButton.setRound(true);
+                tmpButton.setSize(wChooseProject.getWidth() * 0.15f, wChooseProject.getHeight() * 0.1f);
+                tmpButton.addListener(new InputListener() {
+                    @Override
+                    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                        return true;
+                    }
+                    
+                    @Override
+                    public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                        HegeLog.log("Input", "TechButton: " + tmpButton.getId());
+                        HegeLog.log("Province choosing project", "Chose " + buttonTechMap.get(tmpButton.id).toString());
+                        turnCountry.chooseTechnology(buttonTechMap.get(tmpButton.id));
+                        HegeLog.log("Province Project", "Chose tech " + buttonTechMap.get(tmpButton.id).name);
+                        setCountryInfo();
+                        wChooseTech.setVisible(false);
+                    }
+                });
+                bTech.add(tmpButton);
+                wChooseTech.add(bTech.get(i));
+            }
         }
         wChooseTech.setVisible(true);
         wChooseTech.setMovable(true);

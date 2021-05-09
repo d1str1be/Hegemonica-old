@@ -1,12 +1,12 @@
-package com.hegemonica.game.screens.hud;
+package com.hegemonica.game.ui;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
-public class TechButton extends TextButton {
+public class HegeTechButton extends TextButton {
     public final int id;
     
-    public TechButton(final int id, String text, Skin skin) {
+    public HegeTechButton(final int id, String text, Skin skin) {
         super(text, skin);
         this.id = id;
     }

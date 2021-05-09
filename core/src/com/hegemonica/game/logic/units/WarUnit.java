@@ -2,6 +2,7 @@ package com.hegemonica.game.logic.units;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.hegemonica.game.HegeLog;
 import com.hegemonica.game.logic.Country;
 import com.hegemonica.game.logic.Province;
 import com.hegemonica.game.logic.Technology;
@@ -23,7 +24,7 @@ public class WarUnit {
     public int movementPoints;
     public int upgradeLevel;
     public int health;
-    public int maxHealth;
+    public static final int maxHealth = 100;
     public boolean isHealing;
     
     boolean readyToCapture;
@@ -31,13 +32,20 @@ public class WarUnit {
     public WarUnitGFX warUnitGFX;
     public boolean isRendered;
     public SpriteBatch batch;
-
+    
     public float xCoords;
     public float yCoords;
     
     public WarUnit(int id, Province province) {
+        this(id, province, false);
+    }
+    
+    public WarUnit(int id, Province province, boolean isRendered) {
         this.id = id;
         owner = province.owner;
+        this.homeProvince = province;
+        this.province = province;
+        health = maxHealth;
         switch (id) {
             case ID.WARRIOR:
                 productionCost = PRODUCTIONCOST.WARRIOR;
@@ -75,57 +83,24 @@ public class WarUnit {
                 upgradeLevel = MeleeUnit.UPGRADELEVEL.SWORDSMAN;
                 name = "Swordsman";
         }
-        this.movementPoints = movementPoints;
-        this.homeProvince = homeProvince;
-        this.province = homeProvince;
-        this.number = number;
-        this.upgradeLevel = upgradeLevel;
-        this.name = name;
-    }
-    
-    public WarUnit(int id, Province homeProvince, boolean isRendered) {
-        this.id = id;
-        this.homeProvince = homeProvince;
-        this.owner = homeProvince.owner;
-        this.isRendered = isRendered;
-        switch (id) {
-            case ID.WARRIOR:
-                this.name = "Warrior";
-                requiredTechnology = null;
-                productionCost = PRODUCTIONCOST.WARRIOR;
-                break;
-            case ID.ARCHER:
-                this.name = "Archer";
-                requiredTechnology = owner.technologies[Technology.ID.ENGINEERING];
-                productionCost = PRODUCTIONCOST.ARCHER;
-                break;
-            case ID.SHIELDMAN:
-                this.name = "Shieldman";
-                requiredTechnology = owner.technologies[Technology.ID.ENGINEERING];
-                productionCost = PRODUCTIONCOST.SHIELDMAN;
-                break;
-            case ID.CROSSBOWS:
-                this.name = "Crossbows";
-                requiredTechnology = owner.technologies[Technology.ID.MACHINERY];
-                productionCost = PRODUCTIONCOST.CROSSBOWS;
-                break;
-            case ID.SWORDSMAN:
-                this.name = "Swordsman";
-                requiredTechnology = owner.technologies[Technology.ID.APPRENTICESHIP];
-                productionCost = PRODUCTIONCOST.SWORDSMAN;
-                break;
-        }
+        
         setAttackStrength();
         setDefenseStrength();
         if (isRendered) {
-            warUnitGFX = new WarUnitGFX(id, homeProvince);
+            warUnitGFX = new WarUnitGFX(id, province);
+            warUnitGFX.setHealth(maxHealth);
+            warUnitGFX.update(this);
+            HegeLog.log("WarUnitGFX", "Set health to " + maxHealth);
         }
         batch = new SpriteBatch();
+        
     }
     
     public void onTurn() {
         if (isHealing) {
             heal();
+            warUnitGFX.setHealth(health);
+            warUnitGFX.update(this);
         }
         switch (id) {
             case ID.WARRIOR:
@@ -141,6 +116,7 @@ public class WarUnit {
         }
         setAttackStrength();
         setDefenseStrength();
+        
     }
     
     public void setAttackStrength() {
@@ -153,6 +129,7 @@ public class WarUnit {
     
     public void heal() {
         health += 20;
+        warUnitGFX.update(this);
     }
     
     public void move(Province province) {
@@ -182,12 +159,14 @@ public class WarUnit {
         if (health <= 0) {
             destroy();
         }
+        warUnitGFX.update(this);
     }
     
     public void defense(WarUnit unit) {
         health -= Math.round(30 * Math.pow(2.72, (unit.attackStrength - defenseStrength) / 25f));
         setAttackStrength();
         setDefenseStrength();
+        warUnitGFX.update(this);
     }
     
     public void upgrade() {
@@ -271,6 +250,7 @@ public class WarUnit {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         warUnitGFX.getSprite().draw(batch);
+        warUnitGFX.healthBar.draw(batch, 1f);
         batch.end();
     }
     

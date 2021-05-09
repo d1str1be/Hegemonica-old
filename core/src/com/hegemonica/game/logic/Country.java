@@ -6,6 +6,13 @@ import com.hegemonica.game.logic.units.WarUnit;
 
 import java.util.ArrayList;
 
+import static com.hegemonica.game.logic.Technology.ID.APPRENTICESHIP;
+import static com.hegemonica.game.logic.Technology.ID.EDUCATION;
+import static com.hegemonica.game.logic.Technology.ID.ENGINEERING;
+import static com.hegemonica.game.logic.Technology.ID.MACHINERY;
+import static com.hegemonica.game.logic.Technology.ID.PAPER;
+import static com.hegemonica.game.logic.Technology.ID.SIMPLYCHEMISTRY;
+
 public class Country {
     public String name;
     public int id;
@@ -98,18 +105,18 @@ public class Country {
         
         technologies = new Technology[6];
         
-        technologies[Technology.ID.ENGINEERING] = new Technology(Technology.ID.ENGINEERING, 50, new Technology[]{});;
-        technologies[Technology.ID.PAPER] = new Technology(Technology.ID.PAPER, 50, new Technology[]{});
-        technologies[Technology.ID.SIMPLYCHEMISTRY] = new Technology(Technology.ID.SIMPLYCHEMISTRY, 50, new Technology[]{});
-        technologies[Technology.ID.MACHINERY] = new Technology(Technology.ID.MACHINERY, 50, new Technology[]{engineering});
-        technologies[Technology.ID.APPRENTICESHIP] = new Technology(Technology.ID.APPRENTICESHIP, 100, new Technology[]{engineering, paper});
-        technologies[Technology.ID.EDUCATION] = new Technology(Technology.ID.EDUCATION, 100, new Technology[]{paper, simplyChemistry});
+        technologies[ENGINEERING] = new Technology(ENGINEERING, 50, new Technology[]{});;
+        technologies[PAPER] = new Technology(PAPER, 50, new Technology[]{});
+        technologies[SIMPLYCHEMISTRY] = new Technology(SIMPLYCHEMISTRY, 50, new Technology[]{});
+        technologies[MACHINERY] = new Technology(MACHINERY, 50, new Technology[]{technologies[ENGINEERING]});
+        technologies[APPRENTICESHIP] = new Technology(APPRENTICESHIP, 100, new Technology[]{technologies[ENGINEERING], technologies[PAPER]});
+        technologies[EDUCATION] = new Technology(EDUCATION, 100, new Technology[]{technologies[PAPER], technologies[SIMPLYCHEMISTRY]});
         isSomethingResearching = false;
         
         possibleTechnologies = new ArrayList<>();
-        possibleTechnologies.add(engineering);
-        possibleTechnologies.add(paper);
-        possibleTechnologies.add(simplyChemistry);
+        possibleTechnologies.add(technologies[ENGINEERING]);
+        possibleTechnologies.add(technologies[PAPER]);
+        possibleTechnologies.add(technologies[SIMPLYCHEMISTRY]);
         //updatedShipbuilding = new Technology(Technology.ID.UPDATEDSHIPBUILDING, 75, new Technology[]{});
         //oceanExploration = new Technology(Technology.ID.OCEANEXPLORATION, 150, new Technology[]{updatedShipbuilding, engineering, paper});
         
@@ -117,8 +124,8 @@ public class Country {
     }
     
     public boolean onTurn() {
-        population = 0;
         if (isTurnAvailable()) {
+            population = 0;
             for (Province province : gemelch.provinces) {
                 if (province.owner == this) {
                     province.onTurn();
@@ -158,16 +165,16 @@ public class Country {
     public void research(Technology technology) {
         technologies[technology.id].isResearched = true;
         switch (technology.id) {
-            case Technology.ID.ENGINEERING:
+            case ENGINEERING:
                 mineProduction++;
                 break;
-            case Technology.ID.SIMPLYCHEMISTRY:
+            case SIMPLYCHEMISTRY:
                 farmProduction++;
                 break;
-            case Technology.ID.APPRENTICESHIP:
+            case APPRENTICESHIP:
                 mineProduction++;
                 break;
-            case Technology.ID.EDUCATION:
+            case EDUCATION:
                 libraryProduction += 2;
                 break;
                 //case Technology.ID.UPDATEDSHIPBUILDING:
@@ -211,13 +218,13 @@ public class Country {
             case WarUnit.ID.WARRIOR:
                 return true;
             case WarUnit.ID.ARCHER:
-                return engineering.isResearched;
+                return technologies[ENGINEERING].isResearched;
             case WarUnit.ID.SHIELDMAN:
-                return engineering.isResearched;
+                return technologies[ENGINEERING].isResearched;
             case WarUnit.ID.CROSSBOWS:
-                return machinery.isResearched;
+                return technologies[MACHINERY].isResearched;
             case WarUnit.ID.SWORDSMAN:
-                return apprienticeship.isResearched;
+                return technologies[APPRENTICESHIP].isResearched;
             default:
                 return true;
         }

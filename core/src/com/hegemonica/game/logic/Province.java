@@ -18,7 +18,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.FloatArray;
 import com.hegemonica.game.HegeLog;
-import com.hegemonica.game.logic.units.DefenseUnit;
 import com.hegemonica.game.logic.units.MeleeUnit;
 import com.hegemonica.game.logic.units.RangedUnit;
 import com.hegemonica.game.logic.units.WarUnit;
@@ -197,11 +196,11 @@ public class Province {
         isSomethingBuilding = false;
         
         if (owner.id != NOTHING) {
-            warrior = new WarUnit(WarUnit.ID.WARRIOR, this, false);
-            archer = new WarUnit(WarUnit.ID.ARCHER, this, false);
-            shieldman = new WarUnit(WarUnit.ID.SHIELDMAN, this, false);
-            crossbows = new WarUnit(WarUnit.ID.CROSSBOWS, this, false);
-            swordsman = new WarUnit(WarUnit.ID.SWORDSMAN, this, false);
+            warrior = new WarUnit(WarUnit.ID.WARRIOR, this);
+            archer = new WarUnit(WarUnit.ID.ARCHER, this);
+            shieldman = new WarUnit(WarUnit.ID.SHIELDMAN, this);
+            crossbows = new WarUnit(WarUnit.ID.CROSSBOWS, this);
+            swordsman = new WarUnit(WarUnit.ID.SWORDSMAN, this);
             units = new WarUnit[5];
             units[WarUnit.ID.WARRIOR] = warrior;
             units[WarUnit.ID.ARCHER] = archer;
@@ -409,31 +408,31 @@ public class Province {
     public void createUnit(WarUnit unit) {
         switch (unit.id) {
             case WarUnit.ID.WARRIOR:
-                createdUnits.add(new MeleeUnit(WarUnit.ID.WARRIOR, owner, WarUnit.PRODUCTIONCOST.WARRIOR, WarUnit.ATTACKSTRENGTH.WARRIOR, WarUnit.DEFENSESTRENGTH.WARRIOR, WarUnit.MOVEMENTPOINTS.WARRIOR, this, unitCounter, MeleeUnit.UPGRADELEVEL.WARRIOR, "Warrior"));
+                createdUnits.add(new MeleeUnit(WarUnit.ID.WARRIOR, this));
                 unitThere = createdUnits.get(unitCounter);
                 unitCounter++;
                 productionPoints -= WarUnit.PRODUCTIONCOST.WARRIOR;
                 break;
             case WarUnit.ID.ARCHER:
-                createdUnits.add(new RangedUnit(WarUnit.ID.ARCHER, owner, WarUnit.PRODUCTIONCOST.ARCHER, WarUnit.ATTACKSTRENGTH.ARCHER, WarUnit.DEFENSESTRENGTH.ARCHER, WarUnit.MOVEMENTPOINTS.ARCHER, this, unitCounter, RangedUnit.UPGRADELEVEL.ARCHER, "Archer"));
+                createdUnits.add(new RangedUnit(WarUnit.ID.ARCHER, this));
                 unitThere = createdUnits.get(unitCounter);
                 unitCounter++;
                 productionPoints -= WarUnit.PRODUCTIONCOST.ARCHER;
                 break;
             case WarUnit.ID.SHIELDMAN:
-                createdUnits.add(new DefenseUnit(WarUnit.ID.SHIELDMAN, owner, WarUnit.PRODUCTIONCOST.SHIELDMAN, WarUnit.ATTACKSTRENGTH.SHIELDMAN, WarUnit.DEFENSESTRENGTH.SHIELDMAN, WarUnit.MOVEMENTPOINTS.SHIELDMAN, this, unitCounter, DefenseUnit.UPGRADELEVEL.SHIELDMAN, "Shieldman"));
+                createdUnits.add(new MeleeUnit(WarUnit.ID.SHIELDMAN, this));
                 unitThere = createdUnits.get(unitCounter);
                 unitCounter++;
                 productionPoints -= WarUnit.PRODUCTIONCOST.SHIELDMAN;
                 break;
             case WarUnit.ID.CROSSBOWS:
-                createdUnits.add(new RangedUnit(WarUnit.ID.CROSSBOWS, owner, WarUnit.PRODUCTIONCOST.CROSSBOWS, WarUnit.ATTACKSTRENGTH.CROSSBOWS, WarUnit.DEFENSESTRENGTH.CROSSBOWS, WarUnit.MOVEMENTPOINTS.CROSSBOWS, this, unitCounter, RangedUnit.UPGRADELEVEL.CROSSBOWS, "Crossbows"));
+                createdUnits.add(new RangedUnit(WarUnit.ID.CROSSBOWS, this));
                 unitThere = createdUnits.get(unitCounter);
                 unitCounter++;
                 productionPoints -= WarUnit.PRODUCTIONCOST.CROSSBOWS;
                 break;
             case WarUnit.ID.SWORDSMAN:
-                createdUnits.add(new MeleeUnit(WarUnit.ID.SWORDSMAN, owner, WarUnit.PRODUCTIONCOST.SWORDSMAN, WarUnit.ATTACKSTRENGTH.SWORDSMAN, WarUnit.DEFENSESTRENGTH.SWORDSMAN, WarUnit.MOVEMENTPOINTS.SWORDSMAN, this, unitCounter, MeleeUnit.UPGRADELEVEL.SWORDSMAN, "Swordsman"));
+                createdUnits.add(new MeleeUnit(WarUnit.ID.SWORDSMAN, this));
                 unitThere = createdUnits.get(unitCounter);
                 unitCounter++;
                 productionPoints -= WarUnit.PRODUCTIONCOST.SWORDSMAN;
