@@ -463,7 +463,7 @@ public class Province {
                 }
             }
         }
-        return false;
+        return true;
     }
     
     public boolean isUnitAvailable(WarUnit unit) {
