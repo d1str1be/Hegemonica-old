@@ -154,8 +154,8 @@ public class WarUnit {
     
     public void capture(Province province) {
         if (province.owner.id == Country.ID.NOTHING) {
-            province.setOwner(this.owner);
             province.manualInitialization(true);
+            province.setOwner(this.owner);
         }
         province.setOwner(this.owner);
         movementPoints = 0;

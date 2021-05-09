@@ -234,9 +234,6 @@ public class Province {
         this.setMathRender();
     }
     
-    public void setupBuildings() {
-    
-    }
     
     public void manualInitialization(boolean isNothingProv) {
         if (owner.id != NOTHING) {
@@ -325,6 +322,8 @@ public class Province {
     
     public void setOwner(Country newOwner) {
         this.owner = newOwner;
+        setPossibleBuildings();
+        setPossibleUnits();
         lProvName.setColor(owner.color);
     }
     
