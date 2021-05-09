@@ -105,12 +105,12 @@ public class Country {
         
         technologies = new Technology[6];
         
-        technologies[ENGINEERING] = new Technology(ENGINEERING, 50, new Technology[]{});;
-        technologies[PAPER] = new Technology(PAPER, 50, new Technology[]{});
-        technologies[SIMPLYCHEMISTRY] = new Technology(SIMPLYCHEMISTRY, 50, new Technology[]{});
-        technologies[MACHINERY] = new Technology(MACHINERY, 50, new Technology[]{technologies[ENGINEERING]});
-        technologies[APPRENTICESHIP] = new Technology(APPRENTICESHIP, 100, new Technology[]{technologies[ENGINEERING], technologies[PAPER]});
-        technologies[EDUCATION] = new Technology(EDUCATION, 100, new Technology[]{technologies[PAPER], technologies[SIMPLYCHEMISTRY]});
+        technologies[ENGINEERING] = new Technology(ENGINEERING, 25, new Technology[]{});;
+        technologies[PAPER] = new Technology(PAPER, 25, new Technology[]{});
+        technologies[SIMPLYCHEMISTRY] = new Technology(SIMPLYCHEMISTRY, 25, new Technology[]{});
+        technologies[MACHINERY] = new Technology(MACHINERY, 75, new Technology[]{technologies[ENGINEERING]});
+        technologies[APPRENTICESHIP] = new Technology(APPRENTICESHIP, 75, new Technology[]{technologies[ENGINEERING], technologies[PAPER]});
+        technologies[EDUCATION] = new Technology(EDUCATION, 75, new Technology[]{technologies[PAPER], technologies[SIMPLYCHEMISTRY]});
         isSomethingResearching = false;
         
         possibleTechnologies = new ArrayList<>();

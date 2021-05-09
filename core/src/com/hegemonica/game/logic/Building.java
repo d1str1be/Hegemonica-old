@@ -76,13 +76,13 @@ public class Building {
     }
 
     public class PRODUCTIONCOST {
-        public final static int FARM = 15;
-        public final static int MINE = 15;
-        public final static int LIBRARY = 50;
-        public final static int UNIVERSITY = 120;
-        public final static int WORKSHOP = 60;
+        public final static int FARM = 8;
+        public final static int MINE = 8;
+        public final static int LIBRARY = 25;
+        public final static int UNIVERSITY = 60;
+        public final static int WORKSHOP = 30;
         public final static int SHIPYARD = 40;
-        public final static int CITY = 150;
+        public final static int CITY = 75;
     }
 
     public Province getProvince() {

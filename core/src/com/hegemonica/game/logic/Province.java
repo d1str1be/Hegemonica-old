@@ -367,7 +367,6 @@ public class Province {
                     numberOfFarms += 1;
                     numberOfBuildings += 1;
                     productionPoints -= farm.productionCost;
-                    
                     break;
                 case Building.ID.MINE:
                     numberOfMines += 1;

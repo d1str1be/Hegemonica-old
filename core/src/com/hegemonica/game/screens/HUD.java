@@ -142,7 +142,7 @@ public class HUD {
         
         wProvinceInfo = new Window("Province Info", DefaultUI);
         wProvinceInfo.setPosition(Core.gameWidth * 0.05f, Core.gameHeight * 0.4f);
-        wProvinceInfo.setSize(Core.gameWidth * 0.15f, Core.gameWidth * 0.125f);
+        wProvinceInfo.setSize(Core.gameWidth * 0.15f / Core.uiFactor, Core.gameWidth * 0.125f / Core.uiFactor);
         wProvinceInfo.setVisible(false);
         wProvinceInfo.setResizable(true);
         lP1 = new Label("Name:", GlassyUI);
@@ -185,7 +185,7 @@ public class HUD {
         wCountryInfo = new Window("Country Info", DefaultUI);
         wCountryInfo.setMovable(true);
         wCountryInfo.setPosition(Core.gameWidth * 0.3f, Core.gameHeight * 0.6f);
-        wCountryInfo.setSize(Core.gameWidth * 0.15f, Core.gameWidth * 0.125f);
+        wCountryInfo.setSize(Core.gameWidth * 0.15f / Core.uiFactor, Core.gameWidth * 0.125f / Core.uiFactor);
         wCountryInfo.setVisible(false);
         wCountryInfo.align(Align.top);
         
@@ -228,7 +228,8 @@ public class HUD {
         
         wChooseTech = new Window("Choose technology", DefaultUI);
         wChooseTech.setMovable(true);
-        wChooseTech.setSize(Core.gameWidth * 0.15f, Core.gameWidth * 0.125f);
+        wChooseTech.setResizable(true);
+        wChooseTech.setSize(Core.gameWidth * 0.15f / Core.uiFactor, Core.gameWidth * 0.125f / Core.uiFactor);
         wChooseTech.setPosition(wCountryInfo.getX(), wCountryInfo.getY() - wChooseTech.getHeight());
         wChooseTech.align(Align.top);
         wChooseTech.setVisible(false);
@@ -239,7 +240,8 @@ public class HUD {
         
         wChooseProject = new Window("Choose project", DefaultUI);
         wChooseProject.setMovable(true);
-        wChooseProject.setSize(Core.gameWidth * 0.15f, Core.gameWidth * 0.125f);
+        wChooseProject.setResizable(true);
+        wChooseProject.setSize(Core.gameWidth * 0.15f / Core.uiFactor, Core.gameWidth * 0.125f / Core.uiFactor);
         wChooseProject.setPosition(wProvinceInfo.getX(), wProvinceInfo.getY() - wChooseProject.getHeight());
         wChooseProject.align(Align.top);
         
