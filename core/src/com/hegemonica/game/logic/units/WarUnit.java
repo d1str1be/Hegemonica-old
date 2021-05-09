@@ -25,6 +25,8 @@ public class WarUnit {
     public int health;
     public boolean isHealing;
     
+    boolean readyToCapture;
+    
     public WarUnitGFX warUnitGFX;
     public boolean isRendered;
     public SpriteBatch batch;
@@ -77,7 +79,9 @@ public class WarUnit {
                 productionCost = PRODUCTIONCOST.SWORDSMAN;
                 break;
         }
-        if (isRendered){
+        setAttackStrength();
+        setDefenseStrength();
+        if (isRendered) {
             warUnitGFX = new WarUnitGFX(id, homeProvince);
         }
         batch = new SpriteBatch();
@@ -148,9 +152,6 @@ public class WarUnit {
         health -= Math.round(30 * Math.pow(2.72, (unit.attackStrength - defenseStrength) / 25f));
         setAttackStrength();
         setDefenseStrength();
-        if (health <= 0) {
-            destroy();
-        }
     }
     
     public void upgrade() {
