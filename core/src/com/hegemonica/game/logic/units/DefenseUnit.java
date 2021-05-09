@@ -3,7 +3,11 @@ package com.hegemonica.game.logic.units;
 import com.hegemonica.game.logic.Province;
 
 public class DefenseUnit extends WarUnit {
-
+    
+    public DefenseUnit(int id, Province province, boolean isRendered) {
+        super(id, province, isRendered);
+    }
+    
     public DefenseUnit(int id, Province province) {
         super(id, province);
     }

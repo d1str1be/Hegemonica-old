@@ -7,7 +7,11 @@ public class RangedUnit extends WarUnit {
     public RangedUnit(int id, Province province) {
         super(id, province);
     }
-
+    
+    public RangedUnit(int id, Province province, boolean isRendered) {
+        super(id, province, isRendered);
+    }
+    
     @Override
     public void attack(WarUnit unit) {
         unit.defense(this);
