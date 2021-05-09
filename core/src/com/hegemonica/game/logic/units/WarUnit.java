@@ -23,6 +23,7 @@ public class WarUnit {
     public int movementPoints;
     public int upgradeLevel;
     public int health;
+    public int maxHealth;
     public boolean isHealing;
     
     boolean readyToCapture;
@@ -30,15 +31,50 @@ public class WarUnit {
     public WarUnitGFX warUnitGFX;
     public boolean isRendered;
     public SpriteBatch batch;
+
+    public float xCoords;
+    public float yCoords;
     
-    public WarUnit(int id, Country owner, int productionCost, int startAttackStrength, int startDefenseStrength, int movementPoints, Province homeProvince, int number, int upgradeLevel, String name) {
+    public WarUnit(int id, Province province) {
         this.id = id;
-        this.owner = owner;
-        this.productionCost = productionCost;
-        this.startAttackStrength = startAttackStrength;
-        this.startDefenseStrength = startDefenseStrength;
-        this.attackStrength = startAttackStrength;
-        this.defenseStrength = startDefenseStrength;
+        owner = province.owner;
+        switch (id) {
+            case ID.WARRIOR:
+                productionCost = PRODUCTIONCOST.WARRIOR;
+                startAttackStrength = ATTACKSTRENGTH.WARRIOR;
+                startDefenseStrength = DEFENSESTRENGTH.WARRIOR;
+                movementPoints = MOVEMENTPOINTS.WARRIOR;
+                upgradeLevel = MeleeUnit.UPGRADELEVEL.WARRIOR;
+                name = "Warrior";
+            case ID.ARCHER:
+                productionCost = PRODUCTIONCOST.ARCHER;
+                startAttackStrength = ATTACKSTRENGTH.ARCHER;
+                startDefenseStrength = DEFENSESTRENGTH.ARCHER;
+                movementPoints = MOVEMENTPOINTS.ARCHER;
+                upgradeLevel = RangedUnit.UPGRADELEVEL.ARCHER;
+                name = "Archer";
+            case ID.SHIELDMAN:
+                productionCost = PRODUCTIONCOST.SHIELDMAN;
+                startAttackStrength = ATTACKSTRENGTH.SHIELDMAN;
+                startDefenseStrength = DEFENSESTRENGTH.SHIELDMAN;
+                movementPoints = MOVEMENTPOINTS.SHIELDMAN;
+                upgradeLevel = DefenseUnit.UPGRADELEVEL.SHIELDMAN;
+                name = "Shieldman";
+            case ID.CROSSBOWS:
+                productionCost = PRODUCTIONCOST.CROSSBOWS;
+                startAttackStrength = ATTACKSTRENGTH.CROSSBOWS;
+                startDefenseStrength = DEFENSESTRENGTH.CROSSBOWS;
+                movementPoints = MOVEMENTPOINTS.CROSSBOWS;
+                upgradeLevel = RangedUnit.UPGRADELEVEL.CROSSBOWS;
+                name = "Crossbows";
+            case ID.SWORDSMAN:
+                productionCost = PRODUCTIONCOST.SWORDSMAN;
+                startAttackStrength = ATTACKSTRENGTH.SWORDSMAN;
+                startDefenseStrength = DEFENSESTRENGTH.SWORDSMAN;
+                movementPoints = MOVEMENTPOINTS.SWORDSMAN;
+                upgradeLevel = MeleeUnit.UPGRADELEVEL.SWORDSMAN;
+                name = "Swordsman";
+        }
         this.movementPoints = movementPoints;
         this.homeProvince = homeProvince;
         this.province = homeProvince;

@@ -33,21 +33,21 @@ public class Building {
                 productionCost = PRODUCTIONCOST.LIBRARY;
                 isNeedCity = true;
                 isLimited = true;
-                requiredTechnology = province.owner.paper;
+                requiredTechnology = province.owner.technologies[Technology.ID.PAPER];
                 break;
             case ID.UNIVERSITY:
                 name = "University";
                 productionCost = PRODUCTIONCOST.UNIVERSITY;
                 isNeedCity = true;
                 isLimited = true;
-                requiredTechnology = province.owner.education;
+                requiredTechnology = province.owner.technologies[Technology.ID.EDUCATION];
                 break;
             case ID.WORKSHOP:
                 name = "Workshop";
                 productionCost = PRODUCTIONCOST.WORKSHOP;
                 isNeedCity = true;
                 isLimited = true;
-                requiredTechnology = province.owner.engineering;
+                requiredTechnology = province.owner.technologies[Technology.ID.APPRENTICESHIP];
                 break;
             //case ID.SHIPYARD:
             //    name = "zsdrfg";
