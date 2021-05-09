@@ -16,8 +16,6 @@ public class Gemelch {
     public GemelchGFX gfx;
     
     public static int turnNumber;
-    public int mapHeight;
-    public int mapWidth;
     
     public Country redCountry;
     public Country greenCountry;
@@ -201,68 +199,68 @@ public class Gemelch {
             int[] neighbors = new int[4];
             neighbors[0] = 0;
             neighbors[1] = 1;
-            neighbors[2] = mapWidth;
-            neighbors[3] = mapWidth + 1;
+            neighbors[2] = provCountWidth;
+            neighbors[3] = provCountWidth + 1;
             return neighbors;
-        } else if (id == mapWidth - 1) {
+        } else if (id == provCountWidth - 1) {
             int[] neighbors = new int[4];
             neighbors[0] = id;
             neighbors[1] = id - 1;
-            neighbors[2] = id + mapWidth - 1;
-            neighbors[3] = id + mapWidth;
+            neighbors[2] = id + provCountWidth - 1;
+            neighbors[3] = id + provCountWidth;
             return neighbors;
-        } else if (id == mapWidth * (mapHeight - 1)) {
+        } else if (id == provCountWidth * (provCountHeight - 1)) {
             int[] neighbors = new int[4];
             neighbors[0] = id;
-            neighbors[1] = id - mapWidth;
-            neighbors[2] = id - mapWidth + 1;
+            neighbors[1] = id - provCountWidth;
+            neighbors[2] = id - provCountWidth + 1;
             neighbors[3] = id + 1;
             return neighbors;
-        } else if (id == mapHeight * mapWidth - 1) {
+        } else if (id == provCountHeight * provCountWidth - 1) {
             int[] neighbors = new int[4];
             neighbors[0] = id;
             neighbors[1] = id - 1;
-            neighbors[2] = id - mapWidth;
-            neighbors[3] = id - mapWidth - 1;
+            neighbors[2] = id - provCountWidth;
+            neighbors[3] = id - provCountWidth - 1;
             return neighbors;
             
             //крайние по сторонам
             
-        } else if (id < mapWidth) {
+        } else if (id < provCountWidth) {
             int[] neighbors = new int[6];
             neighbors[0] = id;
             neighbors[1] = id - 1;
             neighbors[2] = id + 1;
-            neighbors[3] = id + mapWidth - 1;
-            neighbors[4] = id + mapWidth;
-            neighbors[5] = id + mapWidth + 1;
+            neighbors[3] = id + provCountWidth - 1;
+            neighbors[4] = id + provCountWidth;
+            neighbors[5] = id + provCountWidth + 1;
             return neighbors;
-        } else if (id >= mapWidth * (mapHeight - 1)) {
+        } else if (id >= provCountWidth * (provCountHeight - 1)) {
             int[] neighbors = new int[6];
             neighbors[0] = id;
             neighbors[1] = id - 1;
             neighbors[2] = id + 1;
-            neighbors[3] = id - mapWidth - 1;
-            neighbors[4] = id - mapWidth;
-            neighbors[5] = id - mapWidth + 1;
+            neighbors[3] = id - provCountWidth - 1;
+            neighbors[4] = id - provCountWidth;
+            neighbors[5] = id - provCountWidth + 1;
             return neighbors;
-        } else if (id % mapWidth == 0) {
+        } else if (id % provCountWidth == 0) {
             int[] neighbors = new int[6];
             neighbors[0] = id;
-            neighbors[1] = id - mapWidth;
-            neighbors[2] = id + mapWidth;
+            neighbors[1] = id - provCountWidth;
+            neighbors[2] = id + provCountWidth;
             neighbors[3] = id + 1;
-            neighbors[4] = id - mapWidth + 1;
-            neighbors[5] = id + mapWidth + 1;
+            neighbors[4] = id - provCountWidth + 1;
+            neighbors[5] = id + provCountWidth + 1;
             return neighbors;
-        } else if ((id + 1) % mapWidth == 0) {
+        } else if ((id + 1) % provCountWidth == 0) {
             int[] neighbors = new int[6];
             neighbors[0] = id;
-            neighbors[1] = id - mapWidth;
-            neighbors[2] = id + mapWidth;
+            neighbors[1] = id - provCountWidth;
+            neighbors[2] = id + provCountWidth;
             neighbors[3] = id - 1;
-            neighbors[4] = id - mapWidth - 1;
-            neighbors[5] = id + mapWidth - 1;
+            neighbors[4] = id - provCountWidth - 1;
+            neighbors[5] = id + provCountWidth - 1;
             return neighbors;
             
             //все остальные
@@ -272,23 +270,25 @@ public class Gemelch {
             neighbors[0] = id;
             neighbors[1] = id + 1;
             neighbors[2] = id - 1;
-            neighbors[3] = id + mapWidth;
-            neighbors[4] = id - mapWidth;
-            neighbors[5] = id - mapWidth - 1;
-            neighbors[6] = id - mapWidth + 1;
-            neighbors[7] = id + mapWidth - 1;
-            neighbors[8] = id + mapWidth + 1;
+            neighbors[3] = id + provCountWidth;
+            neighbors[4] = id - provCountWidth;
+            neighbors[5] = id - provCountWidth - 1;
+            neighbors[6] = id - provCountWidth + 1;
+            neighbors[7] = id + provCountWidth - 1;
+            neighbors[8] = id + provCountWidth + 1;
             return neighbors;
         }
     }
     
     public boolean[] getBooleanNeighborsList(Province province) {
+        HegeLog.log("Gemelch Neighbour", "getNeighborsIdList(province).length: " + getNeighborsIdList(province).length);
         int neighborsQuantity = getNeighborsIdList(province).length;
         int[] neighborsIntList = getNeighborsIdList(province);
-        boolean[] neighborsBooleanList = new boolean[mapWidth * mapHeight];
-        for (int i = 0; i < mapWidth * mapHeight; i++) {
+        boolean[] neighborsBooleanList = new boolean[provCountWidth * provCountHeight];
+        for (int i = 0; i < provCountWidth * provCountHeight; i++) {
             neighborsBooleanList[i] = false;
         }
+        HegeLog.log("Gemelch Neighbour", "neighborsBooleanList.length(): " + neighborsBooleanList.length);
         for (int i = 0; i < neighborsQuantity; i++) {
             neighborsBooleanList[neighborsIntList[i]] = true;
         }
