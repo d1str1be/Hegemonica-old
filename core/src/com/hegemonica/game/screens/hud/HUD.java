@@ -33,9 +33,9 @@ public class HUD {
     public Gemelch gemelch;
     final float bWidth = Gdx.graphics.getWidth() / 5f;
     final float bHeight = Gdx.graphics.getHeight() / 8f;
-
-    public Map<BuildButton, Building> buttonBuildingMap;
-    public Map<BuildButton, WarUnit> buttonUnitMap;
+    
+    public Map<Integer, Building> buttonBuildingMap;
+    public Map<Integer, WarUnit> buttonUnitMap;
     
     
     public Stage stage;
@@ -77,6 +77,7 @@ public class HUD {
     ArrayList<Label> lBuildingProjects;
     ArrayList<BuildButton> bBuildingBuild;
     ArrayList<Label> lUnitProjects;
+    ArrayList<Label> lProdCost;
     ArrayList<BuildButton> bUnitBuild;
     
     Window wChooseProject;
@@ -217,6 +218,7 @@ public class HUD {
         lBuildingProjects = new ArrayList<>();
         bBuildingBuild = new ArrayList<>();
         lUnitProjects = new ArrayList<>();
+        lProdCost = new ArrayList<>();
         bUnitBuild = new ArrayList<>();
         
         
@@ -347,19 +349,23 @@ public class HUD {
     
     public void setBuildingsInfo() {
         wChooseProject.clear();
-        wChooseProject.add(lProjectName).padRight(wChooseProject.getWidth() * 0.15f);
-        wChooseProject.add(lProductionCost).padRight(wChooseProject.getWidth() * 0.15f);
+        wChooseProject.add(lProjectName);
+        wChooseProject.add(lProductionCost);
         Label l = new Label(" ", GlassyUI);
         wChooseProject.add(l);
-        buttonBuildingMap = new HashMap<BuildButton, Building>();
+        buttonBuildingMap = new HashMap<Integer, Building>();
         //обработка доступных построек
         for (int i = 0; i < selectedProvince.possibleBuildings.size(); i++) {
             Label tmpLabel = new Label(selectedProvince.possibleBuildings.get(i).name, DefaultUI);
+            Label tmpLabel1 = new Label(Integer.toString(selectedProvince.possibleBuildings.get(i).productionCost), DefaultUI);
             lBuildingProjects.add(tmpLabel);
+            lProdCost.add(tmpLabel1);
             wChooseProject.row();
             wChooseProject.add(lBuildingProjects.get(i));
+            wChooseProject.add(tmpLabel1);
             final BuildButton tmpButton = new BuildButton(i, "Make building", DefaultUI);
-            buttonBuildingMap.put(tmpButton, selectedProvince.possibleBuildings.get(i));
+            HegeLog.log("Code", "Added button with id: " + i + " and name Make building");
+            buttonBuildingMap.put(tmpButton.id, selectedProvince.possibleBuildings.get(i));
             tmpButton.setRound(true);
             tmpButton.setSize(wChooseProject.getWidth() * 0.15f, wChooseProject.getHeight() * 0.1f);
             tmpButton.addListener(new InputListener() {
@@ -371,8 +377,9 @@ public class HUD {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     HegeLog.log("Input", "BuildBtn ID: " + tmpButton.getId());
-                    selectedProvince.chooseBuilding(buttonBuildingMap.get(tmpButton));
-                    HegeLog.log("Province Project", "Chose building " + buttonBuildingMap.get(tmpButton).name);
+                    HegeLog.log("Province choosing project", "Chose " + buttonBuildingMap.get(tmpButton.id).toString());
+                    selectedProvince.chooseBuilding(buttonBuildingMap.get(tmpButton.id));
+                    HegeLog.log("Province Project", "Chose building " + buttonBuildingMap.get(tmpButton.id).name);
                     setProvinceInfo();
 //                    isClicked = true;
 //                    wChooseProject.setVisible(false);
@@ -382,37 +389,39 @@ public class HUD {
             wChooseProject.add(bBuildingBuild.get(i));
         }
         //обработка доступных юнитов
-        buttonUnitMap = new HashMap<BuildButton, WarUnit>();
+        buttonUnitMap = new HashMap<Integer, WarUnit>();
         for (int i = 0; i < selectedProvince.possibleUnits.size(); i++) {
-            //HegeLog.log("Code", "units.size() + buildings.size() = " + (units.size() + buildings.size()));
-            //HegeLog.log("Code", "i = " + i);
-            String unitName = selectedProvince.possibleUnits.get(i).name;
-//            HegeLog.log("Code", selectedProvince.possibleUnits.isEmpty());
-            Label tmpLabel = new Label(unitName, DefaultUI);
+            Label tmpLabel = new Label(selectedProvince.possibleUnits.get(i).name, DefaultUI);
+            Label tmpLabel1 = new Label(Integer.toString(selectedProvince.possibleUnits.get(i).productionCost), DefaultUI);
             lUnitProjects.add(tmpLabel);
+            lProdCost.add(tmpLabel1);
             wChooseProject.row();
             wChooseProject.add(lUnitProjects.get(i));
-            final BuildButton tmpButton = new BuildButton(i + 1, "Make unit", DefaultUI);
+            wChooseProject.add(tmpLabel1);
+            final BuildButton tmpButton = new BuildButton(i + selectedProvince.possibleBuildings.size(), "Make unit", DefaultUI);
+            HegeLog.log("Code", "Added button with id: " + (i + selectedProvince.possibleBuildings.size()) + " and name Make unit");
+            buttonUnitMap.put(tmpButton.id, selectedProvince.possibleUnits.get(i));
             tmpButton.setRound(true);
             tmpButton.setSize(wChooseProject.getWidth() * 0.15f, wChooseProject.getHeight() * 0.1f);
-            buttonUnitMap.put(tmpButton, selectedProvince.possibleUnits.get(i));
-            bBuildingBuild.add(tmpButton);
             tmpButton.addListener(new InputListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     return true;
                 }
-                
+        
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                    selectedProvince.chooseUnit(buttonUnitMap.get(tmpButton));
-                    //HegeLog.log("Code", "tmpButton.getId() - buildings.size() - 1 = " + (tmpButton.getId() - buildings.size() - 1));
-                    
+                    HegeLog.log("Input", "BuildBtn ID: " + tmpButton.getId());
+                    HegeLog.log("Province choosing project", "Chose " + buttonUnitMap.get(tmpButton.id).toString());
+                    selectedProvince.chooseUnit(buttonUnitMap.get(tmpButton.id));
+                    HegeLog.log("Province Project", "Chose unit " + buttonUnitMap.get(tmpButton.id).name);
                     setProvinceInfo();
-//                  wChooseProject.setVisible(false);
+//                    isClicked = true;
+//                    wChooseProject.setVisible(false);
                 }
             });
-            wChooseProject.add(bBuildingBuild.get(i));
+            bBuildingBuild.add(tmpButton);
+            wChooseProject.add(bBuildingBuild.get(i + selectedProvince.possibleBuildings.size()));
         }
         wChooseProject.setVisible(true);
     }

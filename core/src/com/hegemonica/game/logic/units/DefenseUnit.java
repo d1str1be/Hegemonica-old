@@ -10,6 +10,6 @@ public class DefenseUnit extends WarUnit {
     }
 
     public class UPGRADELEVEL {
-        public final static int SHIELDER = 0;
+        public final static int SHIELDMAN = 0;
     }
 }

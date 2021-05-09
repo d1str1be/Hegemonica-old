@@ -223,7 +223,7 @@ public class Country {
                 return true;
             case WarUnit.ID.ARCHER:
                 return engineering.isResearched;
-            case WarUnit.ID.SHIELDER:
+            case WarUnit.ID.SHIELDMAN:
                 return engineering.isResearched;
             case WarUnit.ID.CROSSBOWS:
                 return machinery.isResearched;

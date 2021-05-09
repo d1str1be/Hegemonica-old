@@ -6,7 +6,7 @@ import com.hegemonica.game.logic.Technology;
 
 public class WarUnit {
     public int id;
-    public int cost;
+    public int productionCost;
     public int startAttackStrength;
     public int startDefenseStrength;
     public int attackStrength;
@@ -24,10 +24,10 @@ public class WarUnit {
     public Province province;
     public Country owner;
 
-    public WarUnit(int id, Country owner, int cost, int startAttackStrength, int startDefenseStrength, int movementPoints, Province homeProvince, int number, int upgradeLevel, String name) {
+    public WarUnit(int id, Country owner, int productionCost, int startAttackStrength, int startDefenseStrength, int movementPoints, Province homeProvince, int number, int upgradeLevel, String name) {
         this.id = id;
         this.owner = owner;
-        this.cost = cost;
+        this.productionCost = productionCost;
         this.startAttackStrength = startAttackStrength;
         this.startDefenseStrength = startDefenseStrength;
         this.attackStrength = startAttackStrength;
@@ -46,15 +46,25 @@ public class WarUnit {
         this.owner = homeProvince.owner;
         switch (id) {
             case ID.WARRIOR:
+                this.name = "Warrior";
                 requiredTechnology = null;
+                break;
             case ID.ARCHER:
+                this.name = "Archer";
                 requiredTechnology = owner.technologies[Technology.ID.ENGINEERING];
-            case ID.SHIELDER:
+                break;
+            case ID.SHIELDMAN:
+                this.name = "Shieldman";
                 requiredTechnology = owner.technologies[Technology.ID.ENGINEERING];
+                break;
             case ID.CROSSBOWS:
+                this.name = "Crossbows";
                 requiredTechnology = owner.technologies[Technology.ID.MACHINERY];
+                break;
             case ID.SWORDSMAN:
+                this.name = "Swordsman";
                 requiredTechnology = owner.technologies[Technology.ID.APPRIENTICESHIP];
+                break;
         }
     }
 
@@ -67,8 +77,8 @@ public class WarUnit {
                 movementPoints = MOVEMENTPOINTS.WARRIOR;
             case ID.ARCHER:
                 movementPoints = MOVEMENTPOINTS.ARCHER;
-            case ID.SHIELDER:
-                movementPoints = MOVEMENTPOINTS.SHIELDER;
+            case ID.SHIELDMAN:
+                movementPoints = MOVEMENTPOINTS.SHIELDMAN;
             case ID.CROSSBOWS:
                 movementPoints = MOVEMENTPOINTS.CROSSBOWS;
             case ID.SWORDSMAN:
@@ -120,7 +130,7 @@ public class WarUnit {
     }
 
     public void defense(WarUnit unit) {
-        health -= Math.round(30 * Math.pow(2.72, (unit.attackStrength - defenseStrength) / 25));
+        health -= Math.round(30 * Math.pow(2.72, (unit.attackStrength - defenseStrength) / 25f));
         setAttackStrength();
         setDefenseStrength();
         if (health <= 0) {
@@ -153,7 +163,7 @@ public class WarUnit {
     public class ID { // https://media.discordapp.net/attachments/774236986406862870/780117623575805992/YpJz5_SFXKI.png отсюда добавить
         public final static int WARRIOR = 0;
         public final static int ARCHER = 1;
-        public final static int SHIELDER = 2;
+        public final static int SHIELDMAN = 2;
         public final static int CROSSBOWS = 3;
         public final static int SWORDSMAN = 4;
     }
@@ -161,7 +171,7 @@ public class WarUnit {
     public class COST {
         public final static int WARRIOR = 10;
         public final static int ARCHER = 10;
-        public final static int SHIELDER = 10;
+        public final static int SHIELDMAN = 10;
         public final static int CROSSBOWS = 10;
         public final static int SWORDSMAN = 10;
     }
@@ -174,7 +184,7 @@ public class WarUnit {
     public class ATTACKSTRENGTH {
         public final static int WARRIOR = 10;
         public final static int ARCHER = 10;
-        public final static int SHIELDER = 10;
+        public final static int SHIELDMAN = 10;
         public final static int CROSSBOWS = 10;
         public final static int SWORDSMAN = 10;
     }
@@ -182,7 +192,7 @@ public class WarUnit {
     public class DEFENSESTRENGTH {
         public final static int WARRIOR = 10;
         public final static int ARCHER = 10;
-        public final static int SHIELDER = 10;
+        public final static int SHIELDMAN = 10;
         public final static int CROSSBOWS = 10;
         public final static int SWORDSMAN = 10;
     }
@@ -190,7 +200,7 @@ public class WarUnit {
     public class MOVEMENTPOINTS {
         public final static int WARRIOR = 1;
         public final static int ARCHER = 1;
-        public final static int SHIELDER = 1;
+        public final static int SHIELDMAN = 1;
         public final static int CROSSBOWS = 1;
         public final static int SWORDSMAN = 1;
     }

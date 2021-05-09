@@ -56,7 +56,7 @@ public class Province {
     public ArrayList<WarUnit> possibleUnits;
     public WarUnit warrior;
     public WarUnit archer;
-    public WarUnit shielder;
+    public WarUnit shieldman;
     public WarUnit crossbows;
     public WarUnit swordsman;
     
@@ -199,13 +199,13 @@ public class Province {
         
         warrior = new WarUnit(WarUnit.ID.WARRIOR, this);
         archer = new WarUnit(WarUnit.ID.ARCHER, this);
-        shielder = new WarUnit(WarUnit.ID.SHIELDER, this);
+        shieldman = new WarUnit(WarUnit.ID.SHIELDMAN, this);
         crossbows = new WarUnit(WarUnit.ID.CROSSBOWS, this);
         swordsman = new WarUnit(WarUnit.ID.SWORDSMAN, this);
         units = new WarUnit[5];
         units[WarUnit.ID.WARRIOR] = warrior;
         units[WarUnit.ID.ARCHER] = archer;
-        units[WarUnit.ID.SHIELDER] = shielder;
+        units[WarUnit.ID.SHIELDMAN] = shieldman;
         units[WarUnit.ID.CROSSBOWS] = crossbows;
         units[WarUnit.ID.SWORDSMAN] = swordsman;
         possibleUnits = new ArrayList<WarUnit>();
@@ -285,18 +285,16 @@ public class Province {
                 switch (projectId) {
                     case PROJECTID.BUILDING:
                         build(buildingInProcess);
-                        buildingInProcess = null;
-                        isSomethingBuilding = false;
+                        
                         break;
                     case PROJECTID.UNIT:
                         if (unitThere == null) {
                             createUnit(unitInProcess);
-                            unitInProcess = null;
                         }
                         break;
                     case PROJECTID.UNITUPGRADE:
                         upgradeUnit();
-                        isSomethingBuilding = false;
+                        
                         break;
                 }
                 isProjectReadyNotificacion = true;
@@ -356,6 +354,7 @@ public class Province {
                     numberOfFarms += 1;
                     numberOfBuildings += 1;
                     productionPoints -= farm.productionCost;
+                    
                     break;
                 case Building.ID.MINE:
                     numberOfMines += 1;
@@ -386,6 +385,8 @@ public class Province {
                     productionPoints -= city.productionCost;
                     break;
             }
+            buildingInProcess = null;
+            isSomethingBuilding = false;
         }
         HegeLog.log("Province", name + ": built " + buildingInProcess.name);
         
@@ -405,11 +406,11 @@ public class Province {
                 unitCounter++;
                 productionPoints -= WarUnit.COST.ARCHER;
                 break;
-            case WarUnit.ID.SHIELDER:
-                createdUnits.add(new DefenseUnit(WarUnit.ID.SHIELDER, owner, WarUnit.COST.SHIELDER, WarUnit.ATTACKSTRENGTH.SHIELDER, WarUnit.DEFENSESTRENGTH.SHIELDER, WarUnit.MOVEMENTPOINTS.SHIELDER, this, unitCounter, DefenseUnit.UPGRADELEVEL.SHIELDER, "Shielder"));
+            case WarUnit.ID.SHIELDMAN:
+                createdUnits.add(new DefenseUnit(WarUnit.ID.SHIELDMAN, owner, WarUnit.COST.SHIELDMAN, WarUnit.ATTACKSTRENGTH.SHIELDMAN, WarUnit.DEFENSESTRENGTH.SHIELDMAN, WarUnit.MOVEMENTPOINTS.SHIELDMAN, this, unitCounter, DefenseUnit.UPGRADELEVEL.SHIELDMAN, "Shieldman"));
                 unitThere = createdUnits.get(unitCounter);
                 unitCounter++;
-                productionPoints -= WarUnit.COST.SHIELDER;
+                productionPoints -= WarUnit.COST.SHIELDMAN;
                 break;
             case WarUnit.ID.CROSSBOWS:
                 createdUnits.add(new RangedUnit(WarUnit.ID.CROSSBOWS, owner, WarUnit.COST.CROSSBOWS, WarUnit.ATTACKSTRENGTH.CROSSBOWS, WarUnit.DEFENSESTRENGTH.CROSSBOWS, WarUnit.MOVEMENTPOINTS.CROSSBOWS, this, unitCounter, RangedUnit.UPGRADELEVEL.CROSSBOWS, "Crossbows"));
@@ -424,11 +425,13 @@ public class Province {
                 productionPoints -= WarUnit.COST.SWORDSMAN;
                 break;
         }
+        unitInProcess = null;
     }
     
     public void upgradeUnit() {
         unitThere.upgrade();
         productionPoints -= neededProductionPoints;
+        isSomethingBuilding = false;
     }
     
     public boolean isBuildingAvailable(Building building) {
@@ -461,7 +464,7 @@ public class Province {
                 } else {
                     return false;
                 }
-            case WarUnit.ID.SHIELDER:
+            case WarUnit.ID.SHIELDMAN:
                 return false;
             case WarUnit.ID.CROSSBOWS:
                 return false;
@@ -490,7 +493,7 @@ public class Province {
     
     public void chooseUnit(WarUnit unit) {
         unitInProcess = unit;
-        neededProductionPoints = unit.cost;
+        neededProductionPoints = unit.productionCost;
         projectId = PROJECTID.UNIT;
         isSomethingBuilding = true;
         HegeLog.log("Province Project", "Chose unit " + unit.name);
