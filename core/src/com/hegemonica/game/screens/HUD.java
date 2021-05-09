@@ -188,7 +188,6 @@ public class HUD {
         wCountryInfo.setSize(Core.gameWidth * 0.15f, Core.gameWidth * 0.125f);
         wCountryInfo.setVisible(false);
         wCountryInfo.align(Align.top);
-        wCountryInfo.setDebug(true);
         
         lC1 = new Label("Country Name:", GlassyUI);
         lCountryName = new Label("Null", GlassyUI);

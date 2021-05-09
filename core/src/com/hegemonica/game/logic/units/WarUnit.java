@@ -54,6 +54,7 @@ public class WarUnit {
                 movementPoints = MOVEMENTPOINTS.WARRIOR;
                 upgradeLevel = MeleeUnit.UPGRADELEVEL.WARRIOR;
                 name = "Warrior";
+                break;
             case ID.ARCHER:
                 productionCost = PRODUCTIONCOST.ARCHER;
                 startAttackStrength = ATTACKSTRENGTH.ARCHER;
@@ -61,6 +62,7 @@ public class WarUnit {
                 movementPoints = MOVEMENTPOINTS.ARCHER;
                 upgradeLevel = RangedUnit.UPGRADELEVEL.ARCHER;
                 name = "Archer";
+                break;
             case ID.SHIELDMAN:
                 productionCost = PRODUCTIONCOST.SHIELDMAN;
                 startAttackStrength = ATTACKSTRENGTH.SHIELDMAN;
@@ -68,6 +70,7 @@ public class WarUnit {
                 movementPoints = MOVEMENTPOINTS.SHIELDMAN;
                 upgradeLevel = DefenseUnit.UPGRADELEVEL.SHIELDMAN;
                 name = "Shieldman";
+                break;
             case ID.CROSSBOWS:
                 productionCost = PRODUCTIONCOST.CROSSBOWS;
                 startAttackStrength = ATTACKSTRENGTH.CROSSBOWS;
@@ -75,6 +78,7 @@ public class WarUnit {
                 movementPoints = MOVEMENTPOINTS.CROSSBOWS;
                 upgradeLevel = RangedUnit.UPGRADELEVEL.CROSSBOWS;
                 name = "Crossbows";
+                break;
             case ID.SWORDSMAN:
                 productionCost = PRODUCTIONCOST.SWORDSMAN;
                 startAttackStrength = ATTACKSTRENGTH.SWORDSMAN;
@@ -82,6 +86,7 @@ public class WarUnit {
                 movementPoints = MOVEMENTPOINTS.SWORDSMAN;
                 upgradeLevel = MeleeUnit.UPGRADELEVEL.SWORDSMAN;
                 name = "Swordsman";
+                break;
         }
         
         setAttackStrength();
@@ -105,14 +110,19 @@ public class WarUnit {
         switch (id) {
             case ID.WARRIOR:
                 movementPoints = MOVEMENTPOINTS.WARRIOR;
+                break;
             case ID.ARCHER:
                 movementPoints = MOVEMENTPOINTS.ARCHER;
+                break;
             case ID.SHIELDMAN:
                 movementPoints = MOVEMENTPOINTS.SHIELDMAN;
+                break;
             case ID.CROSSBOWS:
                 movementPoints = MOVEMENTPOINTS.CROSSBOWS;
+                break;
             case ID.SWORDSMAN:
                 movementPoints = MOVEMENTPOINTS.SWORDSMAN;
+                break;
         }
         setAttackStrength();
         setDefenseStrength();
