@@ -451,29 +451,13 @@ public class Province {
             if (building.isLimited) {
                 switch (building.id) {
                     case Building.ID.LIBRARY:
-                        if (numberOfLibraries == 0) {
-                            return true;
-                        } else {
-                            return false;
-                        }
+                        return numberOfLibraries == 0;
                     case Building.ID.UNIVERSITY:
-                        if (numberOfUniversities == 0) {
-                            return true;
-                        } else {
-                            return false;
-                        }
+                        return numberOfUniversities == 0;
                     case Building.ID.WORKSHOP:
-                        if (numberOfWorkshops == 0) {
-                            return true;
-                        } else {
-                            return false;
-                        }
+                        return numberOfWorkshops == 0;
                     case Building.ID.CITY:
-                        if (!isCity) {
-                            return true;
-                        } else {
-                            return false;
-                        }
+                        return !isCity;
                     default:
                         return false;
                 }
