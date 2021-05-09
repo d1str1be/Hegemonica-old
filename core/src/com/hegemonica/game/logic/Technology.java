@@ -17,7 +17,7 @@ public class Technology {
     
     }
     
-    public Technology(int id, float cost, Technology[] requiredTechnologies) {
+    public Technology(int id, int cost, Technology[] requiredTechnologies) {
         this.cost = cost;
         this.requiredTechnologies = requiredTechnologies;
         switch (id) {
@@ -43,8 +43,8 @@ public class Technology {
         public final static int MACHINERY = 3;
         public final static int APPRENTICESHIP = 4;
         public final static int EDUCATION = 5;
-        public final static int UPDATEDSHIPBUILDING = 6;
-        public final static int OCEANEXPLORATION = 7;
+        //public final static int UPDATEDSHIPBUILDING = 6;
+        //public final static int OCEANEXPLORATION = 7;
     }
 
     
