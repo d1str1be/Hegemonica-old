@@ -90,6 +90,7 @@ public class HUD {
     Label lC3;
     Label lScienceProgress;
     HegeProgressBar scienceProgress;
+    TextButton bCHide;
     
     Window wChooseTech;
     Label lT1;
@@ -187,6 +188,7 @@ public class HUD {
         wCountryInfo.setSize(Core.gameWidth * 0.15f, Core.gameWidth * 0.125f);
         wCountryInfo.setVisible(false);
         wCountryInfo.align(Align.top);
+        wCountryInfo.setDebug(true);
         
         lC1 = new Label("Country Name:", GlassyUI);
         lCountryName = new Label("Null", GlassyUI);
@@ -195,6 +197,21 @@ public class HUD {
         lC3 = new Label("Science points:", GlassyUI);
         lScienceProgress = new Label("Null", DefaultUI);
         scienceProgress = new HegeProgressBar(wCountryInfo.getWidth() * 0.15f, wCountryInfo.getWidth() * 0.02f, HegeProgressBar.ID.SCIENCE);
+        
+        bCHide = new TextButton("Hide", DefaultUI);
+        bCHide.setSize(wCountryInfo.getWidth() * 0.8f, wCountryInfo.getHeight() * 0.3f);
+        bCHide.setRound(true);
+        bCHide.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+            
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                wCountryInfo.setVisible(false);
+            }
+        });
         
         wCountryInfo.add(lC1);
         wCountryInfo.add(lCountryName);
@@ -206,6 +223,8 @@ public class HUD {
         wCountryInfo.row();
         wCountryInfo.add(scienceProgress);
         wCountryInfo.add(lScienceProgress);
+        wCountryInfo.row();
+        wCountryInfo.add(bCHide);
         
         
         wChooseTech = new Window("Choose technology", DefaultUI);
@@ -306,7 +325,7 @@ public class HUD {
         lCountryTurn.setPosition(Core.gameWidth * 0.925f - lCountryTurn.getWidth(), lTurnNumber.getY() + lTurnNumber.getHeight());
         
         lStartHint = new Label("Choose new project in your start province \n and technology in \"Country Info\" ", GlassyUI, "big");
-        lStartHint.setPosition(Core.gameWidth/1.25f - lStartHint.getWidth(), Core.gameHeight * 0.1f);
+        lStartHint.setPosition((Core.gameWidth / 1.25f - lStartHint.getWidth()) / Core.uiFactor, Core.gameHeight * 0.1f);
         lStartHint.setFontScale(Core.uiFactor);
         
         stage.addActor(lTurnNumber);
