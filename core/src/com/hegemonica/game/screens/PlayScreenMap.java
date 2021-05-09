@@ -145,17 +145,18 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
         gemelch.hud.setSelectedProvince(gemelch.whichProvinceContainsPoint(realX, realY));
         if (gemelch.hud.isReadyToMove) {
             if (gemelch.whichProvinceContainsPoint(realX, realY) != null) {
-                if (gemelch.hud.selectedProvince.unitThere.isMovableToProvince(gemelch.whichProvinceContainsPoint(realX, realY))) {
+                if (gemelch.hud.startMovingProv.unitThere.isMovableToProvince(gemelch.whichProvinceContainsPoint(realX, realY))) {
                     if (gemelch.whichProvinceContainsPoint(realX, realY).unitThere != null) {
                         gemelch.hud.attackUnit(gemelch.hud.selectedProvince.unitThere, gemelch.whichProvinceContainsPoint(realX, realY).unitThere);
-                        gemelch.hud.selectedProvince.unitThere.attack(gemelch.whichProvinceContainsPoint(realX, realY).unitThere);
+                        gemelch.hud.startMovingProv.unitThere.attack(gemelch.whichProvinceContainsPoint(realX, realY).unitThere);
                     } else {
-                        gemelch.hud.selectedProvince.unitThere.move(gemelch.whichProvinceContainsPoint(realX, realY));
+                        gemelch.hud.startMovingProv.unitThere.move(gemelch.whichProvinceContainsPoint(realX, realY));
+                        gemelch.hud.moveUnit();
                     }
                 } else {
                     HegeLog.log("WarUnit move", "You cannot move unit there");
                 }
-                gemelch.hud.moveUnit();
+                
             } else {
                 gemelch.hud.hideAllWindows();
             }

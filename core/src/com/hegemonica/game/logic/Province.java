@@ -153,7 +153,7 @@ public class Province {
         this.setMathRender();
     }
     
-    public Province(int id, String name, Country owner, boolean[] neighbours, boolean isCity, float x, float y, float width, float height) {
+    public Province(int id, String name, Country owner, boolean[] neighbours, float x, float y, float width, float height) {
         this.id = id;
         this.x = x;
         this.y = y;
@@ -162,7 +162,6 @@ public class Province {
         this.name = name;
         this.owner = owner;
         this.neighbourProvinces = neighbours;
-        this.isCity = isCity;
         foodPoints = 0;
         population = 1;
         numberOfShipyards = 0;
@@ -212,6 +211,7 @@ public class Province {
             unitCounter = 1;
             HegeLog.log("WarUnit", "Making unit for: " + owner.name);
             unitThere = new WarUnit(WarUnit.ID.WARRIOR, this,true);
+            isCity = true;
         } else {
             unitCounter = 0;
         }
@@ -278,7 +278,6 @@ public class Province {
                 possibleUnits.add(unit);
             }
         }
-        HegeLog.log("ProvGeneric", possibleUnits.toString());
     }
     
     public void onTurn() {
@@ -407,31 +406,31 @@ public class Province {
     public void createUnit(WarUnit unit) {
         switch (unit.id) {
             case WarUnit.ID.WARRIOR:
-                createdUnits.add(new MeleeUnit(WarUnit.ID.WARRIOR, this));
+                createdUnits.add(new MeleeUnit(WarUnit.ID.WARRIOR, this, true));
                 unitThere = createdUnits.get(unitCounter);
                 unitCounter++;
                 productionPoints -= WarUnit.PRODUCTIONCOST.WARRIOR;
                 break;
             case WarUnit.ID.ARCHER:
-                createdUnits.add(new RangedUnit(WarUnit.ID.ARCHER, this));
+                createdUnits.add(new RangedUnit(WarUnit.ID.ARCHER, this, true));
                 unitThere = createdUnits.get(unitCounter);
                 unitCounter++;
                 productionPoints -= WarUnit.PRODUCTIONCOST.ARCHER;
                 break;
             case WarUnit.ID.SHIELDMAN:
-                createdUnits.add(new MeleeUnit(WarUnit.ID.SHIELDMAN, this));
+                createdUnits.add(new MeleeUnit(WarUnit.ID.SHIELDMAN, this, true));
                 unitThere = createdUnits.get(unitCounter);
                 unitCounter++;
                 productionPoints -= WarUnit.PRODUCTIONCOST.SHIELDMAN;
                 break;
             case WarUnit.ID.CROSSBOWS:
-                createdUnits.add(new RangedUnit(WarUnit.ID.CROSSBOWS, this));
+                createdUnits.add(new RangedUnit(WarUnit.ID.CROSSBOWS, this, true));
                 unitThere = createdUnits.get(unitCounter);
                 unitCounter++;
                 productionPoints -= WarUnit.PRODUCTIONCOST.CROSSBOWS;
                 break;
             case WarUnit.ID.SWORDSMAN:
-                createdUnits.add(new MeleeUnit(WarUnit.ID.SWORDSMAN, this));
+                createdUnits.add(new MeleeUnit(WarUnit.ID.SWORDSMAN, this, true));
                 unitThere = createdUnits.get(unitCounter);
                 unitCounter++;
                 productionPoints -= WarUnit.PRODUCTIONCOST.SWORDSMAN;

@@ -49,6 +49,7 @@ public class HUD {
     public TextButton bTurn;
     
     Country turnCountry;
+    Province startMovingProv;
     Province selectedProvince;
     
     Label lTurnNumber;
@@ -179,7 +180,7 @@ public class HUD {
                 hideAllWindows();
                 lMoveUnit.setVisible(true);
                 isReadyToMove = true;
-                
+                startMovingProv = selectedProvince;
             }
         });
         
@@ -393,6 +394,7 @@ public class HUD {
     
     public void onTurn() {
         lNewTurn.setVisible(false);
+        hideAllWindows();
         gemelch.onTurn();
         setSelectedCountry(gemelch.turnCountry);
         if (selectedProvince != null)
@@ -430,7 +432,7 @@ public class HUD {
         }
         
         
-        if (selectedProvince.productionPoints >= selectedProvince.neededProductionPoints) {
+        if (!selectedProvince.isSomethingBuilding) {
             setBuildingsInfo();
         }
     }
@@ -442,7 +444,7 @@ public class HUD {
         scienceProgress.setRange(0, turnCountry.neededSciencePoints);
         scienceProgress.setValue((float) turnCountry.sciencePoints);
         
-        if (turnCountry.sciencePoints >= turnCountry.neededSciencePoints) {
+        if (!turnCountry.isSomethingResearching) {
             setTechInfo();
         }
     }
@@ -525,8 +527,7 @@ public class HUD {
                         HegeLog.log("Province Project", "Chose unit " + buttonUnitMap.get(tmpButton.id).name);
                         setProvinceInfo();
                         wChooseProject.setVisible(false);
-                        return;
-//                    isClicked = true;
+                        //                    isClicked = true;
 //                    wChooseProject.setVisible(false);
                     }
                 });

@@ -57,14 +57,14 @@ public class Gemelch {
         blueCountry = new Country(this, "Blue", Country.ID.BLUE, Color.BLUE);
         yellowCountry = new Country(this, "Yellow", Country.ID.YELLOW, Color.YELLOW);
         turnCountry = redCountry;
-    
+        
         hud = new HUD(game, this);
         
         provinces = new Province[provCountWidth * provCountHeight];
         for (int i = 0; i < provCountHeight; i++) {
             for (int j = 0; j < provCountWidth; j++) {
                 int iterator = i * provCountWidth + j;
-                provinces[iterator] = new Province(iterator, "Province " + iterator, nothingCountry, new boolean[]{true}, false, 50 * j, 50 * i, 50, 50);
+                provinces[iterator] = new Province(iterator, "Province " + iterator, nothingCountry, new boolean[]{true}, 50 * j, 50 * i, 50, 50);
             }
         }
         highestX = 50 * provCountWidth;
@@ -119,9 +119,9 @@ public class Gemelch {
         switch (turnCountry.id) {
             case Country.ID.RED:
                 HegeLog.log("Gemelch", "Red turns");
-                if(redCountry.onTurn())
-                turnCountry = greenCountry;
-                else{
+                if (redCountry.onTurn())
+                    turnCountry = greenCountry;
+                else {
                     HegeLog.log("Gemelch", "NO FUCKING TURN RED COUNTRY BAD");
                     return;
                 }
@@ -129,27 +129,27 @@ public class Gemelch {
                 break;
             case Country.ID.GREEN:
                 HegeLog.log("Gemelch", "Green turns");
-                if(greenCountry.onTurn())
+                if (greenCountry.onTurn())
                     turnCountry = blueCountry;
-                else{
+                else {
                     HegeLog.log("Gemelch", "NO FUCKING TURN GREEN COUNTRY BAD");
                     return;
                 }
                 break;
             case Country.ID.BLUE:
                 HegeLog.log("Gemelch", "Blue turns");
-                if(blueCountry.onTurn())
+                if (blueCountry.onTurn())
                     turnCountry = yellowCountry;
-                else{
+                else {
                     HegeLog.log("Gemelch", "NO FUCKING TURN BLUE COUNTRY BAD");
                     return;
                 }
                 break;
             case Country.ID.YELLOW:
                 HegeLog.log("Gemelch", "Yellow turns");
-                if(yellowCountry.onTurn())
+                if (yellowCountry.onTurn())
                     turnCountry = redCountry;
-                else{
+                else {
                     HegeLog.log("Gemelch", "NO FUCKING TURN YELLOW COUNTRY BAD");
                     return;
                 }
