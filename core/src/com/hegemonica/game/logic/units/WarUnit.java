@@ -2,7 +2,6 @@ package com.hegemonica.game.logic.units;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.hegemonica.game.HegeLog;
 import com.hegemonica.game.logic.Country;
 import com.hegemonica.game.logic.Province;
@@ -160,8 +159,7 @@ public class WarUnit {
         }
         province.setOwner(this.owner);
         movementPoints = 0;
-        HegeLog.log("WarUnit", "Unit " + name + " of country " + owner.name + " captured " + province.name);
-        owner.gemelch.hud.lProvName = new Label(name, owner.gemelch.hud.DefaultUI, owner.name);
+        HegeLog.log("WarUnit", "Unit " + name + " of country " + owner.name + " captured " + this.province.name);
         warUnitGFX.update(this);
     }
     
