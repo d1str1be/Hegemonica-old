@@ -31,6 +31,8 @@ public class Gemelch {
     public int provCountHeight;
     public int provincesCount;
     public Province[] provinces;
+    public int highestX;
+    public int highestY;
     
     public Province leftBottomProv;
     public Province rightBottomProv;
@@ -67,31 +69,34 @@ public class Gemelch {
                 provinces[iterator] = new Province(iterator, "Province " + iterator, nothingCountry, new boolean[]{true}, false, 50 * j, 50 * i, 50, 50);
             }
         }
+        highestX = 50 * provCountWidth;
+        highestY = 50 * provCountHeight;
+        
         leftBottomProv = provinces[0];
         rightBottomProv = provinces[provCountWidth - 1];
         leftTopProv = provinces[(provCountHeight - 1) * provCountWidth];
         rightTopProv = provinces[provCountWidth * provCountHeight - 1];
         
         leftBottomProv.owner = redCountry;
-        leftBottomProv.lProvName = new Label(leftBottomProv.name, leftBottomProv.defaultSkin, "red");
+        leftBottomProv.lProvName = new Label(leftBottomProv.name, leftBottomProv.defaultSkin, "Red");
         leftBottomProv.lProvName.setSize(leftBottomProv.width * 0.2f, leftBottomProv.height * 0.2f);
         leftBottomProv.lProvName.setFontScale(0.5f);
         leftBottomProv.lProvName.setPosition(leftBottomProv.x + (leftBottomProv.width * 0.05f), leftBottomProv.y);
         
         leftTopProv.owner = blueCountry;
-        leftTopProv.lProvName = new Label(leftTopProv.name, leftTopProv.defaultSkin, "blue");
+        leftTopProv.lProvName = new Label(leftTopProv.name, leftTopProv.defaultSkin, "Blue");
         leftTopProv.lProvName.setFontScale(0.5f);
         leftTopProv.lProvName.setSize(leftTopProv.width * 0.2f, leftTopProv.height * 0.2f);
         leftTopProv.lProvName.setPosition(leftTopProv.x + (leftTopProv.width * 0.05f), leftTopProv.y);
         
         rightTopProv.owner = yellowCountry;
-        rightTopProv.lProvName = new Label(rightTopProv.name, rightTopProv.defaultSkin, "yellow");
+        rightTopProv.lProvName = new Label(rightTopProv.name, rightTopProv.defaultSkin, "Yellow");
         rightTopProv.lProvName.setFontScale(0.5f);
         rightTopProv.lProvName.setSize(rightTopProv.width * 0.2f, rightTopProv.height * 0.2f);
         rightTopProv.lProvName.setPosition(rightTopProv.x + (leftBottomProv.width * 0.05f), rightTopProv.y);
         
         rightBottomProv.owner = greenCountry;
-        rightBottomProv.lProvName = new Label(rightBottomProv.name, rightBottomProv.defaultSkin, "green");
+        rightBottomProv.lProvName = new Label(rightBottomProv.name, rightBottomProv.defaultSkin, "Green");
         rightBottomProv.lProvName.setFontScale(0.5f);
         rightBottomProv.lProvName.setSize(rightBottomProv.width * 0.2f, rightBottomProv.height * 0.2f);
         rightBottomProv.lProvName.setPosition(rightBottomProv.x + (rightBottomProv.width * 0.05f), rightBottomProv.y);
@@ -180,7 +185,7 @@ public class Gemelch {
      * @return Selected province
      */
     
-    public Province whichPolygonContainsPoint(float x, float y) {
+    public Province whichProvinceContainsPoint(float x, float y) {
         for (Province province : provinces) {
             if (province.contains(x, y))
                 return province;

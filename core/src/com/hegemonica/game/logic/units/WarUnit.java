@@ -2,6 +2,7 @@ package com.hegemonica.game.logic.units;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.hegemonica.game.HegeLog;
 import com.hegemonica.game.logic.Country;
 import com.hegemonica.game.logic.Province;
@@ -27,7 +28,7 @@ public class WarUnit {
     public static final int maxHealth = 100;
     public boolean isHealing;
     
-    boolean readyToCapture;
+    boolean isReadyToCapture;
     
     public WarUnitGFX warUnitGFX;
     public boolean isRendered;
@@ -93,7 +94,7 @@ public class WarUnit {
         setDefenseStrength();
         if (isRendered) {
             warUnitGFX = new WarUnitGFX(id, province);
-            warUnitGFX.setHealth(maxHealth);
+            warUnitGFX.setHealth((float) maxHealth);
             warUnitGFX.update(this);
             HegeLog.log("WarUnitGFX", "Set health to " + maxHealth);
         }
@@ -104,7 +105,7 @@ public class WarUnit {
     public void onTurn() {
         if (isHealing) {
             heal();
-            warUnitGFX.setHealth(health);
+            warUnitGFX.setHealth((float) health);
             warUnitGFX.update(this);
         }
         switch (id) {
@@ -146,22 +147,34 @@ public class WarUnit {
         this.province.unitThere = null;
         province.unitThere = this;
         this.province = province;
+        this.homeProvince = province;
         movementPoints--;
+        capture(province);
+        warUnitGFX.update(this);
     }
     
-    public void capture() {
+    public void capture(Province province) {
+        if(province.owner.id == Country.ID.NOTHING){
+            province.setOwner(this.owner);
+            province.manualInitialization();
+        }
         province.setOwner(this.owner);
         movementPoints = 0;
+        HegeLog.log("WarUnit", "Unit " + name + " of country " + owner.name + " captured " + province.name);
+        owner.gemelch.hud.lProvName = new Label(name, owner.gemelch.hud.DefaultUI, owner.name);
+        this.homeProvince = province;
+        warUnitGFX.update(this);
     }
     
     public void attack(WarUnit unit) {
         unit.defense(this);
         if (unit.health <= 0) {
             this.move(unit.province);
+            isReadyToCapture = true;
             setAttackStrength();
             setDefenseStrength();
         } else {
-            health -= Math.round(30 * Math.pow(2.72, (unit.defenseStrength - attackStrength) / 25));
+            health -= Math.round(30 * Math.pow(2.72, (unit.defenseStrength - attackStrength) / 25f));
             setAttackStrength();
             setDefenseStrength();
             movementPoints = 0;
@@ -197,7 +210,8 @@ public class WarUnit {
     
     public void destroy() {
         province.unitThere = null;
-        province.createdUnits.set(number, null);
+        if (!province.createdUnits.isEmpty())
+            province.createdUnits.set(number, null);
     }
     
     
@@ -257,11 +271,7 @@ public class WarUnit {
     
     
     public void render(OrthographicCamera camera) {
-        batch.setProjectionMatrix(camera.combined);
-        batch.begin();
-        warUnitGFX.getSprite().draw(batch);
-        warUnitGFX.healthBar.draw(batch, 1f);
-        batch.end();
+        warUnitGFX.render(camera);
     }
     
 }

@@ -33,6 +33,7 @@ import java.util.Map;
 public class HUD {
     Core game;
     public Gemelch gemelch;
+    public boolean isReadyToMove;
     final float bWidth = Gdx.graphics.getWidth() / 5f;
     final float bHeight = Gdx.graphics.getHeight() / 8f;
     
@@ -41,8 +42,8 @@ public class HUD {
     
     
     public Stage stage;
-    Skin DefaultUI;
-    Skin GlassyUI;
+    public Skin DefaultUI;
+    public Skin GlassyUI;
     TextButton bCountry;
     TextButton bBack;
     public TextButton bTurn;
@@ -54,6 +55,8 @@ public class HUD {
     Label lCountryTurn;
     Label lNewTurn;
     Label lStartHint;
+    Label lMoveUnit;
+    Label lUnitAttack;
     
     ScrollPane scrollPane;
     Table scrollTable1;
@@ -61,7 +64,7 @@ public class HUD {
     Label lP1;
     Label lP2;
     Label lP3;
-    Label lProvName;
+    public Label lProvName;
     Label lProvCountry;
     Label lProvPopulation;
     Label lP4;
@@ -70,6 +73,9 @@ public class HUD {
     Label lP5;
     Label lProductionProgress;
     HegeProgressBar productionProgress;
+    Label lP6;
+    Label lUnitThere;
+    TextButton bMoveUnit;
     
     
     Label lCB1;
@@ -107,6 +113,7 @@ public class HUD {
         this.gemelch = gemelch;
         this.turnCountry = gemelch.turnCountry;
         this.show();
+        this.isReadyToMove = false;
         //setDebug(Core.DEV_MODE);
     }
     
@@ -116,16 +123,14 @@ public class HUD {
             game.audio.playSound(AudioManager.Sounds.UI_CLICK);
             HegeLog.log(HegeLog.HUD, "Selected " + selectedProvince.name);
             if (selectedProvince.owner.id == Country.ID.NOTHING) {
-                wProvinceInfo.setVisible(false);
-                wChooseProject.setVisible(false);
+                hideAllWindows();
                 return;
             }
             setProvinceInfo();
             wProvinceInfo.setVisible(true);
         } else {
-            HegeLog.log(HegeLog.HUD, "Selected null province");
-            wProvinceInfo.setVisible(false);
-            wChooseProject.setVisible(false);
+            HegeLog.log(HegeLog.HUD, "Selected not country`s province or null");
+            hideAllWindows();
         }
     }
     
@@ -155,11 +160,28 @@ public class HUD {
         lPopulationProgress = new Label("Null", DefaultUI);
         lP5 = new Label("Production points:", GlassyUI);
         lProductionProgress = new Label("Null", DefaultUI);
-        
+        lP6 = new Label("Unit in province:", GlassyUI);
+        lUnitThere = new Label("Null", DefaultUI);
         
         populationProgress = new HegeProgressBar(wProvinceInfo.getWidth() * 0.15f, wProvinceInfo.getWidth() * 0.02f, HegeProgressBar.ID.FOOD);
         productionProgress = new HegeProgressBar(wProvinceInfo.getWidth() * 0.15f, wProvinceInfo.getWidth() * 0.02f, HegeProgressBar.ID.PRODUCTION);
         
+        bMoveUnit = new TextButton("Move Unit", DefaultUI);
+        bMoveUnit.setSize(wProvinceInfo.getWidth() * 0.4f, wProvinceInfo.getHeight() * 0.3f);
+        bMoveUnit.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+            
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                hideAllWindows();
+                lMoveUnit.setVisible(true);
+                isReadyToMove = true;
+                
+            }
+        });
         
         wProvinceInfo.add(lP1);
         wProvinceInfo.add(lProvName);
@@ -180,7 +202,10 @@ public class HUD {
         wProvinceInfo.add(productionProgress);
         wProvinceInfo.add(lProductionProgress);
         wProvinceInfo.row();
-        wProvinceInfo.add(scrollPane);
+        wProvinceInfo.add(lP6);
+        wProvinceInfo.add(lUnitThere);
+        wProvinceInfo.row();
+        wProvinceInfo.add(bMoveUnit);
         
         wCountryInfo = new Window("Country Info", DefaultUI);
         wCountryInfo.setMovable(true);
@@ -329,10 +354,18 @@ public class HUD {
         lStartHint.setPosition(Core.gameWidth * 0.15f, Core.gameHeight * 0.05f);
         lStartHint.setFontScale(Core.uiFactor);
         
+        lUnitAttack = new Label("Unit X attacked unit Y", GlassyUI, "big");
+        lUnitAttack.setPosition((gemelch.highestX - lUnitAttack.getWidth()) / 2f, (gemelch.highestY - lUnitAttack.getHeight()) / 2f);
+        
+        lMoveUnit = new Label("Move unit to...", GlassyUI, "big");
+        lMoveUnit.setPosition((Core.gameWidth - lMoveUnit.getWidth()) / 2f, Core.gameHeight * 0.95f);
+        lMoveUnit.setVisible(false);
+        
         stage.addActor(lTurnNumber);
         stage.addActor(lNewTurn);
         stage.addActor(lCountryTurn);
         stage.addActor(lStartHint);
+        stage.addActor(lMoveUnit);
         stage.addActor(wProvinceInfo);
         stage.addActor(wChooseProject);
         stage.addActor(wCountryInfo);
@@ -340,6 +373,13 @@ public class HUD {
         stage.addActor(bTurn);
         stage.addActor(bBack);
         stage.addActor(bCountry);
+    }
+    
+    public void hideAllWindows() {
+        wProvinceInfo.setVisible(false);
+        wChooseProject.setVisible(false);
+        wCountryInfo.setVisible(false);
+        wChooseTech.setVisible(false);
     }
     
     public void render(float delta) {
@@ -380,6 +420,14 @@ public class HUD {
         
         productionProgress.setRange(0, (float) selectedProvince.neededProductionPoints);
         productionProgress.setValue((float) selectedProvince.productionPoints);
+        
+        if (selectedProvince.unitThere != null) {
+            lUnitThere.setText(selectedProvince.unitThere.name);
+            bMoveUnit.setVisible(true);
+        } else {
+            lUnitThere.setText("No Unit");
+            bMoveUnit.setVisible(false);
+        }
         
         
         if (selectedProvince.productionPoints >= selectedProvince.neededProductionPoints) {
@@ -538,6 +586,16 @@ public class HUD {
         }
         wChooseTech.setVisible(true);
         wChooseTech.setMovable(true);
+    }
+    
+    public void moveUnit() {
+        lMoveUnit.setVisible(false);
+        isReadyToMove = false;
+    }
+    
+    public void attackUnit(WarUnit attackUnit, WarUnit defenseUnit) {
+        lUnitAttack.setText("Unit " + attackUnit.name + "attacked unit " + defenseUnit.name + "!");
+        lUnitAttack.setVisible(true);
     }
     
     public void setDebug(boolean debug) {

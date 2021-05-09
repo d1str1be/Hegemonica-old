@@ -141,7 +141,22 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
         realY = (Core.gameHeight - y + cameraMovementY) / 2;
 //        HegeLog.log("Input", "Tapped on X: " + realX);
 //        HegeLog.log("Input", "Tapped on Y: " + realY);
-        gemelch.hud.setSelectedProvince(gemelch.whichPolygonContainsPoint(realX, realY));
+        gemelch.hud.setSelectedProvince(gemelch.whichProvinceContainsPoint(realX, realY));
+        if (gemelch.hud.isReadyToMove) {
+            if (gemelch.whichProvinceContainsPoint(realX, realY) != null) {
+                if(gemelch.whichProvinceContainsPoint(realX, realY).unitThere!=null) {
+                    gemelch.hud.attackUnit(gemelch.hud.selectedProvince.unitThere, gemelch.whichProvinceContainsPoint(realX, realY).unitThere);
+                    gemelch.hud.selectedProvince.unitThere.attack(gemelch.whichProvinceContainsPoint(realX, realY).unitThere);
+                }
+                else {
+                    gemelch.hud.selectedProvince.unitThere.move(gemelch.whichProvinceContainsPoint(realX, realY));
+                }
+                gemelch.hud.moveUnit();
+            }
+            else{
+                gemelch.hud.hideAllWindows();
+            }
+        }
         return true;
     }
     
