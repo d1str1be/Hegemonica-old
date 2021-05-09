@@ -486,10 +486,16 @@ public class Province {
     
     public boolean isUnitAvailable(WarUnit unit) {
         if (owner.checkRequiredTechnologiesForUnit(unit) && isCity && unitThere != null) {
-            return true;
-        } else {
-            return false;
+            switch (unit.id) {
+                case WarUnit.ID.CROSSBOWS:
+                    if (numberOfWorkshops == 1) {return true;} else {return false;}
+                case WarUnit.ID.SWORDSMAN:
+                    if (numberOfWorkshops == 1) {return true;} else {return false;}
+                default:
+                    return true;
+            }
         }
+        return false;
     }
     
     public boolean isUpgradeAvailable() {

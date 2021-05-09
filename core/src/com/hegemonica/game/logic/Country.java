@@ -85,7 +85,7 @@ public class Country {
         sciencePoints = 0;
         citizenProduction = 1;
         mineProduction = 2;
-        workshopProduction = 5;
+        workshopProduction = 8;
         shipyardProduction = 3;
         
         startFoodProduction = 2;
@@ -93,25 +93,17 @@ public class Country {
         shipyardProduction = 2;
         
         citizenScienceProduction = 1;
-        libraryProduction = 3;
-        universityProduction = 6;
+        libraryProduction = 4;
+        universityProduction = 9;
         
         technologies = new Technology[6];
         
-        engineering = new Technology(Technology.ID.ENGINEERING, 50, new Technology[]{});
-        paper = new Technology(Technology.ID.PAPER, 50, new Technology[]{});
-        simplyChemistry = new Technology(Technology.ID.SIMPLYCHEMISTRY, 50, new Technology[]{});
-        machinery = new Technology(Technology.ID.MACHINERY, 50, new Technology[]{engineering});
-        apprienticeship = new Technology(Technology.ID.APPRENTICESHIP, 100, new Technology[]{engineering, paper});
-        education = new Technology(Technology.ID.EDUCATION, 100, new Technology[]{paper, simplyChemistry});
-        
-        technologies[0] = engineering;
-        technologies[0].cost = 2;
-        technologies[1] = paper;
-        technologies[2] = simplyChemistry;
-        technologies[3] = machinery;
-        technologies[4] = apprienticeship;
-        technologies[5] = education;
+        technologies[Technology.ID.ENGINEERING] = new Technology(Technology.ID.ENGINEERING, 50, new Technology[]{});;
+        technologies[Technology.ID.PAPER] = new Technology(Technology.ID.PAPER, 50, new Technology[]{});
+        technologies[Technology.ID.SIMPLYCHEMISTRY] = new Technology(Technology.ID.SIMPLYCHEMISTRY, 50, new Technology[]{});
+        technologies[Technology.ID.MACHINERY] = new Technology(Technology.ID.MACHINERY, 50, new Technology[]{engineering});
+        technologies[Technology.ID.APPRENTICESHIP] = new Technology(Technology.ID.APPRENTICESHIP, 100, new Technology[]{engineering, paper});
+        technologies[Technology.ID.EDUCATION] = new Technology(Technology.ID.EDUCATION, 100, new Technology[]{paper, simplyChemistry});
         isSomethingResearching = false;
         
         possibleTechnologies = new ArrayList<>();
@@ -164,23 +156,20 @@ public class Country {
     
     
     public void research(Technology technology) {
+        technologies[technology.id].isResearched = true;
         switch (technology.id) {
             case Technology.ID.ENGINEERING:
-                engineering.isResearched = true;
                 mineProduction++;
-            case Technology.ID.PAPER:
-                paper.isResearched = true;
+                break;
             case Technology.ID.SIMPLYCHEMISTRY:
-                simplyChemistry.isResearched = true;
                 farmProduction++;
-            case Technology.ID.MACHINERY:
-                machinery.isResearched = true;
+                break;
             case Technology.ID.APPRENTICESHIP:
-                apprienticeship.isResearched = true;
                 mineProduction++;
+                break;
             case Technology.ID.EDUCATION:
-                education.isResearched = true;
-                libraryProduction++;
+                libraryProduction += 2;
+                break;
                 //case Technology.ID.UPDATEDSHIPBUILDING:
                 //    updatedShipbuilding.isResearched = true;
                 //case Technology.ID.OCEANEXPLORATION:
