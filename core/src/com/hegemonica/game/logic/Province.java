@@ -272,9 +272,11 @@ public class Province {
     public void setPossibleUnits() {
         if(possibleUnits!=null)
             possibleUnits.clear();
-        for (WarUnit unit : units) {
-            if (isUnitAvailable(unit)) {
-                possibleUnits.add(unit);
+        if(units!=null) {
+            for (WarUnit unit : units) {
+                if (isUnitAvailable(unit)) {
+                    possibleUnits.add(unit);
+                }
             }
         }
     }
