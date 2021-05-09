@@ -249,6 +249,7 @@ public class HUD {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 onTurn();
+                setCountryInfo();
             }
         });
         
@@ -282,6 +283,7 @@ public class HUD {
                 setCountryInfo();
                 if (wCountryInfo.isVisible()) {
                     wCountryInfo.setVisible(false);
+                    wChooseTech.setVisible(false);
                 } else {
                     wCountryInfo.setVisible(true);
                 }
@@ -401,6 +403,7 @@ public class HUD {
                     selectedProvince.chooseBuilding(buttonBuildingMap.get(tmpButton.id));
                     HegeLog.log("Province Project", "Chose building " + buttonBuildingMap.get(tmpButton.id).name);
                     setProvinceInfo();
+                    wChooseProject.setVisible(false);
 //                    isClicked = true;
 //                    wChooseProject.setVisible(false);
                 }
@@ -435,6 +438,7 @@ public class HUD {
                     selectedProvince.chooseUnit(buttonUnitMap.get(tmpButton.id));
                     HegeLog.log("Province Project", "Chose unit " + buttonUnitMap.get(tmpButton.id).name);
                     setProvinceInfo();
+                    wChooseProject.setVisible(false);
 //                    isClicked = true;
 //                    wChooseProject.setVisible(false);
                 }
@@ -443,6 +447,7 @@ public class HUD {
             wChooseProject.add(bBuildingBuild.get(i + selectedProvince.possibleBuildings.size()));
         }
         wChooseProject.setVisible(true);
+        wChooseProject.setMovable(true);
     }
     
     public void setTechInfo() {
@@ -478,14 +483,15 @@ public class HUD {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     HegeLog.log("Input", "TechButton: " + tmpButton.getId());
-                    HegeLog.log("Province choosing project", "Chose " + buttonUnitMap.get(tmpButton.id).toString());
+                    HegeLog.log("Province choosing project", "Chose " + buttonTechMap.get(tmpButton.id).toString());
                     turnCountry.chooseTechnology(buttonTechMap.get(tmpButton.id));
-                    HegeLog.log("Province Project", "Chose tech " + buttonUnitMap.get(tmpButton.id).name);
+                    HegeLog.log("Province Project", "Chose tech " + buttonTechMap.get(tmpButton.id).name);
                     setCountryInfo();
+                    wChooseTech.setVisible(false);
                 }
             });
             bTech.add(tmpButton);
-            wChooseProject.add(bBuildingBuild.get(i));
+            wChooseTech.add(bTech.get(i));
         }
         wChooseTech.setVisible(true);
         wChooseTech.setMovable(true);
