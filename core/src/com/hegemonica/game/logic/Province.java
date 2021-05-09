@@ -398,11 +398,10 @@ public class Province {
                     productionPoints -= city.productionCost;
                     break;
             }
+            HegeLog.log("Province", name + ": built " + buildingInProcess.name);
             buildingInProcess = null;
             isSomethingBuilding = false;
         }
-        HegeLog.log("Province", name + ": built " + buildingInProcess.name);
-        
     }
     
     public void createUnit(WarUnit unit) {

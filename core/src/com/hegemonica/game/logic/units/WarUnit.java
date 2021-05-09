@@ -45,7 +45,7 @@ public class WarUnit {
         this.id = id;
         owner = province.owner;
         this.homeProvince = province;
-        this.province = province;
+        this.province = homeProvince;
         health = maxHealth;
         switch (id) {
             case ID.WARRIOR:
@@ -147,7 +147,6 @@ public class WarUnit {
         this.province.unitThere = null;
         province.unitThere = this;
         this.province = province;
-        this.homeProvince = province;
         movementPoints--;
         capture(province);
         warUnitGFX.update(this);
@@ -162,7 +161,6 @@ public class WarUnit {
         movementPoints = 0;
         HegeLog.log("WarUnit", "Unit " + name + " of country " + owner.name + " captured " + province.name);
         owner.gemelch.hud.lProvName = new Label(name, owner.gemelch.hud.DefaultUI, owner.name);
-        this.homeProvince = province;
         warUnitGFX.update(this);
     }
     
