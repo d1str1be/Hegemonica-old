@@ -307,6 +307,7 @@ public class HUD {
         
         lStartHint = new Label("Choose new project in your start province \n and technology in \"Country Info\" ", GlassyUI, "big");
         lStartHint.setPosition(Core.gameWidth/1.25f - lStartHint.getWidth(), Core.gameHeight * 0.1f);
+        lStartHint.setFontScale(Core.uiFactor);
         
         stage.addActor(lTurnNumber);
         stage.addActor(lNewTurn);

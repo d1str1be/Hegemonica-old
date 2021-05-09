@@ -36,7 +36,7 @@ public class Core extends Game {
     public void create() {
         gameWidth = Gdx.graphics.getWidth();
         gameHeight = Gdx.graphics.getHeight();
-        uiFactor = gameWidth * 0.01625f;
+        uiFactor = gameWidth / 2030f;
         HegeLog.log(HegeLog.HEGEMONICA, "Width of app: " + gameWidth +
                 "\nHeight of app: " + gameHeight);
         Gdx.input.setCatchKey(Input.Keys.BACK, true); // перехват сист.кнопки "назад" на андроиде
