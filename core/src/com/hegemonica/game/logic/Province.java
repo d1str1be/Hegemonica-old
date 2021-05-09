@@ -436,10 +436,38 @@ public class Province {
     
     public boolean isBuildingAvailable(Building building) {
         if (owner.checkRequiredTechnologiesForBuilding(building) && numberOfBuildings < population) {
-            return !building.isNeedCity || building.isNeedCity == isCity;
-        } else {
-            return false;
+            if (building.isLimited) {
+                switch (building.id) {
+                    case Building.ID.LIBRARY:
+                        if (numberOfLibraries == 0) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    case Building.ID.UNIVERSITY:
+                        if (numberOfUniversities == 0) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    case Building.ID.WORKSHOP:
+                        if (numberOfWorkshops == 0) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    case Building.ID.CITY:
+                        if (!isCity) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    default:
+                        return false;
+                }
+            }
         }
+        return false;
     }
     
     public boolean isUnitAvailable(WarUnit unit) {

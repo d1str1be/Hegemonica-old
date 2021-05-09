@@ -68,7 +68,7 @@ public class WarUnit {
                 break;
             case ID.SWORDSMAN:
                 this.name = "Swordsman";
-                requiredTechnology = owner.technologies[Technology.ID.APPRIENTICESHIP];
+                requiredTechnology = owner.technologies[Technology.ID.APPRENTICESHIP];
                 productionCost = PRODUCTIONCOST.SWORDSMAN;
                 break;
         }

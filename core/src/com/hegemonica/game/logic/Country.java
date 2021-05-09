@@ -194,7 +194,7 @@ public class Country {
     public void setPossibleTechnologies() {
         possibleTechnologies.clear();
         for (Technology technology : technologies) {
-            if (checkRequiredTechnologiesForTechnology(technology)) {
+            if (checkRequiredTechnologiesForTechnology(technology) && !technology.isResearched) {
                 possibleTechnologies.add(technology);
             }
         }
