@@ -77,7 +77,6 @@ public class Gemelch {
         
         leftBottomProv.owner = redCountry;
         leftBottomProv.isCity = true;
-        leftBottomProv.possibleBuildings.remove(2);
         leftBottomProv.lProvName = new Label(leftBottomProv.name, leftBottomProv.defaultSkin, "Red");
         leftBottomProv.lProvName.setSize(leftBottomProv.width * 0.2f, leftBottomProv.height * 0.2f);
         leftBottomProv.lProvName.setFontScale(0.5f);
@@ -85,7 +84,6 @@ public class Gemelch {
         
         leftTopProv.owner = blueCountry;
         leftTopProv.isCity = true;
-        leftTopProv.possibleBuildings.remove(2);
         leftTopProv.lProvName = new Label(leftTopProv.name, leftTopProv.defaultSkin, "Blue");
         leftTopProv.lProvName.setFontScale(0.5f);
         leftTopProv.lProvName.setSize(leftTopProv.width * 0.2f, leftTopProv.height * 0.2f);
@@ -93,7 +91,6 @@ public class Gemelch {
         
         rightTopProv.owner = yellowCountry;
         rightTopProv.isCity = true;
-        rightTopProv.possibleBuildings.remove(2);
         rightTopProv.lProvName = new Label(rightTopProv.name, rightTopProv.defaultSkin, "Yellow");
         rightTopProv.lProvName.setFontScale(0.5f);
         rightTopProv.lProvName.setSize(rightTopProv.width * 0.2f, rightTopProv.height * 0.2f);
@@ -101,7 +98,6 @@ public class Gemelch {
         
         rightBottomProv.owner = greenCountry;
         rightBottomProv.isCity = true;
-        rightBottomProv.possibleBuildings.remove(2);
         rightBottomProv.lProvName = new Label(rightBottomProv.name, rightBottomProv.defaultSkin, "Green");
         rightBottomProv.lProvName.setFontScale(0.5f);
         rightBottomProv.lProvName.setSize(rightBottomProv.width * 0.2f, rightBottomProv.height * 0.2f);

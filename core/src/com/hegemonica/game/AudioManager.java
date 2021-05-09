@@ -48,6 +48,7 @@ public class AudioManager {
         switch (soundId) {
             case Sounds.UI_CLICK:
                 uiClickSound.play(soundVolume);
+                break;
         }
     }
 

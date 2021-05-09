@@ -188,9 +188,7 @@ public class Province {
         buildings[Building.ID.WORKSHOP] = workshop;
         buildings[Building.ID.CITY] = city;
         possibleBuildings = new ArrayList<Building>();
-        possibleBuildings.add(farm);
-        possibleBuildings.add(mine);
-        possibleBuildings.add(city);
+        setPossibleBuildings();
         productionPoints = 0;
         isSomethingBuilding = false;
         
@@ -207,7 +205,7 @@ public class Province {
             units[WarUnit.ID.CROSSBOWS] = crossbows;
             units[WarUnit.ID.SWORDSMAN] = swordsman;
             possibleUnits = new ArrayList<WarUnit>();
-            possibleUnits.add(warrior);
+            setPossibleUnits();
             unitCounter = 1;
             HegeLog.log("WarUnit", "Making unit for: " + owner.name);
             unitThere = new WarUnit(WarUnit.ID.WARRIOR, this,true);
@@ -250,7 +248,7 @@ public class Province {
             units[WarUnit.ID.SWORDSMAN] = swordsman;
             possibleUnits = new ArrayList<WarUnit>();
             if(!isNothingProv) {
-                possibleUnits.add(warrior);
+                setPossibleUnits();
                 unitCounter = 1;
                 HegeLog.log("WarUnit", "Making unit for: " + owner.name);
                 unitThere = new WarUnit(WarUnit.ID.WARRIOR, this, true);
@@ -469,7 +467,7 @@ public class Province {
     }
     
     public boolean isUnitAvailable(WarUnit unit) {
-        if (owner.checkRequiredTechnologiesForUnit(unit) && isCity && unitThere != null) {
+        if (owner.checkRequiredTechnologiesForUnit(unit) && isCity && unitThere == null) {
             switch (unit.id) {
                 case WarUnit.ID.CROSSBOWS:
                     if (numberOfWorkshops == 1) {return true;} else {return false;}
