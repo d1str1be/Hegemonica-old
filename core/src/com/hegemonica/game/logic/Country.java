@@ -118,8 +118,6 @@ public class Country {
         //updatedShipbuilding = new Technology(Technology.ID.UPDATEDSHIPBUILDING, 75, new Technology[]{});
         //oceanExploration = new Technology(Technology.ID.OCEANEXPLORATION, 150, new Technology[]{updatedShipbuilding, engineering, paper});
         
-        technologyInProcess = engineering;
-        neededSciencePoints = technologyInProcess.cost;
         
     }
     
