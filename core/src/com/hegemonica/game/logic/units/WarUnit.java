@@ -213,6 +213,12 @@ public class WarUnit {
         if (!province.createdUnits.isEmpty())
             province.createdUnits.set(number, null);
     }
+
+    public boolean isMovableToProvince(Province province) {
+        if (movementPoints <= 0) {
+            return false;
+        } else if (this.province.isNeighbor(province)) {return true;} else {return false;}
+    }
     
     
     public class ID { // https://media.discordapp.net/attachments/774236986406862870/780117623575805992/YpJz5_SFXKI.png отсюда добавить

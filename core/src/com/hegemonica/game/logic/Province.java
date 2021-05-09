@@ -529,6 +529,11 @@ public class Province {
             return false;
         }
     }
+
+    public boolean isNeighbor(Province province) {
+        if (owner.gemelch.getBooleanNeighborsList(this)[province.id]) {return true;}
+        return false;
+    }
     
     
     public void chooseBuilding(Building building) {
