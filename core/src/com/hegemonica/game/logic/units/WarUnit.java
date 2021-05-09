@@ -1,6 +1,5 @@
 package com.hegemonica.game.logic.units;
 
-import com.hegemonica.game.logic.Building;
 import com.hegemonica.game.logic.Country;
 import com.hegemonica.game.logic.Province;
 import com.hegemonica.game.logic.Technology;
@@ -68,7 +67,7 @@ public class WarUnit {
                 break;
             case ID.SWORDSMAN:
                 this.name = "Swordsman";
-                requiredTechnology = owner.technologies[Technology.ID.APPRIENTICESHIP];
+                requiredTechnology = owner.technologies[Technology.ID.APPRENTICESHIP];
                 productionCost = PRODUCTIONCOST.SWORDSMAN;
                 break;
         }
