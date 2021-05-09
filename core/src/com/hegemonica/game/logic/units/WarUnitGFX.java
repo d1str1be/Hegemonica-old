@@ -139,10 +139,10 @@ public class WarUnitGFX {
     }
     
     public void update(WarUnit unit) {
-        healthBar.setPosition(unit.homeProvince.x + unit.homeProvince.width * 0.2f, unit.homeProvince.y + unit.homeProvince.height * 0.8f);
+        healthBar.setPosition(unit.province.x + unit.province.width * 0.2f, unit.province.y + unit.province.height * 0.8f);
         this.setHealth((float) unit.health);
         this.healthBar.updateVisualValue();
-        sprite.setPosition(unit.homeProvince.x + unit.homeProvince.width * 0.25f, unit.homeProvince.y + unit.homeProvince.height * 0.25f);
+        sprite.setPosition(unit.province.x + unit.province.width * 0.25f, unit.province.y + unit.province.height * 0.25f);
     }
     
     public void render(OrthographicCamera camera){
