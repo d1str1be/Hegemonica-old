@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.hegemonica.game.Core;
 import com.hegemonica.game.FPS;
+import com.hegemonica.game.HegeLog;
 import com.hegemonica.game.logic.Gemelch;
 
 import java.util.Random;
@@ -145,8 +146,12 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
         if (gemelch.hud.isReadyToMove) {
             if (gemelch.whichProvinceContainsPoint(realX, realY) != null) {
                 if(gemelch.whichProvinceContainsPoint(realX, realY).unitThere!=null) {
-                    gemelch.hud.attackUnit(gemelch.hud.selectedProvince.unitThere, gemelch.whichProvinceContainsPoint(realX, realY).unitThere);
-                    gemelch.hud.selectedProvince.unitThere.attack(gemelch.whichProvinceContainsPoint(realX, realY).unitThere);
+                    if (gemelch.hud.selectedProvince.unitThere.isMovableToProvince(gemelch.whichProvinceContainsPoint(realX, realY))) {
+                        gemelch.hud.attackUnit(gemelch.hud.selectedProvince.unitThere, gemelch.whichProvinceContainsPoint(realX, realY).unitThere);
+                        gemelch.hud.selectedProvince.unitThere.attack(gemelch.whichProvinceContainsPoint(realX, realY).unitThere);
+                    } else {
+                        HegeLog.log("WarUnit move", "You cannot move unit there");
+                    }
                 }
                 else {
                     gemelch.hud.selectedProvince.unitThere.move(gemelch.whichProvinceContainsPoint(realX, realY));
