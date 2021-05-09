@@ -1,5 +1,6 @@
 package com.hegemonica.game.logic.units;
 
+import com.hegemonica.game.logic.Building;
 import com.hegemonica.game.logic.Country;
 import com.hegemonica.game.logic.Province;
 import com.hegemonica.game.logic.Technology;
@@ -48,22 +49,27 @@ public class WarUnit {
             case ID.WARRIOR:
                 this.name = "Warrior";
                 requiredTechnology = null;
+                productionCost = PRODUCTIONCOST.WARRIOR;
                 break;
             case ID.ARCHER:
                 this.name = "Archer";
                 requiredTechnology = owner.technologies[Technology.ID.ENGINEERING];
+                productionCost = PRODUCTIONCOST.ARCHER;
                 break;
             case ID.SHIELDMAN:
                 this.name = "Shieldman";
                 requiredTechnology = owner.technologies[Technology.ID.ENGINEERING];
+                productionCost = PRODUCTIONCOST.SHIELDMAN;
                 break;
             case ID.CROSSBOWS:
                 this.name = "Crossbows";
                 requiredTechnology = owner.technologies[Technology.ID.MACHINERY];
+                productionCost = PRODUCTIONCOST.CROSSBOWS;
                 break;
             case ID.SWORDSMAN:
                 this.name = "Swordsman";
                 requiredTechnology = owner.technologies[Technology.ID.APPRIENTICESHIP];
+                productionCost = PRODUCTIONCOST.SWORDSMAN;
                 break;
         }
     }
@@ -168,7 +174,7 @@ public class WarUnit {
         public final static int SWORDSMAN = 4;
     }
 
-    public class COST {
+    public class PRODUCTIONCOST {
         public final static int WARRIOR = 10;
         public final static int ARCHER = 10;
         public final static int SHIELDMAN = 10;
