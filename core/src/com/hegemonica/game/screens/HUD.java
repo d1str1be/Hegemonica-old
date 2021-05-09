@@ -122,12 +122,12 @@ public class HUD {
         if (selectedProvince != null && selectedProvince.owner == turnCountry) {
             this.selectedProvince = selectedProvince;
             game.audio.playSound(AudioManager.Sounds.UI_CLICK);
+            setProvinceInfo();
             HegeLog.log(HegeLog.HUD, "Selected " + selectedProvince.name);
             if (selectedProvince.owner.id == Country.ID.NOTHING) {
                 hideAllWindows();
                 return;
             }
-            setProvinceInfo();
             wProvinceInfo.setVisible(true);
         } else {
             HegeLog.log(HegeLog.HUD, "Selected not country`s province or null");
@@ -589,7 +589,7 @@ public class HUD {
         wChooseTech.setMovable(true);
     }
     
-    public void moveUnit() {
+    public void endUnitMovement() {
         lMoveUnit.setVisible(false);
         isReadyToMove = false;
     }

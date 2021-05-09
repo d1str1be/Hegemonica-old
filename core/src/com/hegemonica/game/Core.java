@@ -8,7 +8,7 @@ import com.hegemonica.game.screens.MainMenuScreen;
 
 
 public class Core extends Game {
-    private static final float VERSION = 0.70f;
+    private static final float VERSION = 0.80f;
     public static float gameWidth;
     public static float gameHeight;
     public static float uiFactor;

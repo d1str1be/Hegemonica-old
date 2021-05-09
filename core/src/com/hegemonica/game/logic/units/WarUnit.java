@@ -99,7 +99,7 @@ public class WarUnit {
             HegeLog.log("WarUnitGFX", "Set health to " + maxHealth);
         }
         batch = new SpriteBatch();
-        
+        HegeLog.log("WarUnit", "Unit of " + owner.name + " has " + movementPoints + " movementPoints");
     }
     
     public void onTurn() {
@@ -150,12 +150,13 @@ public class WarUnit {
         movementPoints--;
         capture(province);
         warUnitGFX.update(this);
+        HegeLog.log("WarUnit", "Unit of " + owner.name + " has " + movementPoints + " movementPoints");
     }
     
     public void capture(Province province) {
         if (province.owner.id == Country.ID.NOTHING) {
             province.setOwner(this.owner);
-            province.manualInitialization();
+            province.manualInitialization(true);
         }
         province.setOwner(this.owner);
         movementPoints = 0;
@@ -222,9 +223,9 @@ public class WarUnit {
     
     public boolean isMovableToProvince(Province province) {
         if (movementPoints <= 0) {
+            HegeLog.log("WarUnit move", "No movement points");
             return false;
-        }
-        else  if(province.unitThere!=null){
+        } else if (province.unitThere != null) {
             if (owner == province.unitThere.owner) {
                 HegeLog.log("WarUnit move", "You are trying to attack your own unit");
                 return false;

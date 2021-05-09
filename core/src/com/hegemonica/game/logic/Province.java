@@ -238,7 +238,7 @@ public class Province {
     
     }
     
-    public void manualInitialization() {
+    public void manualInitialization(boolean isNothingProv) {
         if (owner.id != NOTHING) {
             warrior = new WarUnit(WarUnit.ID.WARRIOR, this, false);
             archer = new WarUnit(WarUnit.ID.ARCHER, this, false);
@@ -252,10 +252,12 @@ public class Province {
             units[WarUnit.ID.CROSSBOWS] = crossbows;
             units[WarUnit.ID.SWORDSMAN] = swordsman;
             possibleUnits = new ArrayList<WarUnit>();
-            possibleUnits.add(warrior);
-            unitCounter = 1;
-            HegeLog.log("WarUnit", "Making unit for: " + owner.name);
-            unitThere = new WarUnit(WarUnit.ID.WARRIOR, this,true);
+            if(!isNothingProv) {
+                possibleUnits.add(warrior);
+                unitCounter = 1;
+                HegeLog.log("WarUnit", "Making unit for: " + owner.name);
+                unitThere = new WarUnit(WarUnit.ID.WARRIOR, this, true);
+            }
         } else {
             unitCounter = 0;
         }
