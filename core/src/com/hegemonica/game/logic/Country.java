@@ -100,7 +100,7 @@ public class Country {
         paper = new Technology(Technology.ID.PAPER, 50, new Technology[]{});
         simplyChemistry = new Technology(Technology.ID.SIMPLYCHEMISTRY, 50, new Technology[]{});
         machinery = new Technology(Technology.ID.MACHINERY, 50, new Technology[]{engineering});
-        apprienticeship = new Technology(Technology.ID.APPRIENTICESHIP, 100, new Technology[]{engineering, paper});
+        apprienticeship = new Technology(Technology.ID.APPRENTICESHIP, 100, new Technology[]{engineering, paper});
         education = new Technology(Technology.ID.EDUCATION, 100, new Technology[]{paper, simplyChemistry});
         
         technologies[0] = engineering;
@@ -174,7 +174,7 @@ public class Country {
                 farmProduction++;
             case Technology.ID.MACHINERY:
                 machinery.isResearched = true;
-            case Technology.ID.APPRIENTICESHIP:
+            case Technology.ID.APPRENTICESHIP:
                 apprienticeship.isResearched = true;
                 mineProduction++;
             case Technology.ID.EDUCATION:

@@ -20,6 +20,20 @@ public class Technology {
     public Technology(int id, float cost, Technology[] requiredTechnologies) {
         this.cost = cost;
         this.requiredTechnologies = requiredTechnologies;
+        switch (id) {
+            case ID.ENGINEERING:
+                name = "Engineering";
+            case ID.PAPER:
+                name = "Paper";
+            case ID.SIMPLYCHEMISTRY:
+                name = "Simply chemistry";
+            case ID.MACHINERY:
+                name = "Machinery";
+            case ID.APPRENTICESHIP:
+                name = "Apprenticeship";
+            case ID.EDUCATION:
+                name = "Education";
+        }
     }
     
     public class ID {
@@ -27,10 +41,11 @@ public class Technology {
         public final static int PAPER = 1;
         public final static int SIMPLYCHEMISTRY = 2;
         public final static int MACHINERY = 3;
-        public final static int APPRIENTICESHIP = 4;
+        public final static int APPRENTICESHIP = 4;
         public final static int EDUCATION = 5;
         public final static int UPDATEDSHIPBUILDING = 6;
         public final static int OCEANEXPLORATION = 7;
     }
+
     
 }
