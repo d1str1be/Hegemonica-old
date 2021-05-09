@@ -165,6 +165,10 @@ public class WarUnit {
     }
     
     public void attack(WarUnit unit) {
+        int attackStrengthThis = attackStrength;
+        int defenseStrengthThis = defenseStrength;
+        int attackStrengthOther = unit.attackStrength;
+        int defenseStrengthOther = unit.defenseStrength;
         unit.defense(this);
         if (unit.health <= 0) {
             this.move(unit.province);
@@ -172,7 +176,7 @@ public class WarUnit {
             setAttackStrength();
             setDefenseStrength();
         } else {
-            health -= Math.round(30 * Math.pow(2.72, (unit.defenseStrength - attackStrength) / 25f));
+            health -= Math.round(30 * Math.pow(2.72, (defenseStrengthOther - attackStrengthThis) / 25f));
             setAttackStrength();
             setDefenseStrength();
             movementPoints = 0;
@@ -184,7 +188,11 @@ public class WarUnit {
     }
     
     public void defense(WarUnit unit) {
-        health -= Math.round(30 * Math.pow(2.72, (unit.attackStrength - defenseStrength) / 25f));
+        int attackStrengthThis = attackStrength;
+        int defenseStrengthThis = defenseStrength;
+        int attackStrengthOther = unit.attackStrength;
+        int defenseStrengthOther = unit.defenseStrength;
+        health -= Math.round(30 * Math.pow(2.72, (attackStrengthOther - defenseStrengthThis) / 25f));
         setAttackStrength();
         setDefenseStrength();
         warUnitGFX.update(this);
@@ -222,8 +230,7 @@ public class WarUnit {
                 return false;
             }
         }
-        else
-            return this.province.isNeighbor(province);
+        return this.province.isNeighbor(province);
     }
     
     
