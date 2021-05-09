@@ -39,6 +39,7 @@ public class Core extends Game {
         uiFactor = gameWidth / 2030f;
         HegeLog.log(HegeLog.HEGEMONICA, "Width of app: " + gameWidth +
                 "\nHeight of app: " + gameHeight);
+        HegeLog.log(HegeLog.HEGEMONICA, "uiFactor: " + uiFactor);
         Gdx.input.setCatchKey(Input.Keys.BACK, true); // перехват сист.кнопки "назад" на андроиде
         audio = new AudioManager();
         loc = new LocalizationManager();

@@ -199,7 +199,7 @@ public class HUD {
         scienceProgress = new HegeProgressBar(wCountryInfo.getWidth() * 0.15f, wCountryInfo.getWidth() * 0.02f, HegeProgressBar.ID.SCIENCE);
         
         bCHide = new TextButton("Hide", DefaultUI);
-        bCHide.setSize(wCountryInfo.getWidth() * 0.8f, wCountryInfo.getHeight() * 0.3f);
+        bCHide.setSize(wCountryInfo.getWidth(), wCountryInfo.getHeight() * 0.3f);
         bCHide.setRound(true);
         bCHide.addListener(new InputListener() {
             @Override
@@ -325,7 +325,7 @@ public class HUD {
         lCountryTurn.setPosition(Core.gameWidth * 0.925f - lCountryTurn.getWidth(), lTurnNumber.getY() + lTurnNumber.getHeight());
         
         lStartHint = new Label("Choose new project in your start province \n and technology in \"Country Info\" ", GlassyUI, "big");
-        lStartHint.setPosition((Core.gameWidth / 1.25f - lStartHint.getWidth()) / Core.uiFactor, Core.gameHeight * 0.1f);
+        lStartHint.setPosition(Core.gameWidth * 0.25f, Core.gameHeight * 0.1f);
         lStartHint.setFontScale(Core.uiFactor);
         
         stage.addActor(lTurnNumber);
