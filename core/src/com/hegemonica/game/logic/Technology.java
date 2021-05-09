@@ -5,23 +5,23 @@ package com.hegemonica.game.logic;
  */
 public class Technology {
     int id;
+    public String name;
     public boolean isResearched;
     public boolean canBeResearched;
-
+    
     public float cost;
     public int year;
-
     public Technology[] requiredTechnologies;
-
+    
     public void onResearch(Country country) {
-
+    
     }
-
+    
     public Technology(int id, float cost, Technology[] requiredTechnologies) {
         this.cost = cost;
         this.requiredTechnologies = requiredTechnologies;
     }
-
+    
     public class ID {
         public final static int ENGINEERING = 0;
         public final static int PAPER = 1;
@@ -32,5 +32,5 @@ public class Technology {
         public final static int UPDATEDSHIPBUILDING = 6;
         public final static int OCEANEXPLORATION = 7;
     }
-
+    
 }
