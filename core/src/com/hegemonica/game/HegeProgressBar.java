@@ -23,25 +23,21 @@ public class HegeProgressBar extends ProgressBar {
         super(0f, 1f, 0.01f, false, new ProgressBarStyle());
         switch (id) {
             case ID.FOOD:
-                HegeLog.log("HUD", "case FOOD");
                 getStyle().background = getColoredDrawable((int) width, (int) height, Color.GRAY);
                 getStyle().knob = getColoredDrawable(0, (int) height, Color.GREEN);
                 getStyle().knobBefore = getColoredDrawable((int) width, (int) height, Color.GREEN);
                 break;
             case ID.PRODUCTION:
-                HegeLog.log("HUD", "case PRODUCTION");
                 getStyle().background = getColoredDrawable((int) width, (int) height, Color.GRAY);
                 getStyle().knob = getColoredDrawable(0, (int) height, Color.BROWN);
                 getStyle().knobBefore = getColoredDrawable((int) width, (int) height, Color.BROWN);
                 break;
             case ID.SCIENCE:
-                HegeLog.log("HUD", "case SCIENCE");
                 getStyle().background = getColoredDrawable((int) width, (int) height, Color.GRAY);
                 getStyle().knob = getColoredDrawable(0, (int) height, Color.BLUE);
                 getStyle().knobBefore = getColoredDrawable((int) width, (int) height, Color.BLUE);
                 break;
             default:
-                HegeLog.log("HUD", "case default");
                 getStyle().background = getColoredDrawable((int) width, (int) height, Color.RED);
                 getStyle().knob = getColoredDrawable(0, (int) height, Color.GREEN);
                 getStyle().knobBefore = getColoredDrawable((int) width, (int) height, Color.GREEN);

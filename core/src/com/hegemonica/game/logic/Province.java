@@ -12,13 +12,11 @@ import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.EarClippingTriangulator;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.FloatArray;
-import com.badlogic.gdx.utils.ShortArray;
 import com.hegemonica.game.HegeLog;
 import com.hegemonica.game.logic.units.DefenseUnit;
 import com.hegemonica.game.logic.units.MeleeUnit;
@@ -26,6 +24,8 @@ import com.hegemonica.game.logic.units.RangedUnit;
 import com.hegemonica.game.logic.units.WarUnit;
 
 import java.util.ArrayList;
+
+import static com.hegemonica.game.logic.Country.ID.NOTHING;
 
 
 public class Province {
@@ -39,12 +39,11 @@ public class Province {
     public int productionPoints;
     
     
-    
     public int neededProductionPoints;
     public int gainedSciencePoints;
     public int projectId;
     public boolean isSomethingBuilding;
-    public boolean isProjectReadyNotificacion;
+    public boolean isProjectReadyNotification;
     
     public int numberOfBuildings;
     
@@ -97,7 +96,7 @@ public class Province {
     
     public FloatArray provCoords;
     private Polygon polygon;
-    private final EarClippingTriangulator triangulator = new EarClippingTriangulator();
+//    private final EarClippingTriangulator triangulator = new EarClippingTriangulator();
     
     
     private ShapeRenderer shapeRenderer;
@@ -197,24 +196,29 @@ public class Province {
         productionPoints = 0;
         isSomethingBuilding = false;
         
-        warrior = new WarUnit(WarUnit.ID.WARRIOR, this);
-        archer = new WarUnit(WarUnit.ID.ARCHER, this);
-        shieldman = new WarUnit(WarUnit.ID.SHIELDMAN, this);
-        crossbows = new WarUnit(WarUnit.ID.CROSSBOWS, this);
-        swordsman = new WarUnit(WarUnit.ID.SWORDSMAN, this);
-        units = new WarUnit[5];
-        units[WarUnit.ID.WARRIOR] = warrior;
-        units[WarUnit.ID.ARCHER] = archer;
-        units[WarUnit.ID.SHIELDMAN] = shieldman;
-        units[WarUnit.ID.CROSSBOWS] = crossbows;
-        units[WarUnit.ID.SWORDSMAN] = swordsman;
-        possibleUnits = new ArrayList<WarUnit>();
-        possibleUnits.add(warrior);
-        HegeLog.log("ProvGeneric", possibleUnits.toString());
-        unitCounter = 0;
+        if (owner.id != NOTHING) {
+            warrior = new WarUnit(WarUnit.ID.WARRIOR, this, false);
+            archer = new WarUnit(WarUnit.ID.ARCHER, this, false);
+            shieldman = new WarUnit(WarUnit.ID.SHIELDMAN, this, false);
+            crossbows = new WarUnit(WarUnit.ID.CROSSBOWS, this, false);
+            swordsman = new WarUnit(WarUnit.ID.SWORDSMAN, this, false);
+            units = new WarUnit[5];
+            units[WarUnit.ID.WARRIOR] = warrior;
+            units[WarUnit.ID.ARCHER] = archer;
+            units[WarUnit.ID.SHIELDMAN] = shieldman;
+            units[WarUnit.ID.CROSSBOWS] = crossbows;
+            units[WarUnit.ID.SWORDSMAN] = swordsman;
+            possibleUnits = new ArrayList<WarUnit>();
+            possibleUnits.add(warrior);
+            unitCounter = 1;
+            HegeLog.log("WarUnit", "Making unit for: " + owner.name);
+            unitThere = new WarUnit(WarUnit.ID.WARRIOR, this,true);
+        } else {
+            unitCounter = 0;
+        }
         createdUnits = new ArrayList<WarUnit>();
         
-        isProjectReadyNotificacion = true;
+        isProjectReadyNotification = true;
         
         rectangle = new Rectangle(x, y, width, height);
         
@@ -229,25 +233,32 @@ public class Province {
             lProvName.setPosition(x + (width * 0.05f), y);
         }
         this.setMathRender();
-        
-        HegeLog.log("Province", "Needed Prod: " + neededProductionPoints);
     }
     
     public void setupBuildings() {
     
     }
     
-    public void update() {
-        onTurn();
-        
-        switch (climate) {
-        
-        }
-        switch (landscape) {
-        
-        }
-        switch (status) {
-        
+    public void manualInitialization() {
+        if (owner.id != NOTHING) {
+            warrior = new WarUnit(WarUnit.ID.WARRIOR, this, false);
+            archer = new WarUnit(WarUnit.ID.ARCHER, this, false);
+            shieldman = new WarUnit(WarUnit.ID.SHIELDMAN, this, false);
+            crossbows = new WarUnit(WarUnit.ID.CROSSBOWS, this, false);
+            swordsman = new WarUnit(WarUnit.ID.SWORDSMAN, this, false);
+            units = new WarUnit[5];
+            units[WarUnit.ID.WARRIOR] = warrior;
+            units[WarUnit.ID.ARCHER] = archer;
+            units[WarUnit.ID.SHIELDMAN] = shieldman;
+            units[WarUnit.ID.CROSSBOWS] = crossbows;
+            units[WarUnit.ID.SWORDSMAN] = swordsman;
+            possibleUnits = new ArrayList<WarUnit>();
+            possibleUnits.add(warrior);
+            unitCounter = 1;
+            HegeLog.log("WarUnit", "Making unit for: " + owner.name);
+            unitThere = new WarUnit(WarUnit.ID.WARRIOR, this,true);
+        } else {
+            unitCounter = 0;
         }
     }
     
@@ -271,7 +282,7 @@ public class Province {
     }
     
     public void onTurn() {
-        if(isTurnAvailable()) {
+        if (isTurnAvailable()) {
             foodPoints += numberOfFarms * owner.farmProduction - neededFood + owner.startFoodProduction + numberOfShipyards * owner.startFoodProduction;
             if (foodPoints > neededFoodPoints) {
                 HegeLog.log("Province", name + " grew");
@@ -294,18 +305,21 @@ public class Province {
                         break;
                     case PROJECTID.UNITUPGRADE:
                         upgradeUnit();
-                        
                         break;
                 }
-                isProjectReadyNotificacion = true;
+                isProjectReadyNotification = true;
             }
             gainedSciencePoints = population + numberOfLibraries * owner.libraryProduction + numberOfUniversities * owner.universityProduction;
             owner.sciencePoints += gainedSciencePoints;
+            //обновление информации по доступным постройкам и юнитам
             setPossibleBuildings();
             setPossibleUnits();
-        }
-        else
-            HegeLog.log("Province","Turn is not avaliable");
+            //обновление инфы по юниту в провинции, если такой в ней есть
+            if (unitThere != null) {
+                unitThere.onTurn();
+            }
+        } else
+            HegeLog.log("Province", "Turn is not avaliable");
     }
     
     public void setOwner(Country newOwner) {
@@ -564,8 +578,10 @@ public class Province {
             shapeRenderer.rect(x, y, width, height);
 //                shapeRenderer.rect(polygon.getBoundingRectangle().getX(),polygon.getBoundingRectangle().getY(),polygon.getBoundingRectangle().getWidth(), polygon.getBoundingRectangle().getHeight());
         shapeRenderer.end();
+        if (unitThere != null) {
+            unitThere.render(camera);
+        }
     }
-    
     
     public void setMathRender() {
         shapeRenderer = new ShapeRenderer();
@@ -574,10 +590,10 @@ public class Province {
         else
             rectangle = new Rectangle(x, y, width, height);
     }
-    
-    private ShortArray triangulate(FloatArray polygonVertices) {
-        return triangulator.computeTriangles(polygonVertices);
-    }
+
+//    private ShortArray triangulate(FloatArray polygonVertices) {
+//        return triangulator.computeTriangles(polygonVertices);
+//    }
     
     public boolean contains(float x, float y) {
         if (provCoords != null) {

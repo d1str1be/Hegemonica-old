@@ -23,8 +23,8 @@ public class PreparationScreen implements Screen {
     Core game;
     Stage stage;
     Skin defaultSkin;
-    int provCountWidth = 2;
-    int provCountHeight = 2;
+    int provCountWidth = 3;
+    int provCountHeight = 3;
 
     Table table;
     Window window;

@@ -96,6 +96,11 @@ public class Gemelch {
         rightBottomProv.lProvName.setSize(rightBottomProv.width * 0.2f, rightBottomProv.height * 0.2f);
         rightBottomProv.lProvName.setPosition(rightBottomProv.x + (rightBottomProv.width * 0.05f), rightBottomProv.y);
         
+        leftBottomProv.manualInitialization();
+        rightBottomProv.manualInitialization();
+        leftTopProv.manualInitialization();
+        rightTopProv.manualInitialization();
+        
         gfx.addProvincesToStage();
     }
     
