@@ -22,7 +22,7 @@ public class Country {
     
     public int population;
     public int sciencePoints;
-    public Technology technologyInProcess;
+    
     
     
     //production
@@ -51,6 +51,8 @@ public class Country {
     public Technology machinery;
     public Technology apprienticeship;
     public Technology education;
+    
+    public Technology technologyInProcess;
     public boolean isSomethingResearching;
     //public Technology updatedShipbuilding;
     //public Technology oceanExploration;
@@ -104,6 +106,7 @@ public class Country {
         education = new Technology(Technology.ID.EDUCATION, 100, new Technology[]{paper, simplyChemistry});
         
         technologies[0] = engineering;
+        technologies[0].cost = 2;
         technologies[1] = paper;
         technologies[2] = simplyChemistry;
         technologies[3] = machinery;
@@ -118,13 +121,11 @@ public class Country {
         //updatedShipbuilding = new Technology(Technology.ID.UPDATEDSHIPBUILDING, 75, new Technology[]{});
         //oceanExploration = new Technology(Technology.ID.OCEANEXPLORATION, 150, new Technology[]{updatedShipbuilding, engineering, paper});
         
-        technologyInProcess = engineering;
-        neededSciencePoints = technologyInProcess.cost;
         
     }
     
     public boolean onTurn() {
-        population = 1;
+        population = 0;
         if (isTurnAvailable()) {
             for (Province province : gemelch.provinces) {
                 if (province.owner == this) {
@@ -188,7 +189,6 @@ public class Country {
                 //    shipyardFoodProduction += 2;
         }
         HegeLog.log("Country", "Researched " + technologyInProcess.id);
-        technologyInProcess = engineering;
     }
     
     public void setPossibleTechnologies() {

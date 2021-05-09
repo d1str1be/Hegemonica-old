@@ -23,16 +23,22 @@ public class Technology {
         switch (id) {
             case ID.ENGINEERING:
                 name = "Engineering";
+                break;
             case ID.PAPER:
                 name = "Paper";
+                break;
             case ID.SIMPLYCHEMISTRY:
                 name = "Simply chemistry";
+                break;
             case ID.MACHINERY:
                 name = "Machinery";
+                break;
             case ID.APPRENTICESHIP:
                 name = "Apprenticeship";
+                break;
             case ID.EDUCATION:
                 name = "Education";
+                break;
         }
     }
     
