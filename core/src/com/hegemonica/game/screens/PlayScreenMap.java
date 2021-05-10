@@ -138,10 +138,10 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
     
     @Override
     public boolean tap(float x, float y, int count, int button) {
-        realX = (x - cameraMovementX) / 2;
-        realY = (Core.gameHeight - y + cameraMovementY) / 2;
-//        HegeLog.log("Input", "Tapped on X: " + realX);
-//        HegeLog.log("Input", "Tapped on Y: " + realY);
+        realX = (x - cameraMovementX) / 4;
+        realY = (Core.gameHeight - y + cameraMovementY) / 4;
+        HegeLog.log("Input", "Tapped on X: " + realX);
+        HegeLog.log("Input", "Tapped on Y: " + realY);
         gemelch.hud.setSelectedProvince(gemelch.whichProvinceContainsPoint(realX, realY));
         gemelch.hud.lUnitAttack.setVisible(false);
         if (gemelch.hud.isReadyToMove) {
@@ -180,8 +180,8 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
     
     @Override
     public boolean pan(float x, float y, float deltaX, float deltaY) {
-        cameraMovementX += deltaX;
-        cameraMovementY += deltaY;
+        cameraMovementX += deltaX ;
+        cameraMovementY += deltaY ;
         camera.translate(-deltaX * camera.zoom, deltaY * camera.zoom);
         
         
