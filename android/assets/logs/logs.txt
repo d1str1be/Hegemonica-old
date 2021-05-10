@@ -1,0 +1,89 @@
+---- IntelliJ IDEA coverage runner ---- 
+tracing and tracking per test coverage ...
+include patterns:
+exclude patterns:
+WARNING: An illegal reflective access operation has occurred
+WARNING: Illegal reflective access by org.lwjgl.LWJGLUtil$3 (file:/E:/CodeProjects_Bogd/.gradle/caches/modules-2/files-2.1/org.lwjgl.lwjgl/lwjgl/2.9.3/3df168ac74e4a8c96562cdff24ad352e255bf89c/lwjgl-2.9.3.jar) to method java.lang.ClassLoader.findLibrary(java.lang.String)
+WARNING: Please consider reporting this to the maintainers of org.lwjgl.LWJGLUtil$3
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+WARNING: All illegal access operations will be denied in a future release
+[Hegemonica] Width of app: 1920.0
+Height of app: 1061.0
+[Hegemonica] uiFactor: 0.9458128
+[Hegemonica] Width of app: 1920
+Height of app: 1061
+[Hegemonica] Width of app: 1920
+Height of app: 1061
+[Main Menu] Opened Settings
+[Hegemonica] Width of app: 1920
+Height of app: 1061
+[Main Menu] Opened Settings
+[Hegemonica] Changed language to: english.json
+[Hegemonica] Changed language to: russian.json
+[Hegemonica] Changed language to: english.json
+[Hegemonica] Changed language to: english.json
+[Hegemonica] Changed language to: russian.json
+[Hegemonica] Changed language to: english.json
+[Hegemonica] Width of app: 1920
+Height of app: 1061
+[Main Menu] Opened Settings
+[Hegemonica] Width of app: 1920
+Height of app: 1061
+[Main Menu] Opened Settings
+[Hegemonica] Width of app: 1920
+Height of app: 1061
+[Main Menu] Opened Settings
+[Hegemonica] Width of app: 1920
+Height of app: 1061
+[Hegemonica] Width of app: 1920
+Height of app: 1061
+[Main Menu] Opened Settings
+[Hegemonica] Changed language to: english.json
+[Hegemonica] Changed language to: russian.json
+[Hegemonica] Changed language to: english.json
+[Hegemonica] Width of app: 1920
+Height of app: 1061
+[Map] prov in width = 3
+[Map] prov in height = 3
+[WarUnit] Unit of Red has 1 movementPoints
+[WarUnit] Unit of Red has 1 movementPoints
+[WarUnit] Unit of Red has 1 movementPoints
+[WarUnit] Unit of Red has 1 movementPoints
+[WarUnit] Unit of Red has 1 movementPoints
+[WarUnit] Making unit for: Red
+[WarUnitGFX] Set health to 100
+[WarUnit] Unit of Red has 1 movementPoints
+[WarUnit] Unit of Green has 1 movementPoints
+[WarUnit] Unit of Green has 1 movementPoints
+[WarUnit] Unit of Green has 1 movementPoints
+[WarUnit] Unit of Green has 1 movementPoints
+[WarUnit] Unit of Green has 1 movementPoints
+[WarUnit] Making unit for: Green
+[WarUnitGFX] Set health to 100
+[WarUnit] Unit of Green has 1 movementPoints
+[WarUnit] Unit of Blue has 1 movementPoints
+[WarUnit] Unit of Blue has 1 movementPoints
+[WarUnit] Unit of Blue has 1 movementPoints
+[WarUnit] Unit of Blue has 1 movementPoints
+[WarUnit] Unit of Blue has 1 movementPoints
+[WarUnit] Making unit for: Blue
+[WarUnitGFX] Set health to 100
+[WarUnit] Unit of Blue has 1 movementPoints
+[WarUnit] Unit of Yellow has 1 movementPoints
+[WarUnit] Unit of Yellow has 1 movementPoints
+[WarUnit] Unit of Yellow has 1 movementPoints
+[WarUnit] Unit of Yellow has 1 movementPoints
+[WarUnit] Unit of Yellow has 1 movementPoints
+[WarUnit] Making unit for: Yellow
+[WarUnitGFX] Set health to 100
+[WarUnit] Unit of Yellow has 1 movementPoints
+[HUD] Selected not country`s province or null
+[HUD] Selected Province 0
+[HUD] Selected not country`s province or null
+[Gemelch Neighbour] getNeighborsIdList(province).length: 4
+[Gemelch Neighbour] neighborsBooleanList.length(): 9
+[Province] setPosUnits, units array: null, unitThere: Warrior, Province 3
+[Province] setPosUnits, units array: null, unitThere: Warrior, Province 3
+[WarUnit] Unit Warrior of country Red captured Province 3
+[WarUnit] Unit of Red has 0 movementPoints
+Class transformation time: 0.8996188s for 1076 classes or 8.360769516728625E-4s per class

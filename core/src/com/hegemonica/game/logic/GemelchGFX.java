@@ -25,7 +25,9 @@ public class GemelchGFX {
         }
 
     }
-
+    public void addProvinceToStage(Province prov){
+        stage.
+    }
     public void render() {
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();

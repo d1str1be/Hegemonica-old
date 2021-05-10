@@ -33,7 +33,7 @@ public class WarUnitGFX {
         hp = new Label("0 / 100", prov.owner.gemelch.hud.DefaultUI);
         hp.setFontScale(0.4f);
         hp.setScale(0.4f);
-        hp.setPosition(healthBar.getX()+healthBar.getWidth()/2f-hp.getWidth()/2f, healthBar.getY() + healthBar.getHeight()/2f - hp.getHeight()/2f);
+        hp.setPosition(healthBar.getX(), healthBar.getY());
         batch = new SpriteBatch();
     }
     public void setHealth(WarUnit unit){

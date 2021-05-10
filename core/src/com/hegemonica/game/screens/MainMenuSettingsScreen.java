@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.hegemonica.game.Core;
@@ -148,20 +149,25 @@ class MainMenuSettingsScreen implements Screen {
         });
 
 
+        Label l = new Label(" ", defaultSkin);
         table = new Table(GlassyUI);
         table.setSize(stage.getWidth(), stage.getHeight());
-        table.setOrigin(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() * 0.65f);
+        table.setPosition(Gdx.graphics.getWidth()*0.05f, Gdx.graphics.getHeight() * 0.1f);
+        table.add();
         table.add(lSettings);
-        table.row().colspan(3);
+        table.row();
+        table.add();
         table.add(languageSelection);
-        table.row().colspan(2);
-        table.add(musicSliderLabel);
+        table.row();
+        table.add(musicSliderLabel).padRight(Core.gameWidth*0.05f);
         table.add(musicSlider).width(Gdx.graphics.getWidth() / 3f);
-        table.row().colspan(2);
-        table.add(soundSliderLabel);
+        table.row();
+        table.add(soundSliderLabel).padRight(Core.gameWidth*0.05f);;
         table.add(soundSlider).width(Gdx.graphics.getWidth() / 3f);
         table.row();
-        table.add(bBack);
+        table.add();
+        table.add(bBack).padTop(Core.gameHeight*0.05f).align(Align.bottom);
+        
 
         stage.addActor(table);
     }
