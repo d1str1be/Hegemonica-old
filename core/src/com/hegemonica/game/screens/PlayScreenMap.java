@@ -196,25 +196,25 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
     @Override
     public boolean zoom(float initialDistance, float distance) {
 //        if(camera.zoom >= zoomMax && camera.zoom <= zoomMin) {
-        if (camera.zoom < zoomMax) {
-            camera.zoom = zoomMax;
-            return true;
-        } else if (camera.zoom > zoomMin) {
-            camera.zoom = zoomMin;
-            return true;
-        }
-        while (zoomMax <= camera.zoom && camera.zoom <= zoomMin) {
-            if (initialDistance >= distance) {
-                camera.zoom += (initialDistance - distance) * 0.00005f * camera.zoom;
-                return true;
-            } else {
-                camera.zoom -= (distance - initialDistance) * 0.00005f * camera.zoom;
-                return true;
-            }
-        }
-    
-        realX = (x - cameraMovementX) / 2;
-        realY = (Core.gameHeight - y + cameraMovementY) / 2;
+//        if (camera.zoom < zoomMax) {
+//            camera.zoom = zoomMax;
+//            return true;
+//        } else if (camera.zoom > zoomMin) {
+//            camera.zoom = zoomMin;
+//            return true;
+//        }
+//        while (zoomMax <= camera.zoom && camera.zoom <= zoomMin) {
+//            if (initialDistance >= distance) {
+//                camera.zoom += (initialDistance - distance) * 0.00005f * camera.zoom;
+//                return true;
+//            } else {
+//                camera.zoom -= (distance - initialDistance) * 0.00005f * camera.zoom;
+//                return true;
+//            }
+//        }
+//
+//        realX = (x - cameraMovementX) / 2;
+//        realY = (Core.gameHeight - y + cameraMovementY) / 2;
         return false;
     }
     
