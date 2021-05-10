@@ -23,6 +23,7 @@ import com.hegemonica.game.logic.units.RangedUnit;
 import com.hegemonica.game.logic.units.WarUnit;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static com.hegemonica.game.logic.Country.ID.NOTHING;
 
@@ -208,7 +209,7 @@ public class Province {
             setPossibleUnits();
             unitCounter = 1;
             HegeLog.log("WarUnit", "Making unit for: " + owner.name);
-            unitThere = new WarUnit(WarUnit.ID.WARRIOR, this,true);
+            unitThere = new WarUnit(WarUnit.ID.WARRIOR, this, true);
             isCity = true;
         } else {
             unitCounter = 0;
@@ -247,7 +248,7 @@ public class Province {
             units[WarUnit.ID.CROSSBOWS] = crossbows;
             units[WarUnit.ID.SWORDSMAN] = swordsman;
             possibleUnits = new ArrayList<WarUnit>();
-            if(!isNothingProv) {
+            if (!isNothingProv) {
                 setPossibleUnits();
                 unitCounter = 1;
                 HegeLog.log("WarUnit", "Making unit for: " + owner.name);
@@ -268,15 +269,16 @@ public class Province {
     }
     
     public void setPossibleUnits() {
-        if(possibleUnits!=null)
+        if (possibleUnits != null)
             possibleUnits.clear();
-        if(units!=null) {
+        if (units != null && unitThere == null) {
             for (WarUnit unit : units) {
                 if (isUnitAvailable(unit)) {
                     possibleUnits.add(unit);
                 }
             }
         }
+        else HegeLog.log("Province", "setPosUnits, units array: "+ Arrays.toString(units) + ", unitThere: " + WarUnit.toString(unitThere));
     }
     
     public void onTurn() {
@@ -324,7 +326,11 @@ public class Province {
         this.owner = newOwner;
         setPossibleBuildings();
         setPossibleUnits();
-        lProvName.setColor(newOwner.color);
+        lProvName = new Label(name, defaultSkin, owner.name);
+        lProvName.setFontScale(0.5f);
+        lProvName.setSize(this.width * 0.2f, this.height * 0.2f);
+        lProvName.setPosition(this.x + (this.width * 0.05f), this.y);
+        owner.gemelch.gfx.addProvincesToStage();
     }
     
     //статус провинции
@@ -470,9 +476,17 @@ public class Province {
         if (owner.checkRequiredTechnologiesForUnit(unit) && isCity && unitThere == null) {
             switch (unit.id) {
                 case WarUnit.ID.CROSSBOWS:
-                    if (numberOfWorkshops == 1) {return true;} else {return false;}
+                    if (numberOfWorkshops == 1) {
+                        return true;
+                    } else {
+                        return false;
+                    }
                 case WarUnit.ID.SWORDSMAN:
-                    if (numberOfWorkshops == 1) {return true;} else {return false;}
+                    if (numberOfWorkshops == 1) {
+                        return true;
+                    } else {
+                        return false;
+                    }
                 default:
                     return true;
             }
@@ -512,9 +526,11 @@ public class Province {
             return false;
         }
     }
-
+    
     public boolean isNeighbor(Province province) {
-        if (owner.gemelch.getBooleanNeighborsList(this)[province.id]) {return true;}
+        if (owner.gemelch.getBooleanNeighborsList(this)[province.id]) {
+            return true;
+        }
         return false;
     }
     

@@ -154,7 +154,7 @@ public class WarUnit {
     
     public void capture(Province province) {
         if (province.owner.id == Country.ID.NOTHING) {
-            province.manualInitialization(true);
+            province.manualInitialization(false);
             province.setOwner(this.owner);
         }
         province.setOwner(this.owner);
@@ -290,6 +290,15 @@ public class WarUnit {
     
     public void render(OrthographicCamera camera) {
         warUnitGFX.render(camera);
+    }
+    
+    
+    public static String toString(WarUnit unit){
+        if(unit==null){
+            return "null";
+        }
+        else
+            return unit.name + ", " + unit.province.name;
     }
     
 }
