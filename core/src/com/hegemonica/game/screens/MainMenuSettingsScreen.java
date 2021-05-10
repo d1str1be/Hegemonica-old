@@ -155,7 +155,7 @@ class MainMenuSettingsScreen implements Screen {
         Label l = new Label(" ", defaultSkin);
         table = new Table(GlassyUI);
         table.setSize(stage.getWidth(), stage.getHeight());
-        table.setPosition(Gdx.graphics.getWidth()*0.05f, Gdx.graphics.getHeight() * 0.1f);
+        table.setPosition(0,0);
         table.add();
         table.add(lSettings);
         table.row();
