@@ -208,7 +208,7 @@ public class Province {
             possibleUnits = new ArrayList<WarUnit>();
             setPossibleUnits();
             unitCounter = 1;
-            HegeLog.log("WarUnit", "Making unit for: " + owner.name);
+            HegeLog.log("WarUnit", "Created start unit for: " + owner.name);
             unitThere = new WarUnit(WarUnit.ID.WARRIOR, this, true);
             isCity = true;
         } else {
@@ -251,7 +251,7 @@ public class Province {
             if (!isNothingProv) {
                 setPossibleUnits();
                 unitCounter = 1;
-                HegeLog.log("WarUnit", "Making unit for: " + owner.name);
+                HegeLog.log("WarUnit", "Created start unit for: " + owner.name);
                 unitThere = new WarUnit(WarUnit.ID.WARRIOR, this, true);
             }
         } else {
@@ -285,10 +285,10 @@ public class Province {
         if (isTurnAvailable()) {
             foodPoints += numberOfFarms * owner.farmProduction - neededFood + owner.startFoodProduction + numberOfShipyards * owner.startFoodProduction;
             if (foodPoints >= neededFoodPoints) {
-                HegeLog.log("Province", name + " grew");
+                HegeLog.log("Province", name + " grew to " + population + " population");
                 provinceGrow();
             } else if (foodPoints < 0) {
-                HegeLog.log("Province", name + " decreased");
+                HegeLog.log("Province", name + " decreased to " + population + " population");
                 provinceDecrease();
             }
             productionPoints += population + numberOfMines * owner.mineProduction + numberOfWorkshops * owner.workshopProduction + numberOfShipyards * owner.shipyardProduction;
@@ -318,8 +318,7 @@ public class Province {
             if (unitThere != null) {
                 unitThere.onTurn();
             }
-        } else
-            HegeLog.log("Province", "Turn is not avaliable");
+        }
     }
     
     public void setOwner(Country newOwner) {
@@ -523,6 +522,7 @@ public class Province {
         if (isSomethingBuilding) {
             return true;
         } else {
+            HegeLog.log("Province", "You have unselected projects in " + this.name);
             return false;
         }
     }
@@ -547,7 +547,7 @@ public class Province {
         neededProductionPoints = unit.productionCost;
         projectId = PROJECTID.UNIT;
         isSomethingBuilding = true;
-        HegeLog.log("Province Project", "Chose unit " + unit.name);
+        HegeLog.log("Province Project", "Building unit " + unit.name);
     }
     
     public void chooseUpgradeUnit() {

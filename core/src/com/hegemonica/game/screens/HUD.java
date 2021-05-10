@@ -77,6 +77,7 @@ public class HUD {
     Label lP6;
     Label lUnitThere;
     TextButton bMoveUnit;
+    Label lMovementPoints;
     
     
     Label lCB1;
@@ -183,6 +184,8 @@ public class HUD {
                 startMovingProv = selectedProvince;
             }
         });
+        lMovementPoints = new Label("Null", DefaultUI);
+        lMovementPoints.setVisible(false);
         
         wProvinceInfo.add(lP1);
         wProvinceInfo.add(lProvName);
@@ -207,6 +210,7 @@ public class HUD {
         wProvinceInfo.add(lUnitThere);
         wProvinceInfo.row();
         wProvinceInfo.add(bMoveUnit);
+        wProvinceInfo.add(lMovementPoints);
         
         wCountryInfo = new Window("Country Info", DefaultUI);
         wCountryInfo.setMovable(true);
@@ -419,6 +423,7 @@ public class HUD {
         lProductionProgress.setText(selectedProvince.productionPoints + " / " + selectedProvince.neededProductionPoints);
         
         
+        
         populationProgress.setRange(0, (float) selectedProvince.neededFoodPoints);
         populationProgress.setValue(selectedProvince.foodPoints);
         
@@ -427,10 +432,13 @@ public class HUD {
         
         if (selectedProvince.unitThere != null) {
             lUnitThere.setText(selectedProvince.unitThere.name);
+            lMovementPoints.setText(selectedProvince.unitThere.movementPoints);
             bMoveUnit.setVisible(true);
+            lMovementPoints.setVisible(true);
         } else {
             lUnitThere.setText("No Unit");
             bMoveUnit.setVisible(false);
+            lMovementPoints.setVisible(false);
         }
         
         
@@ -485,8 +493,7 @@ public class HUD {
                     
                     @Override
                     public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                        HegeLog.log("Input", "BuildBtn ID: " + tmpButton.getId());
-                        HegeLog.log("Province choosing project", "Chose " + buttonBuildingMap.get(tmpButton.id).toString());
+                        HegeLog.log("Input", selectedProvince.name + ", UnitBtn ID: " + tmpButton.getId());
                         selectedProvince.chooseBuilding(buttonBuildingMap.get(tmpButton.id));
                         HegeLog.log("Province Project", "Chose building " + buttonBuildingMap.get(tmpButton.id).name);
                         setProvinceInfo();
@@ -523,8 +530,7 @@ public class HUD {
                     
                     @Override
                     public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                        HegeLog.log("Input", "TechBtn ID: " + tmpButton.getId());
-                        HegeLog.log("Province choosing project", "Chose " + buttonUnitMap.get(tmpButton.id).toString());
+                        HegeLog.log("Input", selectedProvince.name + ", UnitBtn ID: " + tmpButton.getId());
                         selectedProvince.chooseUnit(buttonUnitMap.get(tmpButton.id));
                         HegeLog.log("Province Project", "Chose unit " + buttonUnitMap.get(tmpButton.id).name);
                         setProvinceInfo();

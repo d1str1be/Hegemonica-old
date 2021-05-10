@@ -30,10 +30,10 @@ public class WarUnitGFX {
         healthBar.setRange(0, WarUnit.maxHealth);
         healthBar.setValue(WarUnit.maxHealth);
         healthBar.updateVisualValue();
-        hp = new Label("0 / 100", prov.owner.gemelch.hud.DefaultUI);
-        hp.setFontScale(0.4f);
-        hp.setScale(0.4f);
-        hp.setPosition(healthBar.getX(), healthBar.getY());
+//        hp = new Label("0 / 100", prov.owner.gemelch.hud.DefaultUI);
+//        hp.setFontScale(0.4f);
+//        hp.setScale(0.4f);
+//        hp.setPosition(healthBar.getX(), healthBar.getY());
         batch = new SpriteBatch();
     }
     public void setHealth(WarUnit unit){
@@ -148,7 +148,7 @@ public class WarUnitGFX {
     public void render(OrthographicCamera camera){
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        hp.draw(batch, 1f);
+//        hp.draw(batch, 1f);
         healthBar.draw(batch, 1f);
         sprite.draw(batch);
         batch.end();
