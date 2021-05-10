@@ -70,7 +70,7 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
         camera.translate(0, 0);
         cameraMovementX = camera.viewportWidth / 2;
         cameraMovementY = -camera.viewportHeight / 2;
-        camera.zoom = 0.5f;
+        camera.zoom = 0.25f;
         
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
         stage = new Stage(viewport);
@@ -183,6 +183,8 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
         cameraMovementX += deltaX;
         cameraMovementY += deltaY;
         camera.translate(-deltaX * camera.zoom, deltaY * camera.zoom);
+        
+        
         return true;
     }
     
@@ -210,6 +212,9 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
                 return true;
             }
         }
+    
+        realX = (x - cameraMovementX) / 2;
+        realY = (Core.gameHeight - y + cameraMovementY) / 2;
         return false;
     }
     
