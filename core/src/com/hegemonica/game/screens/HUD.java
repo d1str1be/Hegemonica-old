@@ -75,6 +75,10 @@ public class HUD {
     Label lProductionProgress;
     HegeProgressBar productionProgress;
     Label lP6;
+    Label lFoodIncome;
+    Label lP7;
+    Label lProductionIncome;
+    Label lP8;
     Label lUnitThere;
     TextButton bMoveUnit;
     
@@ -148,7 +152,7 @@ public class HUD {
         
         wProvinceInfo = new Window("Province Info", DefaultUI);
         wProvinceInfo.setPosition(Core.gameWidth * 0.05f, Core.gameHeight * 0.4f);
-        wProvinceInfo.setSize(Core.gameWidth * 0.15f / Core.uiFactor, Core.gameWidth * 0.125f / Core.uiFactor);
+        wProvinceInfo.setSize(Core.gameWidth * 0.15f / Core.uiFactor, Core.gameWidth * 0.15f / Core.uiFactor);
         wProvinceInfo.setVisible(false);
         wProvinceInfo.setResizable(true);
         lP1 = new Label("Name:", GlassyUI);
@@ -161,7 +165,11 @@ public class HUD {
         lPopulationProgress = new Label("Null", DefaultUI);
         lP5 = new Label("Production points:", GlassyUI);
         lProductionProgress = new Label("Null", DefaultUI);
-        lP6 = new Label("Unit in province:", GlassyUI);
+        lP6 = new Label("Food Income:", GlassyUI);
+        lFoodIncome = new Label("Null", DefaultUI);
+        lP7 = new Label("Production Income:", GlassyUI);
+        lProductionIncome = new Label("Null", DefaultUI);
+        lP8 = new Label("Unit in province:", GlassyUI);
         lUnitThere = new Label("Null", DefaultUI);
         
         populationProgress = new HegeProgressBar(wProvinceInfo.getWidth() * 0.15f, wProvinceInfo.getWidth() * 0.02f, HegeProgressBar.ID.FOOD);
@@ -204,6 +212,12 @@ public class HUD {
         wProvinceInfo.add(lProductionProgress);
         wProvinceInfo.row();
         wProvinceInfo.add(lP6);
+        wProvinceInfo.add(lFoodIncome);
+        wProvinceInfo.row();
+        wProvinceInfo.add(lP7);
+        wProvinceInfo.add(lProductionIncome);
+        wProvinceInfo.row();
+        wProvinceInfo.add(lP8);
         wProvinceInfo.add(lUnitThere);
         wProvinceInfo.row();
         wProvinceInfo.add(bMoveUnit);
@@ -424,6 +438,9 @@ public class HUD {
         
         productionProgress.setRange(0, (float) selectedProvince.neededProductionPoints);
         productionProgress.setValue((float) selectedProvince.productionPoints);
+
+        lFoodIncome.setText(selectedProvince.foodIncome);
+        lProductionIncome.setText(selectedProvince.productionIncome);
         
         if (selectedProvince.unitThere != null) {
             lUnitThere.setText(selectedProvince.unitThere.name);

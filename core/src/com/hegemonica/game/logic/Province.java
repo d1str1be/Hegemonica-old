@@ -37,7 +37,8 @@ public class Province {
     public int population;
     public int neededFood;
     public int productionPoints;
-    
+    public int foodIncome;
+    public int productionIncome;
     
     public int neededProductionPoints;
     public int gainedSciencePoints;
@@ -173,6 +174,9 @@ public class Province {
         numberOfFarms = 0;
         numberOfBuildings = 0;
         neededFoodPoints = 10;
+        neededFood = 1;
+        foodIncome = owner.startFoodProduction;
+        productionIncome = owner.citizenProduction;
         
         library = new Building(Building.ID.LIBRARY, this);
         university = new Building(Building.ID.UNIVERSITY, this);
@@ -283,7 +287,8 @@ public class Province {
     
     public void onTurn() {
         if (isTurnAvailable()) {
-            foodPoints += numberOfFarms * owner.farmProduction - neededFood + owner.startFoodProduction + numberOfShipyards * owner.startFoodProduction;
+            foodIncome = numberOfFarms * owner.farmProduction + owner.startFoodProduction;
+            foodPoints += foodIncome - neededFood;
             if (foodPoints >= neededFoodPoints) {
                 HegeLog.log("Province", name + " grew");
                 provinceGrow();
@@ -291,7 +296,8 @@ public class Province {
                 HegeLog.log("Province", name + " decreased");
                 provinceDecrease();
             }
-            productionPoints += population + numberOfMines * owner.mineProduction + numberOfWorkshops * owner.workshopProduction + numberOfShipyards * owner.shipyardProduction;
+            productionIncome = population * owner.citizenProduction + numberOfMines * owner.mineProduction + numberOfWorkshops * owner.workshopProduction;
+            productionPoints += productionIncome;
             if (productionPoints >= neededProductionPoints) {
                 switch (projectId) {
                     case PROJECTID.BUILDING:

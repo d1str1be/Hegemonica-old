@@ -91,7 +91,7 @@ public class Country {
         
         population = 1;
         sciencePoints = 0;
-        citizenProduction = 1;
+        citizenProduction = 5;
         mineProduction = 2;
         workshopProduction = 8;
         shipyardProduction = 3;
