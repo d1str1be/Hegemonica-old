@@ -65,6 +65,10 @@ public class Building {
         }
     }
 
+    public static String toString(Building building) {
+        return building.name;
+    }
+
     public class ID {
         public final static int FARM = 0;
         public final static int MINE = 1;

@@ -301,6 +301,8 @@ public class HUD {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 onTurn();
                 setCountryInfo();
+                HegeLog.log("Possible buildings" + gemelch.turnCountry.name, turnCountry.capital.possibleBuildingsToString());
+                HegeLog.log("Possible units" + gemelch.turnCountry.name, turnCountry.capital.possibleUnits.toString());
             }
         });
         
@@ -574,7 +576,7 @@ public class HUD {
                     @Override
                     public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                         HegeLog.log("Input", "TechButton: " + tmpButton.getId());
-                        HegeLog.log("Province choosing project", "Chose " + buttonTechMap.get(tmpButton.id).toString());
+                        HegeLog.log("Country choosing tech", "Chose " + buttonTechMap.get(tmpButton.id).toString());
                         turnCountry.chooseTechnology(buttonTechMap.get(tmpButton.id));
                         HegeLog.log("Province Project", "Chose tech " + buttonTechMap.get(tmpButton.id).name);
                         setCountryInfo();

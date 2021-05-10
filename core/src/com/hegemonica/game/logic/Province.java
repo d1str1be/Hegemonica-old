@@ -558,6 +558,15 @@ public class Province {
         projectId = PROJECTID.UNITUPGRADE;
         isSomethingBuilding = true;
     }
+
+    public String possibleBuildingsToString() {
+        String str = new String();
+        str = "";
+        for (Building building : possibleBuildings) {
+            str += Building.toString(building);
+        }
+        return str;
+    }
     
     public Province(Country owner, boolean isCity) {
         this.owner = owner;
