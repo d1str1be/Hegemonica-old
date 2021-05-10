@@ -20,13 +20,12 @@ public class GemelchGFX {
     }
 
     public void addProvincesToStage() {
+        stage.clear();
         for (Province province : gemelch.provinces) {
             stage.addActor(province.lProvName);
         }
-
     }
     public void addProvinceToStage(Province prov){
-        stage.
     }
     public void render() {
         stage.act(Gdx.graphics.getDeltaTime());

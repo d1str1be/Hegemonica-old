@@ -327,6 +327,10 @@ public class Province {
         setPossibleBuildings();
         setPossibleUnits();
         lProvName = new Label(name, defaultSkin, owner.name);
+        lProvName.setFontScale(0.5f);
+        lProvName.setSize(this.width * 0.2f, this.height * 0.2f);
+        lProvName.setPosition(this.x + (this.width * 0.05f), this.y);
+        owner.gemelch.gfx.addProvincesToStage();
     }
     
     //статус провинции
