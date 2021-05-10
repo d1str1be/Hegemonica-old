@@ -19,6 +19,7 @@ public class Technology {
     
     public Technology(int id, int cost, Technology[] requiredTechnologies) {
         this.cost = cost;
+        this.id  = id;
         this.requiredTechnologies = requiredTechnologies;
         switch (id) {
             case ID.ENGINEERING:

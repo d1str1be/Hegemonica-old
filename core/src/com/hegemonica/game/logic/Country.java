@@ -16,6 +16,7 @@ import static com.hegemonica.game.logic.Technology.ID.SIMPLYCHEMISTRY;
 public class Country {
     public String name;
     public int id;
+    public Province capital;
     public int cash;
     public int size;
     public int prestige;
@@ -105,9 +106,9 @@ public class Country {
         
         technologies = new Technology[6];
         
-        technologies[ENGINEERING] = new Technology(ENGINEERING, 25, new Technology[]{});;
-        technologies[PAPER] = new Technology(PAPER, 25, new Technology[]{});
-        technologies[SIMPLYCHEMISTRY] = new Technology(SIMPLYCHEMISTRY, 25, new Technology[]{});
+        technologies[ENGINEERING] = new Technology(ENGINEERING, 2, new Technology[]{});;
+        technologies[PAPER] = new Technology(PAPER, 2, new Technology[]{});
+        technologies[SIMPLYCHEMISTRY] = new Technology(SIMPLYCHEMISTRY, 2, new Technology[]{});
         technologies[MACHINERY] = new Technology(MACHINERY, 75, new Technology[]{technologies[ENGINEERING]});
         technologies[APPRENTICESHIP] = new Technology(APPRENTICESHIP, 75, new Technology[]{technologies[ENGINEERING], technologies[PAPER]});
         technologies[EDUCATION] = new Technology(EDUCATION, 75, new Technology[]{technologies[PAPER], technologies[SIMPLYCHEMISTRY]});
@@ -168,6 +169,9 @@ public class Country {
             case ENGINEERING:
                 mineProduction++;
                 break;
+            case PAPER:
+                farmProduction++;
+                break;
             case SIMPLYCHEMISTRY:
                 farmProduction++;
                 break;
@@ -184,7 +188,7 @@ public class Country {
                 //    shipyardProduction += 2;
                 //    shipyardFoodProduction += 2;
         }
-        HegeLog.log("Country", "Researched " + technologyInProcess.id);
+        HegeLog.log("Country", "Researched " + technology.name);
     }
     
     public void setPossibleTechnologies() {
