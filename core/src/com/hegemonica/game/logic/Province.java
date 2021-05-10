@@ -525,9 +525,11 @@ public class Province {
     
     public boolean isTurnAvailable() {
         if (isSomethingBuilding) {
+            owner.gemelch.hud.lUnselectedProjects.setVisible(false);
             return true;
         } else {
             HegeLog.log("Province", "You have unselected projects in " + this.name);
+            owner.gemelch.hud.lUnselectedProjects.setVisible(true);
             return false;
         }
     }

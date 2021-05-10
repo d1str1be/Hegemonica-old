@@ -143,6 +143,7 @@ public class PlayScreenMap implements Disposable, GestureDetector.GestureListene
 //        HegeLog.log("Input", "Tapped on X: " + realX);
 //        HegeLog.log("Input", "Tapped on Y: " + realY);
         gemelch.hud.setSelectedProvince(gemelch.whichProvinceContainsPoint(realX, realY));
+        gemelch.hud.lUnitAttack.setVisible(false);
         if (gemelch.hud.isReadyToMove) {
             if (gemelch.whichProvinceContainsPoint(realX, realY) != null) {
                 if (gemelch.hud.startMovingProv.unitThere.isMovableToProvince(gemelch.whichProvinceContainsPoint(realX, realY))) {

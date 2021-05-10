@@ -250,8 +250,10 @@ public class Country {
                     return false;
                 }
             }
+            gemelch.hud.lUnselectedTech.setVisible(false);
             return true;
         } else {
+            gemelch.hud.lUnselectedTech.setVisible(true);
             return false;
         }
     }

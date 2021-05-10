@@ -57,7 +57,9 @@ public class HUD {
     Label lNewTurn;
     Label lStartHint;
     Label lMoveUnit;
-    Label lUnitAttack;
+    public Label lUnitAttack;
+    public Label lUnselectedProjects;
+    public Label lUnselectedTech;
     
     ScrollPane scrollPane;
     Table scrollTable1;
@@ -356,8 +358,6 @@ public class HUD {
                     wChooseTech.setVisible(false);
                 } else {
                     wCountryInfo.setVisible(true);
-                    wChooseTech.setVisible(true);
-                    wChooseTech.setMovable(true);
                 }
             }
         });
@@ -377,11 +377,20 @@ public class HUD {
         lStartHint.setFontScale(Core.uiFactor);
         
         lUnitAttack = new Label("Unit X attacked unit Y", GlassyUI, "big");
-        lUnitAttack.setPosition((Core.gameWidth/2f - lUnitAttack.getWidth()/2f), Core.gameHeight*0.9f);
+        lUnitAttack.setPosition((Core.gameWidth / 2f - lUnitAttack.getWidth() / 2f), Core.gameHeight * 0.9f);
+        lUnitAttack.setVisible(false);
         
         lMoveUnit = new Label("Move unit to...", GlassyUI, "big");
-        lMoveUnit.setPosition((Core.gameWidth - lMoveUnit.getWidth()) / 2f, Core.gameHeight * 0.95f);
+        lMoveUnit.setPosition((Core.gameWidth - lMoveUnit.getWidth()) / 2f, Core.gameHeight * 0.9f);
         lMoveUnit.setVisible(false);
+        
+        lUnselectedProjects = new Label("You have unselected projects", GlassyUI, "big");
+        lUnselectedProjects.setPosition(Core.gameWidth - lUnselectedProjects.getWidth(), lCountryTurn.getY() + lCountryTurn.getHeight());
+        lUnselectedProjects.setVisible(false);
+    
+        lUnselectedTech = new Label("Choose technology!", GlassyUI, "big");
+        lUnselectedTech.setPosition(Core.gameWidth - lUnselectedTech.getWidth(), lCountryTurn.getY() + lCountryTurn.getHeight());
+        lUnselectedTech.setVisible(false);
         
         stage.addActor(lTurnNumber);
         stage.addActor(lNewTurn);
@@ -389,6 +398,7 @@ public class HUD {
         stage.addActor(lStartHint);
         stage.addActor(lMoveUnit);
         stage.addActor(lUnitAttack);
+        stage.addActor(lUnselectedProjects);
         stage.addActor(wProvinceInfo);
         stage.addActor(wChooseProject);
         stage.addActor(wCountryInfo);
@@ -439,13 +449,12 @@ public class HUD {
         lProductionProgress.setText(selectedProvince.productionPoints + " / " + selectedProvince.neededProductionPoints);
         
         
-        
         populationProgress.setRange(0, (float) selectedProvince.neededFoodPoints);
         populationProgress.setValue(selectedProvince.foodPoints);
         
         productionProgress.setRange(0, (float) selectedProvince.neededProductionPoints);
         productionProgress.setValue((float) selectedProvince.productionPoints);
-
+        
         lFoodIncome.setText(selectedProvince.foodIncome);
         lProductionIncome.setText(selectedProvince.productionIncome);
         
@@ -463,6 +472,8 @@ public class HUD {
         
         if (!selectedProvince.isSomethingBuilding) {
             setBuildingsInfo();
+            wChooseProject.setVisible(true);
+            wChooseProject.setMovable(true);
         }
     }
     
@@ -475,16 +486,22 @@ public class HUD {
         
         if (!turnCountry.isSomethingResearching) {
             setTechInfo();
+            wChooseTech.setVisible(true);
+            wChooseTech.setMovable(true);
         }
     }
     
     public void setBuildingsInfo() {
+        wChooseProject.clear();
         if (selectedProvince.owner.id == Country.ID.NOTHING) {
             wProvinceInfo.setVisible(false);
             wChooseProject.setVisible(false);
             return;
         }
-        wChooseProject.clear();
+        lBuildingProjects.clear();
+        lUnitProjects.clear();
+        bBuildingBuild.clear();
+        bUnitBuild.clear();
         wChooseProject.add(lCB1);
         wChooseProject.add(lCB2);
         Label l = new Label(" ", GlassyUI);
@@ -532,6 +549,8 @@ public class HUD {
             for (int i = 0; i < selectedProvince.possibleUnits.size(); i++) {
                 Label tmpLabel = new Label(selectedProvince.possibleUnits.get(i).name, DefaultUI);
                 Label tmpLabel1 = new Label(Integer.toString(selectedProvince.possibleUnits.get(i).productionCost), DefaultUI);
+                HegeLog.log("ujawsdgr", tmpLabel.toString());
+                HegeLog.log("ujawsdgr", tmpLabel1.toString());
                 lUnitProjects.add(tmpLabel);
                 lProdCost.add(tmpLabel1);
                 wChooseProject.row();
@@ -562,8 +581,7 @@ public class HUD {
                 wChooseProject.add(bBuildingBuild.get(i + selectedProvince.possibleBuildings.size()));
             }
         }
-        wChooseProject.setVisible(true);
-        wChooseProject.setMovable(true);
+        
     }
     
     public void setTechInfo() {
@@ -620,9 +638,9 @@ public class HUD {
     }
     
     public void attackUnit(WarUnit attackUnit, WarUnit defenseUnit) {
-        lUnitAttack.setText("Unit " + attackUnit.name + "attacked unit " + defenseUnit.name + "!");
-        lUnitAttack.setPosition((Core.gameWidth/2f - lUnitAttack.getWidth()/2f), Core.gameHeight*0.9f);
-        lUnitAttack.setVisible(true);
+        lUnitAttack = new Label("Unit of " + attackUnit.owner.name + " attacked unit " + defenseUnit.owner.name + "!", GlassyUI, "big");
+        lUnitAttack.setPosition((Core.gameWidth / 2f - lUnitAttack.getWidth() / 2f), Core.gameHeight * 0.9f);
+        stage.addActor(lUnitAttack);
     }
     
     public void setDebug(boolean debug) {

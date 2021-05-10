@@ -122,7 +122,6 @@ public class Gemelch {
                 if (redCountry.onTurn())
                     turnCountry = greenCountry;
                 else {
-                    HegeLog.log("Gemelch", "NO FUCKING TURN RED COUNTRY BAD");
                     return;
                 }
                 break;
@@ -131,7 +130,6 @@ public class Gemelch {
                 if (greenCountry.onTurn())
                     turnCountry = blueCountry;
                 else {
-                    HegeLog.log("Gemelch", "NO FUCKING TURN GREEN COUNTRY BAD");
                     return;
                 }
                 break;
@@ -140,7 +138,6 @@ public class Gemelch {
                 if (blueCountry.onTurn())
                     turnCountry = yellowCountry;
                 else {
-                    HegeLog.log("Gemelch", "NO FUCKING TURN BLUE COUNTRY BAD");
                     return;
                 }
                 break;
@@ -149,7 +146,6 @@ public class Gemelch {
                 if (yellowCountry.onTurn())
                     turnCountry = redCountry;
                 else {
-                    HegeLog.log("Gemelch", "NO FUCKING TURN YELLOW COUNTRY BAD");
                     return;
                 }
                 turnNumber++;
