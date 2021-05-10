@@ -207,11 +207,11 @@ public class Country {
             case Building.ID.MINE:
                 return true;
             case Building.ID.LIBRARY:
-                return paper.isResearched;
+                return technologies[PAPER].isResearched;
             case Building.ID.UNIVERSITY:
-                return education.isResearched;
+                return technologies[EDUCATION].isResearched;
             case Building.ID.WORKSHOP:
-                return engineering.isResearched;
+                return technologies[APPRENTICESHIP].isResearched;
             default:
                 return true;
         }

@@ -282,7 +282,7 @@ public class Province {
     public void onTurn() {
         if (isTurnAvailable()) {
             foodPoints += numberOfFarms * owner.farmProduction - neededFood + owner.startFoodProduction + numberOfShipyards * owner.startFoodProduction;
-            if (foodPoints > neededFoodPoints) {
+            if (foodPoints >= neededFoodPoints) {
                 HegeLog.log("Province", name + " grew");
                 provinceGrow();
             } else if (foodPoints < 0) {
@@ -451,11 +451,11 @@ public class Province {
             if (building.isLimited) {
                 switch (building.id) {
                     case Building.ID.LIBRARY:
-                        return numberOfLibraries == 0;
+                        return numberOfLibraries == 0 && isCity;
                     case Building.ID.UNIVERSITY:
-                        return numberOfUniversities == 0;
+                        return numberOfUniversities == 0 && isCity;
                     case Building.ID.WORKSHOP:
-                        return numberOfWorkshops == 0;
+                        return numberOfWorkshops == 0 && isCity;
                     case Building.ID.CITY:
                         return !isCity;
                     default:
