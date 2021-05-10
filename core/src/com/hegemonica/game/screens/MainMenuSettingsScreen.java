@@ -80,10 +80,13 @@ class MainMenuSettingsScreen implements Screen {
                 switch (languageSelection.getSelectedIndex()) {
                     case 0: //english
                         game.loc.updateLanguage(game.loc.englishLocFile);
+                        break;
                     case 1: //russian
                         game.loc.updateLanguage(game.loc.russianLocFile);
+                        break;
                     default:
                         game.loc.updateLanguage(game.loc.englishLocFile);
+                        break;
                 }
             }
         });

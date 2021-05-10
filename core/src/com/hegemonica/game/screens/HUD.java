@@ -83,7 +83,7 @@ public class HUD {
     TextButton bMoveUnit;
     Label lMovementPoints;
     
-    
+    Window wChooseProject;
     Label lCB1;
     Label lCB2;
     ArrayList<Label> lBuildingProjects;
@@ -92,7 +92,6 @@ public class HUD {
     ArrayList<Label> lProdCost;
     ArrayList<HegeBuildButton> bUnitBuild;
     
-    Window wChooseProject;
     
     Window wCountryInfo;
     Label lC1;
@@ -357,6 +356,8 @@ public class HUD {
                     wChooseTech.setVisible(false);
                 } else {
                     wCountryInfo.setVisible(true);
+                    wChooseTech.setVisible(true);
+                    wChooseTech.setMovable(true);
                 }
             }
         });
@@ -376,7 +377,7 @@ public class HUD {
         lStartHint.setFontScale(Core.uiFactor);
         
         lUnitAttack = new Label("Unit X attacked unit Y", GlassyUI, "big");
-        lUnitAttack.setPosition((gemelch.highestX - lUnitAttack.getWidth()) / 2f, (gemelch.highestY - lUnitAttack.getHeight()) / 2f);
+        lUnitAttack.setPosition((Core.gameWidth/2f - lUnitAttack.getWidth()/2f), Core.gameHeight*0.9f);
         
         lMoveUnit = new Label("Move unit to...", GlassyUI, "big");
         lMoveUnit.setPosition((Core.gameWidth - lMoveUnit.getWidth()) / 2f, Core.gameHeight * 0.95f);
@@ -387,6 +388,7 @@ public class HUD {
         stage.addActor(lCountryTurn);
         stage.addActor(lStartHint);
         stage.addActor(lMoveUnit);
+        stage.addActor(lUnitAttack);
         stage.addActor(wProvinceInfo);
         stage.addActor(wChooseProject);
         stage.addActor(wCountryInfo);
@@ -610,8 +612,6 @@ public class HUD {
                 wChooseTech.add(bTech.get(i));
             }
         }
-        wChooseTech.setVisible(true);
-        wChooseTech.setMovable(true);
     }
     
     public void endUnitMovement() {
@@ -621,6 +621,7 @@ public class HUD {
     
     public void attackUnit(WarUnit attackUnit, WarUnit defenseUnit) {
         lUnitAttack.setText("Unit " + attackUnit.name + "attacked unit " + defenseUnit.name + "!");
+        lUnitAttack.setPosition((Core.gameWidth/2f - lUnitAttack.getWidth()/2f), Core.gameHeight*0.9f);
         lUnitAttack.setVisible(true);
     }
     

@@ -37,7 +37,7 @@ public class WarUnitGFX {
         batch = new SpriteBatch();
     }
     public void setHealth(WarUnit unit){
-        HegeLog.log("WarUnitGFX", "Set " + unit.owner.name +" Unit health to " + unit.health);
+        HegeLog.log("WarUnitGFX", "Set unit`s health in " + unit.province.name + " to " + unit.health);
         healthBar.setValue(unit.health);
         healthBar.updateVisualValue();
     }
@@ -140,7 +140,7 @@ public class WarUnitGFX {
     
     public void update(WarUnit unit) {
         healthBar.setPosition(unit.province.x + unit.province.width * 0.2f, unit.province.y + unit.province.height * 0.8f);
-        this.setHealth((float) unit.health);
+        this.setHealth(unit);
         this.healthBar.updateVisualValue();
         sprite.setPosition(unit.province.x + unit.province.width * 0.25f, unit.province.y + unit.province.height * 0.25f);
     }

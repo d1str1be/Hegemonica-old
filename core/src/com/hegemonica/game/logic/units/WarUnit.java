@@ -93,18 +93,15 @@ public class WarUnit {
         setDefenseStrength();
         if (isRendered) {
             warUnitGFX = new WarUnitGFX(id, province);
-            warUnitGFX.setHealth((float) maxHealth);
             warUnitGFX.update(this);
-            HegeLog.log("WarUnitGFX", "Set health to " + maxHealth);
         }
         batch = new SpriteBatch();
-        HegeLog.log("WarUnit", "Unit of " + owner.name + " has " + movementPoints + " movementPoints");
     }
     
     public void onTurn() {
         if (isHealing) {
             heal();
-            warUnitGFX.setHealth((float) health);
+            warUnitGFX.setHealth(this);
             warUnitGFX.update(this);
         }
         switch (id) {
@@ -149,7 +146,7 @@ public class WarUnit {
         movementPoints--;
         capture(province);
         warUnitGFX.update(this);
-        HegeLog.log("WarUnit", "Unit of " + owner.name + " has " + movementPoints + " movementPoints");
+        HegeLog.log("WarUnit", "Unit in " + province.name + " has " + movementPoints + " movementPoints now");
     }
     
     public void capture(Province province) {

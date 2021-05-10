@@ -288,14 +288,12 @@ public class Gemelch {
     }
     
     public boolean[] getBooleanNeighborsList(Province province) {
-        HegeLog.log("Gemelch Neighbour", "getNeighborsIdList(province).length: " + getNeighborsIdList(province).length);
         int neighborsQuantity = getNeighborsIdList(province).length;
         int[] neighborsIntList = getNeighborsIdList(province);
         boolean[] neighborsBooleanList = new boolean[provCountWidth * provCountHeight];
         for (int i = 0; i < provCountWidth * provCountHeight; i++) {
             neighborsBooleanList[i] = false;
         }
-        HegeLog.log("Gemelch Neighbour", "neighborsBooleanList.length(): " + neighborsBooleanList.length);
         for (int i = 0; i < neighborsQuantity; i++) {
             neighborsBooleanList[neighborsIntList[i]] = true;
         }

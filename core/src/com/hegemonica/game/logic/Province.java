@@ -302,7 +302,6 @@ public class Province {
                 switch (projectId) {
                     case PROJECTID.BUILDING:
                         build(buildingInProcess);
-                        
                         break;
                     case PROJECTID.UNIT:
                         if (unitThere == null) {
@@ -418,32 +417,32 @@ public class Province {
     public void createUnit(WarUnit unit) {
         switch (unit.id) {
             case WarUnit.ID.WARRIOR:
-                createdUnits.add(new MeleeUnit(WarUnit.ID.WARRIOR, this, true));
-                unitThere = createdUnits.get(unitCounter);
+                createdUnits.add(new MeleeUnit(WarUnit.ID.WARRIOR, this, false));
+                unitThere = new MeleeUnit(WarUnit.ID.WARRIOR, this, true);
                 unitCounter++;
                 productionPoints -= WarUnit.PRODUCTIONCOST.WARRIOR;
                 break;
             case WarUnit.ID.ARCHER:
-                createdUnits.add(new RangedUnit(WarUnit.ID.ARCHER, this, true));
-                unitThere = createdUnits.get(unitCounter);
+                createdUnits.add(new RangedUnit(WarUnit.ID.ARCHER, this, false));
+                unitThere = new RangedUnit(WarUnit.ID.ARCHER, this, true);
                 unitCounter++;
                 productionPoints -= WarUnit.PRODUCTIONCOST.ARCHER;
                 break;
             case WarUnit.ID.SHIELDMAN:
-                createdUnits.add(new MeleeUnit(WarUnit.ID.SHIELDMAN, this, true));
-                unitThere = createdUnits.get(unitCounter);
+                createdUnits.add(new MeleeUnit(WarUnit.ID.SHIELDMAN, this, false));
+                unitThere = new MeleeUnit(WarUnit.ID.SHIELDMAN, this, true);
                 unitCounter++;
                 productionPoints -= WarUnit.PRODUCTIONCOST.SHIELDMAN;
                 break;
             case WarUnit.ID.CROSSBOWS:
-                createdUnits.add(new RangedUnit(WarUnit.ID.CROSSBOWS, this, true));
-                unitThere = createdUnits.get(unitCounter);
+                createdUnits.add(new RangedUnit(WarUnit.ID.CROSSBOWS, this, false));
+                unitThere = new RangedUnit(WarUnit.ID.CROSSBOWS, this, true);
                 unitCounter++;
                 productionPoints -= WarUnit.PRODUCTIONCOST.CROSSBOWS;
                 break;
             case WarUnit.ID.SWORDSMAN:
-                createdUnits.add(new MeleeUnit(WarUnit.ID.SWORDSMAN, this, true));
-                unitThere = createdUnits.get(unitCounter);
+                createdUnits.add(new MeleeUnit(WarUnit.ID.SWORDSMAN, this, false));
+                unitThere = new MeleeUnit(WarUnit.ID.SWORDSMAN, this, true);
                 unitCounter++;
                 productionPoints -= WarUnit.PRODUCTIONCOST.SWORDSMAN;
                 break;
