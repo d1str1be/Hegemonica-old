@@ -19,6 +19,9 @@ import com.hegemonica.game.Core;
 import static com.hegemonica.game.Core.gameHeight;
 import static com.hegemonica.game.Core.gameWidth;
 
+/**
+ * Класс настройки карты
+ */
 public class PreparationScreen implements Screen {
     Core game;
     Stage stage;

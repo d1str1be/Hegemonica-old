@@ -21,6 +21,9 @@ import com.hegemonica.game.logic.Gemelch;
 
 import java.util.Random;
 
+/**
+ * Класс обработки карты и нажатий на неё
+ */
 public class PlayScreenMap implements Disposable, GestureDetector.GestureListener {
     public Core game;
     InputMultiplexer inputMultiplexer;

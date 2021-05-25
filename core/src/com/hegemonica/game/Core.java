@@ -16,7 +16,7 @@ public class Core extends Game {
     /**
      * Для релизных версий ставить false. DevMode нужен для отладки, тестирования и для пометки особого статуса в Discord и, вероятно, на других площадках вроде Steam.
      */
-    public static final boolean DEV_MODE = true;
+    public static final boolean DEV_MODE = false;
     /**
      * Логическая переменная, отвечающая за доступ к интеграции Discord. Значение задаётся в классе лаунчера платформы через конструктор класса.
      */
